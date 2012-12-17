@@ -1,0 +1,563 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: wp-texmaster\n"
+"POT-Creation-Date: 2012-12-17 12:19+0100\n"
+"PO-Revision-Date: 2012-12-17 12:19+0100\n"
+"Last-Translator: T. Perrin <lupuz.yonderboy@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e;_c\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../approuve_doc.php:18
+msgid "Untitled"
+msgstr "Sans Titre"
+
+#: ../approuve_doc.php:103 ../wp-textmaster/trunk/approuve_doc.php:59
+msgid "Valider"
+msgstr "Validate"
+
+#: ../approuve_doc.php:105 ../wp-textmaster/trunk/approuve_doc.php:61
+msgid ""
+"En validant ce travail, il sera appouvé sur Textmaster et copier comme "
+"contenu de votre article. Il vous faudra sauvegarder ce dernier pour "
+"utiliser ce contenu."
+msgstr ""
+"After you validate this work, it will be approved on TextMaster and copied "
+"as content of your article. You will have to save it to use its content."
+
+#: ../textmaster.class.php:193
+msgid "En attente"
+msgstr "Waiting"
+
+#: ../textmaster.class.php:196
+msgid "En cours"
+msgstr "In progress"
+
+#: ../textmaster.class.php:199
+msgid "A valider"
+msgstr "To be validated"
+
+#: ../textmaster.class.php:202
+msgid "Incomplet"
+msgstr "Incomplete"
+
+#: ../textmaster.class.php:205
+msgid "Terminé"
+msgstr "Terminated"
+
+#: ../textmaster.class.php:208
+msgid "En pause"
+msgstr "Paused"
+
+#: ../textmaster.class.php:211
+msgid "Annulé"
+msgstr "Cancelled"
+
+#: ../tm-redaction.php:6
+msgid "TextMaster"
+msgstr "TextMaster"
+
+#: ../tm-redaction.php:7
+msgid "Rédactions TM"
+msgstr "TM Copywritings"
+
+#: ../tm-redaction.php:8
+msgid "Rédaction TM"
+msgstr "TM Copywriting"
+
+#: ../tm-redaction.php:9
+msgid "Ajouter"
+msgstr "Add new"
+
+#: ../tm-redaction.php:10
+msgid "Créer un projet de rédaction TextMaster"
+msgstr "Create a TextMaster copywriting project"
+
+#: ../tm-redaction.php:11
+msgid "Editer un projet de rédaction TextMaster"
+msgstr "Edit a TextMaster copywriting project "
+
+#: ../tm-redaction.php:12
+msgid "Aucune rédaction TextMaster trouvée"
+msgstr "No TextMaster copywriting found"
+
+#: ../tm-redaction.php:34 ../tm-redaction.php:37 ../tm-redaction.php:39
+#: ../tm-redaction.php:40
+msgid "Projet de rédaction sauvegardé."
+msgstr "Copywriting project saved"
+
+#: ../tm-redaction.php:52
+msgid "Status"
+msgstr "Status"
+
+#: ../tm-redaction.php:63
+msgid "Brouillon"
+msgstr "Draft"
+
+#: ../tm-redaction.php:117 ../tm-redaction.php:250 ../tm-redaction.php:356
+#: ../tm-settings.php:201 ../tm-settings.php:227 ../tm-settings.php:281
+#: ../tm-settings.php:307 ../tm-settings.php:366 ../tm-settings.php:392
+#: ../tm-settings.php:418 ../wp-textmaster.php:58 ../wp-textmaster.php:162
+#: ../wp-textmaster/trunk/wp-textmaster.php:50
+#: ../wp-textmaster/trunk/wp-textmaster.php:154
+#: ../wp-textmaster/trunk/wp-textmaster.php:562
+#: ../wp-textmaster/trunk/wp-textmaster.php:588
+#: ../wp-textmaster/trunk/wp-textmaster.php:635
+#: ../wp-textmaster/trunk/wp-textmaster.php:661
+#: ../wp-textmaster/trunk/wp-textmaster.php:687
+msgid "Merci de v&eacute;rifier les api_key et api_secret de TextMaster"
+msgstr "Please check the TextMaster api_key and api_secret "
+
+#: ../tm-redaction.php:121 ../wp-textmaster.php:62 ../wp-textmaster.php:167
+#: ../wp-textmaster/trunk/wp-textmaster.php:54
+#: ../wp-textmaster/trunk/wp-textmaster.php:159
+msgid "Categorie:"
+msgstr "Category"
+
+#: ../tm-redaction.php:138 ../tm-settings.php:103 ../wp-textmaster.php:80
+#: ../wp-textmaster.php:184 ../wp-textmaster/trunk/wp-textmaster.php:72
+#: ../wp-textmaster/trunk/wp-textmaster.php:176
+#: ../wp-textmaster/trunk/wp-textmaster.php:486
+msgid "Basic"
+msgstr "Basic"
+
+#: ../tm-redaction.php:139 ../tm-settings.php:104 ../wp-textmaster.php:81
+#: ../wp-textmaster.php:185 ../wp-textmaster/trunk/wp-textmaster.php:73
+#: ../wp-textmaster/trunk/wp-textmaster.php:177
+#: ../wp-textmaster/trunk/wp-textmaster.php:487
+msgid "Standard"
+msgstr "Standard"
+
+#: ../tm-redaction.php:140 ../tm-settings.php:105 ../wp-textmaster.php:82
+#: ../wp-textmaster.php:186 ../wp-textmaster/trunk/wp-textmaster.php:74
+#: ../wp-textmaster/trunk/wp-textmaster.php:178
+#: ../wp-textmaster/trunk/wp-textmaster.php:488
+msgid "Expert"
+msgstr "Expert"
+
+#: ../tm-redaction.php:141 ../wp-textmaster.php:83 ../wp-textmaster.php:187
+#: ../wp-textmaster/trunk/wp-textmaster.php:75
+#: ../wp-textmaster/trunk/wp-textmaster.php:179
+msgid "Niveau de service:"
+msgstr "Level of service"
+
+#: ../tm-redaction.php:160 ../wp-textmaster.php:102
+#: ../wp-textmaster/trunk/wp-textmaster.php:94
+msgid "Langue :"
+msgstr "Language:"
+
+#: ../tm-redaction.php:177
+msgid "+/- 10%"
+msgstr "+/- 10%"
+
+#: ../tm-redaction.php:178
+msgid "Au moins"
+msgstr "At least"
+
+#: ../tm-redaction.php:179
+msgid "Maximum"
+msgstr "Maximum"
+
+#: ../tm-redaction.php:186
+msgid "Nombre de mot :"
+msgstr "Number of words:"
+
+#: ../tm-redaction.php:207
+msgid "Cet article a &eacute;t&eacute; rédigé."
+msgstr "This article has been copywritten"
+
+#: ../tm-redaction.php:207 ../wp-textmaster.php:127 ../wp-textmaster.php:252
+#: ../wp-textmaster/trunk/wp-textmaster.php:119
+#: ../wp-textmaster/trunk/wp-textmaster.php:244
+msgid "Voir / valider"
+msgstr "View / validate"
+
+#: ../tm-redaction.php:207 ../tm-redaction.php:216 ../tm-redaction.php:426
+msgid "Voir / Valider la rédaction"
+msgstr "View / validate the review "
+
+#: ../tm-redaction.php:212
+msgid "Cet article est en cours de rédaction."
+msgstr "This article is being copywritten."
+
+#: ../tm-redaction.php:216
+msgid "Vous avez d&eacute;j&agrave; valid&eacute; la rédaction de cet article."
+msgstr "You have already validated the copywriting of this article"
+
+#: ../tm-redaction.php:216
+msgid "Voir la rédaction"
+msgstr "See copywriting"
+
+#: ../tm-redaction.php:230
+msgid "Sauver"
+msgstr "Save"
+
+#: ../tm-redaction.php:231
+msgid "Lancer la rédaction"
+msgstr "Start copywriting"
+
+#: ../tm-redaction.php:255
+msgid "Mots-clés:"
+msgstr "Keywords"
+
+#: ../tm-redaction.php:255
+msgid "séparés par des virgules"
+msgstr "Separated by commas"
+
+#: ../tm-redaction.php:262
+msgid "A répéter :"
+msgstr "To be repeated"
+
+#: ../tm-redaction.php:263
+msgid "fois"
+msgstr "times"
+
+#: ../tm-redaction.php:265 ../tm-redaction.php:288 ../tm-redaction.php:316
+msgid "Non spécifié"
+msgstr "Unspecified"
+
+#: ../tm-redaction.php:266
+msgid "Populaire"
+msgstr "Popular"
+
+#: ../tm-redaction.php:267
+msgid "Technique"
+msgstr "Technical"
+
+#: ../tm-redaction.php:268
+msgid "Romancé"
+msgstr "Fictionalized"
+
+#: ../tm-redaction.php:270
+msgid "Type de Vocabulaire:"
+msgstr "Vocabulary level"
+
+#: ../tm-redaction.php:289
+msgid "Je > 1ère personne - Singulier"
+msgstr "I"
+
+#: ../tm-redaction.php:290
+msgid "Tu > 2ème Personne - Singulier"
+msgstr "You "
+
+#: ../tm-redaction.php:291
+msgid "Il > 3ème personne - Singulier Masculin"
+msgstr "He "
+
+#: ../tm-redaction.php:292
+msgid "Elle > 3ème personne - Singulier Féminin"
+msgstr "She "
+
+#: ../tm-redaction.php:293
+msgid "On > 3ème personne - Singulier Neutre"
+msgstr "One "
+
+#: ../tm-redaction.php:294
+msgid "Nous > 1ère personne - Pluriel"
+msgstr "We"
+
+#: ../tm-redaction.php:295
+msgid "Vous > 2ème Personne - Pluriel"
+msgstr "You"
+
+#: ../tm-redaction.php:296
+msgid "Ils/elles > 3ème Personne - Pluriel"
+msgstr "They "
+
+#: ../tm-redaction.php:298
+msgid "Personne grammaticale:"
+msgstr "Grammatical person"
+
+#: ../tm-redaction.php:317
+msgid "Enfants > 13 ans et moins"
+msgstr "Children under 14 years old"
+
+#: ../tm-redaction.php:318
+msgid "Adolescent > entre 14 et 18 ans"
+msgstr "Teenagers > between 14 and 18 years old"
+
+#: ../tm-redaction.php:319
+msgid "Jeunes adultes > entre 19 et 29 ans"
+msgstr "Young adults > between 19 and 29 years old"
+
+#: ../tm-redaction.php:320
+msgid "Adultes > entre 30 et 59 ans"
+msgstr "Adults > between 30 and 59 years old"
+
+#: ../tm-redaction.php:321
+msgid "Séniors > 60 ans et plus"
+msgstr "Seniors > 60 years old and beyond"
+
+#: ../tm-redaction.php:323
+msgid "Public Ciblé:"
+msgstr "Target audience"
+
+#: ../tm-redaction.php:426
+#, fuzzy
+msgid "Ce projet a été rédigé, vous pouvez le"
+msgstr "This project has been copywritten, you can "
+
+#: ../tm-redaction.php:426
+msgid "valider"
+msgstr "Validate"
+
+#: ../tm-redaction.php:426
+msgid "dès maintenant."
+msgstr "Now"
+
+#: ../tm-redaction.php:504
+msgid "La rédaction de cet article est lancée."
+msgstr "The copywriting of this article has started"
+
+#: ../tm-redaction.php:507
+msgid "Cet article est déjà en cours de rédaction."
+msgstr "This article is already being copywritten"
+
+#: ../tm-redaction.php:510
+msgid "La rédaction de cet article est terminée."
+msgstr "The copywriting of this article is complete"
+
+#: ../tm-settings.php:67 ../wp-textmaster/trunk/wp-textmaster.php:462
+msgid "Les paramètres ont été sauvegaradés."
+msgstr "The settings have been saved"
+
+#: ../tm-settings.php:87
+msgid ""
+"Bonjour,\n"
+"Merci de procéder à la correction du texte. Il est impératif de conserver le "
+"style et le type de vocabulaire.\n"
+"Merci"
+msgstr ""
+"Hello. Please copywrite this text. It is mandatory that you respect the "
+"style and vocabulary type."
+
+#: ../tm-settings.php:96
+msgid ""
+"Bonjour,\n"
+"Merci de procéder à la traduction du texte. Il est impératif de conserver le "
+"style et le type de vocabulaire.\n"
+"Merci"
+msgstr ""
+"Hello. Please translate this text. It is mandatory that you respect the "
+"style and vocabulary type"
+
+#: ../tm-settings.php:112 ../wp-textmaster/trunk/wp-textmaster.php:494
+msgid "Paramétrage TextMaster"
+msgstr "TextMaster settings"
+
+#: ../tm-settings.php:118 ../tm-settings.php:119
+msgid "Général"
+msgstr "General"
+
+#: ../tm-settings.php:119
+msgid "Rédaction"
+msgstr "Copywriting"
+
+#: ../tm-settings.php:120 ../wp-textmaster.php:147
+#: ../wp-textmaster/trunk/wp-textmaster.php:139
+msgid "Relecture"
+msgstr "Proofreading"
+
+#: ../tm-settings.php:121 ../wp-textmaster.php:273
+#: ../wp-textmaster/trunk/wp-textmaster.php:265
+msgid "Traduction"
+msgstr "Translation"
+
+#: ../tm-settings.php:129 ../wp-textmaster/trunk/wp-textmaster.php:501
+msgid "Accès API"
+msgstr "API access"
+
+#: ../tm-settings.php:133 ../wp-textmaster/trunk/wp-textmaster.php:505
+msgid "Api key: "
+msgstr "API key"
+
+#: ../tm-settings.php:137 ../wp-textmaster/trunk/wp-textmaster.php:509
+msgid "Api secret: "
+msgstr "API secret"
+
+#: ../tm-settings.php:142 ../wp-textmaster/trunk/wp-textmaster.php:514
+msgid ""
+"Vous trouverez les api_key et api_secret sur le site <a href=\"http://fr."
+"textmaster.com/?pid=4f1db74529e1673829000009\" target=\"_blank\">TextMaster</"
+"a>, dans la rubrique plugins."
+msgstr ""
+"You will find the api_key and api_secret on the website, in the plugins "
+"section"
+
+#: ../tm-settings.php:147 ../wp-textmaster/trunk/wp-textmaster.php:519
+msgid "Pour quelles activités "
+msgstr "For which activities"
+
+#: ../tm-settings.php:153
+msgid "Rédaction "
+msgstr "Copywriting"
+
+#: ../tm-settings.php:159 ../wp-textmaster/trunk/wp-textmaster.php:525
+msgid "Relecture "
+msgstr "Proofreading"
+
+#: ../tm-settings.php:165 ../wp-textmaster/trunk/wp-textmaster.php:532
+msgid "Traduction: "
+msgstr "Translation"
+
+#: ../tm-settings.php:177
+msgid "Paramètres de rédaction par défaut "
+msgstr "Default copywriting settings"
+
+#: ../tm-settings.php:181 ../tm-settings.php:261 ../tm-settings.php:346
+#: ../wp-textmaster/trunk/wp-textmaster.php:542
+#: ../wp-textmaster/trunk/wp-textmaster.php:615
+msgid "Niveau de service: "
+msgstr "Level of service"
+
+#: ../tm-settings.php:197 ../tm-settings.php:277
+#: ../wp-textmaster/trunk/wp-textmaster.php:558
+msgid "Langue: "
+msgstr "Language"
+
+#: ../tm-settings.php:223 ../tm-settings.php:303 ../tm-settings.php:414
+#: ../wp-textmaster/trunk/wp-textmaster.php:584
+#: ../wp-textmaster/trunk/wp-textmaster.php:683
+msgid "Categorie: "
+msgstr "Category"
+
+#: ../tm-settings.php:257 ../wp-textmaster/trunk/wp-textmaster.php:538
+msgid "Paramètres de relecture par défaut "
+msgstr "Default proofreading settings"
+
+#: ../tm-settings.php:330 ../tm-settings.php:441
+msgid "Message de briefing: "
+msgstr "Briefing message"
+
+#: ../tm-settings.php:343 ../wp-textmaster/trunk/wp-textmaster.php:612
+msgid "Paramètres de traduction par défaut "
+msgstr "Default translation settings"
+
+#: ../tm-settings.php:362 ../wp-textmaster/trunk/wp-textmaster.php:631
+msgid "Langue source: "
+msgstr "Source language"
+
+#: ../tm-settings.php:388 ../wp-textmaster/trunk/wp-textmaster.php:657
+msgid "Langue destination: "
+msgstr "Target language"
+
+#: ../tm-settings.php:452 ../wp-textmaster/trunk/wp-textmaster.php:711
+msgid "Sauvegarder les paramtètres"
+msgstr "Save settings"
+
+#: ../wp-textmaster.php:26 ../wp-textmaster/trunk/wp-textmaster.php:23
+msgid "Merci d'installer l'extension crul pour php."
+msgstr "Please install the curl extension for php."
+
+#: ../wp-textmaster.php:33 ../wp-textmaster.php:34
+#: ../wp-textmaster/trunk/wp-textmaster.php:30
+#: ../wp-textmaster/trunk/wp-textmaster.php:31
+msgid "TextMaster Relecture"
+msgstr "TextMaster proofreading"
+
+#: ../wp-textmaster.php:38 ../wp-textmaster.php:39
+#: ../wp-textmaster/trunk/wp-textmaster.php:35
+#: ../wp-textmaster/trunk/wp-textmaster.php:36
+msgid "TextMaster traduction"
+msgstr "TextMaster translation"
+
+#: ../wp-textmaster.php:42
+msgid "Lancer la rédation"
+msgstr "Start copywriting"
+
+#: ../wp-textmaster.php:43
+msgid "Options"
+msgstr "Options"
+
+#: ../wp-textmaster.php:44
+msgid "Mise en page"
+msgstr "Layout"
+
+#: ../wp-textmaster.php:127 ../wp-textmaster/trunk/wp-textmaster.php:119
+msgid "Cet article a &eacute;t&eacute; relu."
+msgstr "This article has been proofread"
+
+#: ../wp-textmaster.php:127 ../wp-textmaster.php:136
+#: ../wp-textmaster/trunk/wp-textmaster.php:119
+#: ../wp-textmaster/trunk/wp-textmaster.php:128
+msgid "Voir / Valider la relecture"
+msgstr "View / validate proofreading"
+
+#: ../wp-textmaster.php:132 ../wp-textmaster/trunk/wp-textmaster.php:124
+msgid "Cet article est en cours de relecture."
+msgstr "This article is being proofread"
+
+#: ../wp-textmaster.php:136 ../wp-textmaster/trunk/wp-textmaster.php:128
+msgid "Vous avez d&eacute;j&agrave; valid&eacute; la relecture de cet article."
+msgstr "You have already validated the proofreading of this article."
+
+#: ../wp-textmaster.php:136 ../wp-textmaster/trunk/wp-textmaster.php:128
+msgid "Voir la relecture"
+msgstr "See proofreading"
+
+#: ../wp-textmaster.php:143 ../wp-textmaster.php:269
+#: ../wp-textmaster/trunk/wp-textmaster.php:135
+#: ../wp-textmaster/trunk/wp-textmaster.php:261
+msgid "Merci de sauvegarder cet article."
+msgstr "Please save this article."
+
+#: ../wp-textmaster.php:206 ../wp-textmaster/trunk/wp-textmaster.php:198
+msgid "Langue d'origine :"
+msgstr "Language of origin:"
+
+#: ../wp-textmaster.php:223 ../wp-textmaster/trunk/wp-textmaster.php:215
+msgid "Traduction en :"
+msgstr "Translation into:"
+
+#: ../wp-textmaster.php:252 ../wp-textmaster/trunk/wp-textmaster.php:244
+msgid "Cet article a &eacute;t&eacute; traduit."
+msgstr "This article has been translated"
+
+#: ../wp-textmaster.php:252 ../wp-textmaster.php:261
+#: ../wp-textmaster/trunk/wp-textmaster.php:244
+#: ../wp-textmaster/trunk/wp-textmaster.php:253
+msgid "Voir / Valider la traduction"
+msgstr "View/validate translation"
+
+#: ../wp-textmaster.php:257 ../wp-textmaster/trunk/wp-textmaster.php:249
+msgid "Cet article est en cours de traduction."
+msgstr "This article is being translated."
+
+#: ../wp-textmaster.php:261 ../wp-textmaster/trunk/wp-textmaster.php:253
+msgid ""
+"Vous avez d&eacute;j&agrave; valid&eacute; la traduction de cet article."
+msgstr "You have already validated the translation of this article"
+
+#: ../wp-textmaster.php:261 ../wp-textmaster/trunk/wp-textmaster.php:253
+msgid "Voir la traduction"
+msgstr "See translation"
+
+#: ../wp-textmaster.php:347 ../wp-textmaster/trunk/wp-textmaster.php:336
+msgid "La relecture de cet article est lancée."
+msgstr "The proofreading of this article has started."
+
+#: ../wp-textmaster.php:350 ../wp-textmaster/trunk/wp-textmaster.php:339
+msgid "Cet article est déjà en cours de relecture."
+msgstr "This article is already being proofread."
+
+#: ../wp-textmaster.php:353 ../wp-textmaster/trunk/wp-textmaster.php:342
+msgid "La relecture de cet article est terminée."
+msgstr "The proofreading of this article is complete."
+
+#: ../wp-textmaster.php:413 ../wp-textmaster/trunk/wp-textmaster.php:401
+msgid "La traduction de cet article est lancée."
+msgstr "The translation of this article has started."
+
+#: ../wp-textmaster.php:416 ../wp-textmaster/trunk/wp-textmaster.php:404
+msgid "Cet article est déjà en cours de traduction."
+msgstr "This article is already being translated."
+
+#: ../wp-textmaster.php:419 ../wp-textmaster/trunk/wp-textmaster.php:407
+msgid "La traduction de cet article est terminée."
+msgstr "The translation of this article is complete."
