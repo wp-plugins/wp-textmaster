@@ -133,7 +133,7 @@ class textmaster_api{
 		$ch = $this->init();
 
 		curl_setopt($ch, CURLOPT_POST, 1);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(array('project' => $project, 'tracker' => '504eefc88e36150002000002')));
+		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(array('project' => $project, 'tracker' => '4f1db74529e1673829000009')));
 		$url = $this->urlAPi . '/projects';
 	//	echo $url;
 		curl_setopt($ch, CURLOPT_URL, $url );

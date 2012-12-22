@@ -17,7 +17,7 @@ Ce plugin permet d'utiliser les services de r&eacute;daction, traduction et de r
 
 == Installation ==
 
-1. Upload `plugin-name.php` to the `/wp-content/plugins/` directory
+1. Upload `wp-textmaster/` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
 == Frequently asked questions ==
