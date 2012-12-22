@@ -1,8 +1,8 @@
 <?php
 /*
 Plugin Name: TextMaster plugin
-Plugin URI: http://www.c1blog.com/plugin-textmaster-wordpress/
-Description: Plugin for TextMaster readproof and translation
+Plugin URI: http://www.c1blog.com/plugin-textmaster-pour-wordpress/
+Description: Plugin for TextMaster copywriting, readproof and translation
 Author: Lupuz
 Version: 1.0
 Author URI: http://www.c1blog.com
