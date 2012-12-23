@@ -31,6 +31,7 @@ Ce plugin permet d'utiliser les services de r&eacute;daction, traduction et de r
 == Changelog ==
 
 V 1.0 first release
+
 v 1.1 fixe for launch project
 
 == Upgrade notice ==
