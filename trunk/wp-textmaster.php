@@ -4,7 +4,7 @@ Plugin Name: TextMaster plugin
 Plugin URI: http://www.c1blog.com/plugin-textmaster-pour-wordpress/
 Description: Plugin for TextMaster copywriting, readproof and translation
 Author: Lupuz
-Version: 1.0
+Version: 1.1
 Author URI: http://www.c1blog.com
 Text Domain: textmaster
 */

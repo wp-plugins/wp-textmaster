@@ -235,8 +235,10 @@ class textmaster_api{
 		$document['word_count'] = $word_count;
 		$document['original_content'] = $original_content;
 		$document['word_count_rule'] = $word_count_rule;
-		$document['keyword_list'] = $keyword_list;
-		$document['keywords_repeat_count'] = $keywords_repeat_count;
+		if (trim($document['keyword_list']) != '') {
+			$document['keyword_list'] = $keyword_list;
+			$document['keywords_repeat_count'] = $keywords_repeat_count;
+		}
 	//	$document['custom_client'] = "{tracker_id: '4f1db74529e1673829000009'}";
 		//print_r( $document);
 
