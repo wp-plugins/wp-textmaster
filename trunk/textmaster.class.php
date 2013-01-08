@@ -138,12 +138,12 @@ class textmaster_api{
 	//	echo $url;
 		curl_setopt($ch, CURLOPT_URL, $url );
 		$result = json_decode(curl_exec($ch),TRUE);
-		curl_close($ch);
 
 		$resultInfos = curl_getinfo($ch);
 		if(curl_errno($ch) || $resultInfos['http_code'] >= 300)
 			$result = 'Error '.$resultInfos['http_code'];
 
+		curl_close($ch);
 		return $result;
 	}
 
@@ -250,13 +250,14 @@ class textmaster_api{
 	//	echo $url;
 		curl_setopt($ch, CURLOPT_URL, $url );
 		$result = json_decode(curl_exec($ch),TRUE);
-		curl_close($ch);
+
 	//	print_r( $result);
 
 		$resultInfos = curl_getinfo($ch);
 		if(curl_errno($ch) || $resultInfos['http_code'] >= 300)
 			$result = 'Error '.$resultInfos['http_code'];
 
+		curl_close($ch);
 		return $result;
 	}
 
