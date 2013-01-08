@@ -100,7 +100,7 @@ function remove_all_media_buttons(){
 	if ('textmaster_redaction' === $current_screen->post_type)
 	{
 		remove_all_actions('media_buttons');
-		add_filter( 'user_can_richedit', false );
+		add_filter( 'user_can_richedit', create_function('' , 'return false;') , 50);
 	}
 }
 
