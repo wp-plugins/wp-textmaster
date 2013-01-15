@@ -38,6 +38,16 @@ function texmaster_admin() {
 		update_option('textmaster_redactionLanguage', $textmaster_redactionLanguage);
 		$textmaster_redactionCategorie = $_POST['textmaster_redactionCategorie'];
 		update_option('textmaster_redactionCategorie', $textmaster_redactionCategorie);
+		$textmaster_vocabularyType = $_POST['textmaster_vocabularyType'];
+		update_option('textmaster_vocabularyType', $textmaster_vocabularyType);
+		$textmaster_grammaticalPerson = $_POST['textmaster_grammaticalPerson'];
+		update_option('textmaster_grammaticalPerson', $textmaster_grammaticalPerson);
+		$textmaster_targetReaderGroup = $_POST['textmaster_targetReaderGroup'];
+		update_option('textmaster_targetReaderGroup', $textmaster_targetReaderGroup);
+		$textmaster_Template = $_POST['textmaster_Template'];
+		update_option('textmaster_Template', $textmaster_Template);
+		$textmaster_author = $_POST['textmaster_author'];
+		update_option('textmaster_author', $textmaster_author);
 
 		// params de relecture
 		$textmaster_readproofLanguageLevel = $_POST['textmaster_readproofLanguageLevel'];
@@ -77,6 +87,11 @@ function texmaster_admin() {
 		$textmaster_redactionLanguageLevel = get_option('textmaster_redactionLanguageLevel');
 		$textmaster_redactionLanguage = get_option('textmaster_redactionLanguage');
 		$textmaster_redactionCategorie = get_option('textmaster_redactionCategorie');
+		$textmaster_vocabularyType = get_option('textmaster_vocabularyType');
+		$textmaster_grammaticalPerson = get_option('textmaster_grammaticalPerson');
+		$textmaster_targetReaderGroup = get_option('textmaster_targetReaderGroup');
+		$textmaster_Template = get_option('textmaster_Template');
+		$textmaster_author = get_option('textmaster_author');
 
 		// params de relecture
 		$textmaster_readproofLanguageLevel = get_option('textmaster_readproofLanguageLevel');
@@ -243,6 +258,174 @@ function texmaster_admin() {
 				<?
 	}
 	?>
+        </td>
+        </tr>
+ 		<tr valign="top">
+        <th scope="row"><?php _e("Type de Vocabulaire:",'textmaster' ); ?></th>
+        <td>
+	 	<?
+		if ($categories['message'] != '') {
+			_e('Merci de v&eacute;rifier les api_key et api_secret de TextMaster','textmaster');
+		}
+		else
+		{
+			?>
+			<select name="textmaster_vocabularyType" style="width:235px;">
+			<?php
+			$vocabulary_types['not_specified'] = __('Non spécifié','textmaster');
+			$vocabulary_types['popular'] = __('Populaire','textmaster');
+			$vocabulary_types['technical'] = __('Technique','textmaster');
+			$vocabulary_types['fictional'] = __('Romancé','textmaster');
+
+			foreach($vocabulary_types as $key => $vocabulary_type)
+			{
+				if ($textmaster_vocabularyType == $key)
+					echo '<option value="'.$key.'" selected="selected">'.$vocabulary_type.'</option>';
+				else
+					echo '<option value="'.$key.'">'.$vocabulary_type.'</option>';
+			}
+			?>
+					</select>
+					<?
+		}
+		?>
+        </td>
+        </tr>
+ 		<tr valign="top">
+        <th scope="row"><?php _e("Personne grammaticale:",'textmaster' ); ?></th>
+        <td>
+	 	<?
+		if ($categories['message'] != '') {
+			_e('Merci de v&eacute;rifier les api_key et api_secret de TextMaster','textmaster');
+		}
+		else
+		{
+			?>
+				<select name="textmaster_grammaticalPerson" style="width:235px;">
+				<?php
+			$grammatical_persons['not_specified'] = __('Non spécifié','textmaster');
+			$grammatical_persons['first_person_singular'] = __('Je > 1ère personne - Singulier','textmaster');
+			$grammatical_persons['second_person_singular'] = __('Tu > 2ème Personne - Singulier','textmaster');
+			$grammatical_persons['third_person_singular_masculine'] = __('Il > 3ème personne - Singulier Masculin','textmaster');
+			$grammatical_persons['third_person_singular_feminine'] = __('Elle > 3ème personne - Singulier Féminin','textmaster');
+			$grammatical_persons['third_person_singular_neuter'] = __('On > 3ème personne - Singulier Neutre','textmaster');
+			$grammatical_persons['first_person_plural'] = __('Nous > 1ère personne - Pluriel','textmaster');
+			$grammatical_persons['second_person_plural'] = __('Vous > 2ème Personne - Pluriel','textmaster');
+			$grammatical_persons['third_person_plural'] = __('Ils/elles > 3ème Personne - Pluriel','textmaster');
+
+			foreach($grammatical_persons as $key => $grammatical_person)
+			{
+				if ($textmaster_grammaticalPerson == $key)
+					echo '<option value="'.$key.'" selected="selected">'.$grammatical_person.'</option>';
+				else
+					echo '<option value="'.$key.'">'.$grammatical_person.'</option>';
+			}
+			?>
+						</select>
+						<?
+		}
+		?>
+        </td>
+        </tr>
+		<tr valign="top">
+        <th scope="row"><?php _e("Public Ciblé:",'textmaster' ); ?></th>
+        <td>
+	 	<?
+		if ($categories['message'] != '') {
+			_e('Merci de v&eacute;rifier les api_key et api_secret de TextMaster','textmaster');
+		}
+		else
+		{
+			?>
+					<select name="textmaster_targetReaderGroup" style="width:235px;">
+					<?php
+			$target_reader_groups['not_specified'] = __('Non spécifié','textmaster');
+			$target_reader_groups['children'] = __('Enfants > 13 ans et moins','textmaster');
+			$target_reader_groups['teenager'] = __('Adolescent > entre 14 et 18 ans','textmaster');
+			$target_reader_groups['young_adults'] = __('Jeunes adultes > entre 19 et 29 ans','textmaster');
+			$target_reader_groups['adults'] = __('Adultes > entre 30 et 59 ans','textmaster');
+			$target_reader_groups['old_adults'] = __('Séniors > 60 ans et plus','textmaster');
+
+
+			foreach($target_reader_groups as $key => $target_reader_group)
+			{
+				if ($textmaster_targetReaderGroup == $key)
+					echo '<option value="'.$key.'" selected="selected">'.$target_reader_group.'</option>';
+				else
+					echo '<option value="'.$key.'">'.$target_reader_group.'</option>';
+			}
+			?>
+							</select>
+							<?
+		}
+		?>
+        </td>
+        </tr>
+		<tr valign="top">
+        <th scope="row"><?php _e("Auteur:",'textmaster' ); ?></th>
+        <td>
+	 	<?
+		if ($categories['message'] != '') {
+			_e('Merci de v&eacute;rifier les api_key et api_secret de TextMaster','textmaster');
+		}
+		else
+		{
+			?>
+						<select name="textmaster_author" style="width:235px;">
+						<?php
+		 	$auteurs = $tApi->getAuteurs();
+
+
+			foreach($auteurs as $auteur)
+			{
+				$auteurDesc = '';
+				if ($auteur['description'] != '')
+					$auteurDesc = ' - '.$auteur['description'];
+
+				if ($textmaster_author == $auteur['id'])
+					echo '<option value="'.$auteur['id'].'" selected="selected">'.$auteur['author_ref'].$auteurDesc.'</option>';
+				else
+					echo '<option value="'.$auteur['id'].'">'.$auteur['author_ref'].$auteurDesc.'</option>';
+			}
+			?>
+								</select>
+								<?
+		}
+		?>
+        </td>
+        </tr>
+		<tr valign="top">
+        <th scope="row"><?php _e("Mise en page",'textmaster' ); ?>:</th>
+        <td>
+	 	<?
+		$templates = $tApi->getTemplates();
+		if (count($templates) == 0) {
+			_e('Merci de v&eacute;rifier les api_key et api_secret de TextMaster','textmaster');
+		}
+		else
+		{
+			if (get_post_meta($post->ID, 'textmasterTemplate', true) != '')
+				$templateSelected = get_post_meta($post->ID, 'textmasterTemplate', true);
+			else
+				$templateSelected = 'Libre';
+
+
+			echo '<ul style="display:inline-block;">';
+			foreach($templates as $key => $template)
+			{
+				echo '<li style="width:150px;display:inline-block;min-height:340px;vertical-align:top;margin:10px;">';
+				if ($textmaster_Template == $template['name'])
+					$checked = 'checked="checked"';
+				else
+					$checked = '';
+				echo '<input type="radio" name="textmaster_Template" id="textmaster_Template" value="'.$template['name'].'" '.$checked.'>';
+				echo '<img src="'.$template['image_preview_path'].'" />';
+				echo $template['description'];
+				echo '</li>';
+			}
+			echo '</ul>';
+		}
+		?>
         </td>
         </tr>
 		</table>

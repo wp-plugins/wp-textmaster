@@ -4,7 +4,7 @@ Plugin Name: TextMaster plugin
 Plugin URI: http://www.c1blog.com/plugin-textmaster-pour-wordpress/
 Description: Plugin for TextMaster copywriting, readproof and translation
 Author: Lupuz
-Version: 1.2
+Version: 1.3
 Author URI: http://www.c1blog.com
 Text Domain: textmaster
 */
@@ -42,6 +42,7 @@ function texmaster_add_metaboxes() {
 	add_meta_box('wp_textmaster_redaction_defaut', __('Lancer la rédation', 'textmaster'), 'wp_texmaster_redaction_defaut_metaboxes', 'textmaster_redaction', 'side', 'default');
 	add_meta_box('wp_textmaster_redaction_options', __('Options', 'textmaster'), 'wp_texmaster_redaction_options_metaboxes', 'textmaster_redaction', 'side', 'default');
 	add_meta_box('wp_texmaster_redaction_templates', __('Mise en page', 'textmaster'), 'wp_texmaster_redaction_templates_metaboxes', 'textmaster_redaction', 'normal', 'default');
+	add_meta_box('wp_texmaster_redaction_authors', __('Auteurs', 'textmaster'), 'wp_texmaster_redaction_authors_metaboxes', 'textmaster_redaction', 'side', 'default');
 	remove_meta_box( 'submitdiv', 'textmaster_redaction', 'side' );
 }
 
@@ -458,6 +459,7 @@ if (get_option('textmaster_useRedaction') == 'Y') {
 	add_action( 'save_post', 'textmaster_redaction_save' );
 //	add_action('edit_post', 'textmaster_redaction_edit');
 	add_action('admin_notices', 'textmaster_redaction_notice');
+	add_filter( 'default_content', 'textmaster_defaut_content' );
 }
 
 
