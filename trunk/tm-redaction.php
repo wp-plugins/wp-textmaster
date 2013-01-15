@@ -7,8 +7,8 @@ function textmaster_redaction_type() {
 		'all_items' => __('Rédactions TM','textmaster'),
 		'singular_name' => __('Rédaction TM','textmaster'),
 		'add_new' => __('Ajouter','textmaster'),
-		'add_new_item' => __('Créer un projet de rédaction TextMaster','textmaster'),
-		'edit_item' => __('Editer un projet de rédaction TextMaster','textmaster'),
+		'add_new_item' => __('Créer une rédaction TextMaster','textmaster'),
+		'edit_item' => __('Editer une rédaction TextMaster','textmaster'),
 		'not_found' => __('Aucune rédaction TextMaster trouvée','textmaster')
 	),
 	'public' => false,
@@ -104,7 +104,15 @@ function remove_all_media_buttons(){
 	}
 }
 
+function textmaster_defaut_content( $content ) {
+	global $current_screen;
 
+	if ('textmaster_redaction' === $current_screen->post_type)
+	{
+			$content = __("C'est ici que vous donnez les instructions concernant votre demande de rédaction.",'textmaster');
+	}
+	return $content;
+}
 function wp_texmaster_redaction_defaut_metaboxes(){
 	global $post;
 
@@ -273,7 +281,7 @@ function wp_texmaster_redaction_options_metaboxes(){
 		if (get_post_meta($post->ID, 'textmasterVocabularyType', true) != '')
 			$vocabulary_typeSelected = get_post_meta($post->ID, 'textmasterVocabularyType', true);
 		else
-			$vocabulary_typeSelected = 'not_specified';
+			$vocabulary_typeSelected = get_option('textmaster_vocabularyType');
 
 		foreach($vocabulary_types as $key => $vocabulary_type)
 		{
@@ -301,7 +309,7 @@ function wp_texmaster_redaction_options_metaboxes(){
 		if (get_post_meta($post->ID, 'textmasterGrammaticalPerson', true) != '')
 			$grammatical_personSelected = get_post_meta($post->ID, 'textmasterGrammaticalPerson', true);
 		else
-			$grammatical_personSelected = 'not_specified';
+			$grammatical_personSelected = get_option('textmaster_grammaticalPerson');
 
 		foreach($grammatical_persons as $key => $grammatical_person)
 		{
@@ -326,7 +334,7 @@ function wp_texmaster_redaction_options_metaboxes(){
 		if (get_post_meta($post->ID, 'textmasterTargetReaderGroup', true) != '')
 			$target_reader_groupSelected = get_post_meta($post->ID, 'textmasterTargetReaderGroup', true);
 		else
-			$target_reader_groupSelected = 'not_specified';
+			$target_reader_groupSelected = get_option('textmaster_targetReaderGroup');
 
 		foreach($target_reader_groups as $key => $target_reader_group)
 		{
@@ -336,7 +344,6 @@ function wp_texmaster_redaction_options_metaboxes(){
 				echo '<option value="'.$key.'">'.$target_reader_group.'</option>';
 		}
 		echo '</select><br/><br/>';
-
 
 	}
 
@@ -360,7 +367,7 @@ function wp_texmaster_redaction_templates_metaboxes(){
 		if (get_post_meta($post->ID, 'textmasterTemplate', true) != '')
 			$templateSelected = get_post_meta($post->ID, 'textmasterTemplate', true);
 		else
-			$templateSelected = 'Libre';
+			$templateSelected = get_option('textmaster_Template');
 
 
 		echo '<ul style="display:inline-block;">';
@@ -374,6 +381,45 @@ function wp_texmaster_redaction_templates_metaboxes(){
 			echo '<input type="radio" name="radio_textmasterTemplate" id="radio_textmasterTemplate" value="'.$template['name'].'" '.$checked.'>';
 			echo '<img src="'.$template['image_preview_path'].'" />';
 			echo $template['description'];
+			echo '</li>';
+		}
+		echo '</ul>';
+	}
+}
+
+function wp_texmaster_redaction_authors_metaboxes(){
+	global $post;
+
+	$tApi = new textmaster_api();
+	$tApi->secretapi = get_option('textmaster_api_secret');
+	$tApi->keyapi =  get_option('textmaster_api_key');
+
+	$auteurs = $tApi->getAuteurs();
+
+	if (count($auteurs) == 0) {
+		_e('Merci de v&eacute;rifier les api_key et api_secret de TextMaster','textmaster');
+	}
+	else
+	{
+		echo '<ul style="display:inline-block;">';
+		if (get_post_meta($post->ID, 'textmasterAuthor', true) != '')
+			$auteurSelected = unserialize( get_post_meta($post->ID, 'textmasterAuthor', true));
+		else
+			$auteurSelected = array(get_option('textmaster_author'));
+
+		foreach($auteurs as $auteur)
+		{
+			$auteurDesc = '';
+			if ($auteur['description'] != '')
+				$auteurDesc = ' - '.$auteur['description'];
+
+			echo '<li>';
+			if ( in_array($auteur['id'], $auteurSelected) )
+				$checked = 'checked="checked"';
+			else
+				$checked = '';
+			echo '<input type="checkbox" name="check_textmasterAuthor[]" class="check_textmasterAuthor" value="'.$auteur['id'].'" '.$checked.'> ';
+			echo $auteur['author_ref'].$auteurDesc;
 			echo '</li>';
 		}
 		echo '</ul>';
@@ -406,6 +452,8 @@ function textmaster_redaction_save( $post_id ){
 			update_post_meta($post_id, 'textmasteWordCountRule', $_REQUEST['select_textmasteWordCountRule']);
 		if (isset($_REQUEST['text_textmasterWordCount']))
 			update_post_meta($post_id, 'textmasterWordCount', $_REQUEST['text_textmasterWordCount']);
+		if (isset($_REQUEST['check_textmasterAuthor']))
+			update_post_meta($post_id, 'textmasterAuthor', serialize($_REQUEST['check_textmasterAuthor']));
 	}
 }
 
@@ -436,6 +484,7 @@ function callback_redaction(){
 	$language = $_POST['language'];
 	$wordCountRule = $_POST['wordCountRule'];
 	$wordCount = $_POST['wordCount'];
+	$authors = $_POST['authors'];
 
 	$keywords = $_POST['keywords'];
 	$keywordsRepeatCount = $_POST['keywordsRepeatCount'];
@@ -463,6 +512,7 @@ function callback_redaction(){
 	update_post_meta($post_id, 'textmasterVocabularyType', $vocabularyType);
 	update_post_meta($post_id, 'textmasterGrammaticalPerson', $grammaticalPerson);
 	update_post_meta($post_id, 'textmasterTargetReaderGroup', $targetReaderGroup);
+	update_post_meta($post_id, 'textmasterAuthor', serialize($authors));
 
 	update_post_meta($post_id, 'textmasterTemplate', $templateTM);
 
@@ -478,7 +528,7 @@ function callback_redaction(){
 		$checkStatut = $tApi->getProjetStatus($idProjet);
 		if ($idProjet == '' || $checkStatut == 'canceled')
 		{
-			$retProjet = $tApi->makeProject(get_the_title($postID), 'copywriting', $language, $language, $categorie, $content, $languageLevel,$templateTM,$vocabularyType,$grammaticalPerson,$targetReaderGroup);
+			$retProjet = $tApi->makeProject(get_the_title($postID), 'copywriting', $language, $language, $categorie, $content, $languageLevel,$templateTM,$vocabularyType,$grammaticalPerson,$targetReaderGroup,$authors);
 			$idProjet = $retProjet['projects']['id'];
 		}
 

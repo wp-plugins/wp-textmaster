@@ -28,6 +28,11 @@
 			language = jQuery("#select_textmasterLang option:selected").val();
 			wordCountRule = jQuery("#select_textmasteWordCountRule option:selected").val();
 			wordCount = jQuery("#text_textmasterWordCount").val();
+		//	author = jQuery("#select_textmasterAuthor").val();
+			var authors = new Array();
+			$(".check_textmasterAuthor:checked").each(function() {
+ 				 authors.push($(this).val());
+			});
 
 			keywords = jQuery("#text_textmasterKeywords").val();
 			keywordsRepeatCount = jQuery("#text_textmasterKeywordsRepeatCount").val();
@@ -55,6 +60,7 @@
 					vocabularyType: vocabularyType,
 					grammaticalPerson: grammaticalPerson,
 					targetReaderGroup: targetReaderGroup,
+					authors: authors,
 
 					templateTM: templateTM,
 
@@ -65,7 +71,7 @@
 					jQuery("#resultTextmaster").append(data);
 				},
 				error: function(MLHttpRequest, textStatus, errorThrown){
-					alert(errorThrown);
+					alert(textStatus +" " +errorThrown);
 				}
 			});
 		});

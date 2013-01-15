@@ -30,6 +30,8 @@ Ce plugin permet d'utiliser les services de r&eacute;daction, traduction et de r
 
 == Changelog ==
 
+v 1.3 Add TextMaster Author for copywriting and some défaults params
+
 v 1.2 fix for some warning messages
 
 v 1.1 fix for launch project

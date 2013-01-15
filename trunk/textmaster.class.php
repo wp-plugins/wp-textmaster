@@ -95,6 +95,7 @@ class textmaster_api{
 
 		return $arrayLangs;
 	}
+
 	/*
 	* pour avoir la liste des mise en page
 	*/
@@ -110,11 +111,26 @@ class textmaster_api{
 		return $datas['work_templates'];
 	}
 
+	/* pour recup la liste des auteurs */
+	function getAuteurs()
+	{
+		$ch = $this->init();
+		$url = $this->urlAPi . '/my_authors';
+		curl_setopt($ch, CURLOPT_URL, $url );
+		$result = curl_exec($ch);
+		curl_close($ch);
+
+		$datas = json_decode($result, TRUE);
+		array_unshift($datas['my_authors'], array('id' => '', 'author_ref' => __('Non spécifié','textmaster')));
+
+		return $datas['my_authors'];
+	}
+
 	/*
 	* créer un nouveau projet sur textmaster
 	* type : copywriting, translation, proofreading
 	*/
-	function makeProject($name, $type, $language_from='fr',  $language_to='fr', $category, $project_briefing, $language_level, $work_template='Default', $vocabulary_type ='not_specified', $grammatical_person ='not_specified', $target_reader_groups = 'not_specified'){
+	function makeProject($name, $type, $language_from='fr',  $language_to='fr', $category, $project_briefing, $language_level, $work_template='Default', $vocabulary_type ='not_specified', $grammatical_person ='not_specified', $target_reader_groups = 'not_specified',$authors = ''){
 
 		$project['name'] = $name;
 		$project['ctype'] = $type;
@@ -128,8 +144,11 @@ class textmaster_api{
 		$project['vocabulary_type'] = $vocabulary_type;
 		$project['grammatical_person'] = $grammatical_person;
 		$project['target_reader_groups'] = $target_reader_groups;
-	//	$project['custom_client'] = "{tracker_id: '4f1db74529e1673829000009', token_id: '504eefc88e36150002000002'}";
+		if ($authors != '')
+			$project['textmasters'] = $authors;
 
+
+	//	$project['custom_client'] = "{tracker_id: '4f1db74529e1673829000009', token_id: '504eefc88e36150002000002'}";
 		$ch = $this->init();
 
 		curl_setopt($ch, CURLOPT_POST, 1);
@@ -140,6 +159,7 @@ class textmaster_api{
 		$result = json_decode(curl_exec($ch),TRUE);
 
 		$resultInfos = curl_getinfo($ch);
+
 		if(curl_errno($ch) || $resultInfos['http_code'] >= 300)
 			$result = 'Error '.$resultInfos['http_code'];
 

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: wp-texmaster\n"
-"POT-Creation-Date: 2012-12-17 12:20+0100\n"
-"PO-Revision-Date: 2012-12-17 12:20+0100\n"
+"POT-Creation-Date: 2013-01-15 10:43+0100\n"
+"PO-Revision-Date: 2013-01-15 10:44+0100\n"
 "Last-Translator: T. Perrin <lupuz.yonderboy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,11 +18,11 @@ msgstr ""
 msgid "Untitled"
 msgstr "Sin título"
 
-#: ../approuve_doc.php:103 ../wp-textmaster/trunk/approuve_doc.php:59
+#: ../approuve_doc.php:103
 msgid "Valider"
 msgstr "Validar"
 
-#: ../approuve_doc.php:105 ../wp-textmaster/trunk/approuve_doc.php:61
+#: ../approuve_doc.php:105
 msgid ""
 "En validant ce travail, il sera appouvé sur Textmaster et copier comme "
 "contenu de votre article. Il vous faudra sauvegarder ce dernier pour "
@@ -31,31 +31,37 @@ msgstr ""
 "Al validar este proyecto, estará aprobado en TextMaster y copiado como "
 "contenido de tu artículo. Tendrás que salvarlo para utilizar este contenido"
 
-#: ../textmaster.class.php:193
+#: ../textmaster.class.php:124 ../tm-redaction.php:273 ../tm-redaction.php:296
+#: ../tm-redaction.php:324 ../tm-settings.php:275 ../tm-settings.php:306
+#: ../tm-settings.php:342
+msgid "Non spécifié"
+msgstr "No especificado"
+
+#: ../textmaster.class.php:212
 msgid "En attente"
 msgstr "En espera"
 
-#: ../textmaster.class.php:196
+#: ../textmaster.class.php:215
 msgid "En cours"
 msgstr "En progreso"
 
-#: ../textmaster.class.php:199
+#: ../textmaster.class.php:218
 msgid "A valider"
 msgstr "A validar"
 
-#: ../textmaster.class.php:202
+#: ../textmaster.class.php:221
 msgid "Incomplet"
 msgstr "Incompleto"
 
-#: ../textmaster.class.php:205
+#: ../textmaster.class.php:224
 msgid "Terminé"
 msgstr "Terminado"
 
-#: ../textmaster.class.php:208
+#: ../textmaster.class.php:227
 msgid "En pause"
 msgstr "En pausa"
 
-#: ../textmaster.class.php:211
+#: ../textmaster.class.php:230
 msgid "Annulé"
 msgstr "Anulado"
 
@@ -76,11 +82,13 @@ msgid "Ajouter"
 msgstr "Añadir"
 
 #: ../tm-redaction.php:10
-msgid "Créer un projet de rédaction TextMaster"
+#, fuzzy
+msgid "Créer une rédaction TextMaster"
 msgstr "Crear un proyecto de redacción TextMaster"
 
 #: ../tm-redaction.php:11
-msgid "Editer un projet de rédaction TextMaster"
+#, fuzzy
+msgid "Editer une rédaction TextMaster"
 msgstr "Editar un proyecto de redacción TextMaster"
 
 #: ../tm-redaction.php:12
@@ -100,234 +108,219 @@ msgstr "Estatuto"
 msgid "Brouillon"
 msgstr "Borrador"
 
-#: ../tm-redaction.php:117 ../tm-redaction.php:250 ../tm-redaction.php:356
-#: ../tm-settings.php:201 ../tm-settings.php:227 ../tm-settings.php:281
-#: ../tm-settings.php:307 ../tm-settings.php:366 ../tm-settings.php:392
-#: ../tm-settings.php:418 ../wp-textmaster.php:58 ../wp-textmaster.php:162
-#: ../wp-textmaster/trunk/wp-textmaster.php:50
-#: ../wp-textmaster/trunk/wp-textmaster.php:154
-#: ../wp-textmaster/trunk/wp-textmaster.php:562
-#: ../wp-textmaster/trunk/wp-textmaster.php:588
-#: ../wp-textmaster/trunk/wp-textmaster.php:635
-#: ../wp-textmaster/trunk/wp-textmaster.php:661
-#: ../wp-textmaster/trunk/wp-textmaster.php:687
+#: ../tm-redaction.php:112
+msgid ""
+"C'est ici que vous donnez les instructions concernant votre demande de "
+"rédaction."
+msgstr ""
+"Es aquí donde se dan instrucciones sobre la escritura de su aplicación."
+
+#: ../tm-redaction.php:125 ../tm-redaction.php:258 ../tm-redaction.php:363
+#: ../tm-redaction.php:400 ../tm-settings.php:216 ../tm-settings.php:242
+#: ../tm-settings.php:268 ../tm-settings.php:299 ../tm-settings.php:335
+#: ../tm-settings.php:369 ../tm-settings.php:403 ../tm-settings.php:464
+#: ../tm-settings.php:490 ../tm-settings.php:549 ../tm-settings.php:575
+#: ../tm-settings.php:601 ../wp-textmaster.php:59 ../wp-textmaster.php:163
 msgid "Merci de v&eacute;rifier les api_key et api_secret de TextMaster"
 msgstr "Gracias por verificar los api_key y api_secret de TextMaster"
 
-#: ../tm-redaction.php:121 ../wp-textmaster.php:62 ../wp-textmaster.php:167
-#: ../wp-textmaster/trunk/wp-textmaster.php:54
-#: ../wp-textmaster/trunk/wp-textmaster.php:159
+#: ../tm-redaction.php:129 ../wp-textmaster.php:63 ../wp-textmaster.php:168
 msgid "Categorie:"
 msgstr "Categoría"
 
-#: ../tm-redaction.php:138 ../tm-settings.php:103 ../wp-textmaster.php:80
-#: ../wp-textmaster.php:184 ../wp-textmaster/trunk/wp-textmaster.php:72
-#: ../wp-textmaster/trunk/wp-textmaster.php:176
-#: ../wp-textmaster/trunk/wp-textmaster.php:486
+#: ../tm-redaction.php:146 ../tm-settings.php:118 ../wp-textmaster.php:81
+#: ../wp-textmaster.php:185
 msgid "Basic"
 msgstr "Básico"
 
-#: ../tm-redaction.php:139 ../tm-settings.php:104 ../wp-textmaster.php:81
-#: ../wp-textmaster.php:185 ../wp-textmaster/trunk/wp-textmaster.php:73
-#: ../wp-textmaster/trunk/wp-textmaster.php:177
-#: ../wp-textmaster/trunk/wp-textmaster.php:487
+#: ../tm-redaction.php:147 ../tm-settings.php:119 ../wp-textmaster.php:82
+#: ../wp-textmaster.php:186
 msgid "Standard"
 msgstr "Estandár"
 
-#: ../tm-redaction.php:140 ../tm-settings.php:105 ../wp-textmaster.php:82
-#: ../wp-textmaster.php:186 ../wp-textmaster/trunk/wp-textmaster.php:74
-#: ../wp-textmaster/trunk/wp-textmaster.php:178
-#: ../wp-textmaster/trunk/wp-textmaster.php:488
+#: ../tm-redaction.php:148 ../tm-settings.php:120 ../wp-textmaster.php:83
+#: ../wp-textmaster.php:187
 msgid "Expert"
 msgstr "Experto"
 
-#: ../tm-redaction.php:141 ../wp-textmaster.php:83 ../wp-textmaster.php:187
-#: ../wp-textmaster/trunk/wp-textmaster.php:75
-#: ../wp-textmaster/trunk/wp-textmaster.php:179
+#: ../tm-redaction.php:149 ../wp-textmaster.php:84 ../wp-textmaster.php:188
 msgid "Niveau de service:"
 msgstr "Nivel de servicio"
 
-#: ../tm-redaction.php:160 ../wp-textmaster.php:102
-#: ../wp-textmaster/trunk/wp-textmaster.php:94
+#: ../tm-redaction.php:168 ../wp-textmaster.php:103
 msgid "Langue :"
 msgstr "Idioma"
 
-#: ../tm-redaction.php:177
+#: ../tm-redaction.php:185
 msgid "+/- 10%"
 msgstr "+/- 10%"
 
-#: ../tm-redaction.php:178
+#: ../tm-redaction.php:186
 msgid "Au moins"
 msgstr "Al menos"
 
-#: ../tm-redaction.php:179
+#: ../tm-redaction.php:187
 msgid "Maximum"
 msgstr "Máximo"
 
-#: ../tm-redaction.php:186
+#: ../tm-redaction.php:194
 msgid "Nombre de mot :"
 msgstr "Nùmero de palabras"
 
-#: ../tm-redaction.php:207
+#: ../tm-redaction.php:215
 msgid "Cet article a &eacute;t&eacute; rédigé."
 msgstr "Este artículo estuvo redactado"
 
-#: ../tm-redaction.php:207 ../wp-textmaster.php:127 ../wp-textmaster.php:252
-#: ../wp-textmaster/trunk/wp-textmaster.php:119
-#: ../wp-textmaster/trunk/wp-textmaster.php:244
+#: ../tm-redaction.php:215 ../wp-textmaster.php:128 ../wp-textmaster.php:253
 msgid "Voir / valider"
 msgstr "Ver / validar"
 
-#: ../tm-redaction.php:207 ../tm-redaction.php:216 ../tm-redaction.php:426
+#: ../tm-redaction.php:215 ../tm-redaction.php:224 ../tm-redaction.php:474
 msgid "Voir / Valider la rédaction"
 msgstr "Ver / validar la redacción"
 
-#: ../tm-redaction.php:212
+#: ../tm-redaction.php:220
 msgid "Cet article est en cours de rédaction."
 msgstr "Este artículo está siendo redactado"
 
-#: ../tm-redaction.php:216
+#: ../tm-redaction.php:224
 msgid "Vous avez d&eacute;j&agrave; valid&eacute; la rédaction de cet article."
 msgstr "Ya has validado la redacción de ese artículo"
 
-#: ../tm-redaction.php:216
+#: ../tm-redaction.php:224
 msgid "Voir la rédaction"
 msgstr "Ver la redacción"
 
-#: ../tm-redaction.php:230
+#: ../tm-redaction.php:238
 msgid "Sauver"
 msgstr "Salvar"
 
-#: ../tm-redaction.php:231
+#: ../tm-redaction.php:239
 msgid "Lancer la rédaction"
 msgstr "Iniciar la redacción"
 
-#: ../tm-redaction.php:255
+#: ../tm-redaction.php:263
 msgid "Mots-clés:"
 msgstr "Palabras-llaves"
 
-#: ../tm-redaction.php:255
+#: ../tm-redaction.php:263
 msgid "séparés par des virgules"
 msgstr "Separados por comas"
 
-#: ../tm-redaction.php:262
+#: ../tm-redaction.php:270
 msgid "A répéter :"
 msgstr "De repetir"
 
-#: ../tm-redaction.php:263
+#: ../tm-redaction.php:271
 msgid "fois"
 msgstr "tiempo"
 
-#: ../tm-redaction.php:265 ../tm-redaction.php:288 ../tm-redaction.php:316
-msgid "Non spécifié"
-msgstr "No especificado"
-
-#: ../tm-redaction.php:266
+#: ../tm-redaction.php:274 ../tm-settings.php:276
 msgid "Populaire"
 msgstr "Popular"
 
-#: ../tm-redaction.php:267
+#: ../tm-redaction.php:275 ../tm-settings.php:277
 msgid "Technique"
 msgstr "Técnico"
 
-#: ../tm-redaction.php:268
+#: ../tm-redaction.php:276 ../tm-settings.php:278
 msgid "Romancé"
 msgstr "Novelado"
 
-#: ../tm-redaction.php:270
+#: ../tm-redaction.php:278 ../tm-settings.php:264
 msgid "Type de Vocabulaire:"
 msgstr "Tipo de vocabulario"
 
-#: ../tm-redaction.php:289
+#: ../tm-redaction.php:297 ../tm-settings.php:307
 msgid "Je > 1ère personne - Singulier"
 msgstr "Yo"
 
-#: ../tm-redaction.php:290
+#: ../tm-redaction.php:298 ../tm-settings.php:308
 msgid "Tu > 2ème Personne - Singulier"
 msgstr "Tù"
 
-#: ../tm-redaction.php:291
+#: ../tm-redaction.php:299 ../tm-settings.php:309
 msgid "Il > 3ème personne - Singulier Masculin"
 msgstr "El"
 
-#: ../tm-redaction.php:292
+#: ../tm-redaction.php:300 ../tm-settings.php:310
 msgid "Elle > 3ème personne - Singulier Féminin"
 msgstr "Ella"
 
-#: ../tm-redaction.php:293
+#: ../tm-redaction.php:301 ../tm-settings.php:311
 msgid "On > 3ème personne - Singulier Neutre"
 msgstr "Uno"
 
-#: ../tm-redaction.php:294
+#: ../tm-redaction.php:302 ../tm-settings.php:312
 msgid "Nous > 1ère personne - Pluriel"
 msgstr "Nosotros - Nosotras"
 
-#: ../tm-redaction.php:295
+#: ../tm-redaction.php:303 ../tm-settings.php:313
 msgid "Vous > 2ème Personne - Pluriel"
 msgstr "Vosotros - Vosotras"
 
-#: ../tm-redaction.php:296
+#: ../tm-redaction.php:304 ../tm-settings.php:314
 msgid "Ils/elles > 3ème Personne - Pluriel"
 msgstr "Ellos - Ellas"
 
-#: ../tm-redaction.php:298
+#: ../tm-redaction.php:306 ../tm-settings.php:295
 msgid "Personne grammaticale:"
 msgstr "Persona gramatical"
 
-#: ../tm-redaction.php:317
+#: ../tm-redaction.php:325 ../tm-settings.php:343
 msgid "Enfants > 13 ans et moins"
 msgstr "Niños > menos de 13 anos"
 
-#: ../tm-redaction.php:318
+#: ../tm-redaction.php:326 ../tm-settings.php:344
 msgid "Adolescent > entre 14 et 18 ans"
 msgstr "Adolescentes > entre 14 y 18 anos"
 
-#: ../tm-redaction.php:319
+#: ../tm-redaction.php:327 ../tm-settings.php:345
 msgid "Jeunes adultes > entre 19 et 29 ans"
 msgstr "Jóvenes adultos > entre 19 y 29 anos"
 
-#: ../tm-redaction.php:320
+#: ../tm-redaction.php:328 ../tm-settings.php:346
 msgid "Adultes > entre 30 et 59 ans"
 msgstr "Adultos > entre 30 y 59 anos"
 
-#: ../tm-redaction.php:321
+#: ../tm-redaction.php:329 ../tm-settings.php:347
 msgid "Séniors > 60 ans et plus"
 msgstr "Ancianos > 60 anos y más"
 
-#: ../tm-redaction.php:323
+#: ../tm-redaction.php:331 ../tm-settings.php:331
 msgid "Public Ciblé:"
 msgstr "Público de destino"
 
-#: ../tm-redaction.php:426
+#: ../tm-redaction.php:474
 #, fuzzy
 msgid "Ce projet a été rédigé, vous pouvez le"
 msgstr "Este proyecto estuvo redactado, puedes validarlo"
 
-#: ../tm-redaction.php:426
+#: ../tm-redaction.php:474
 msgid "valider"
 msgstr "validar"
 
-#: ../tm-redaction.php:426
+#: ../tm-redaction.php:474
 msgid "dès maintenant."
 msgstr "ara."
 
-#: ../tm-redaction.php:504
+#: ../tm-redaction.php:554
 msgid "La rédaction de cet article est lancée."
 msgstr "La redacción de ese artículo ha empezado"
 
-#: ../tm-redaction.php:507
+#: ../tm-redaction.php:557
 msgid "Cet article est déjà en cours de rédaction."
 msgstr "Este artículo ya esta siendo redactado."
 
-#: ../tm-redaction.php:510
+#: ../tm-redaction.php:560
 msgid "La rédaction de cet article est terminée."
 msgstr "La redacción de ese artículo está terminada "
 
-#: ../tm-settings.php:67 ../wp-textmaster/trunk/wp-textmaster.php:462
+#: ../tm-settings.php:77
 msgid "Les paramètres ont été sauvegaradés."
 msgstr "Los parámetros estuvieron salvados"
 
-#: ../tm-settings.php:87
+#: ../tm-settings.php:102
 msgid ""
 "Bonjour,\n"
 "Merci de procéder à la correction du texte. Il est impératif de conserver le "
@@ -337,7 +330,7 @@ msgstr ""
 "Hola. Gracias por corregir este texto. Se precisa conservar el estilo y el "
 "tipo de vocabulario"
 
-#: ../tm-settings.php:96
+#: ../tm-settings.php:111
 msgid ""
 "Bonjour,\n"
 "Merci de procéder à la traduction du texte. Il est impératif de conserver le "
@@ -347,41 +340,39 @@ msgstr ""
 "Hola. Gracias por traducir este texto. Se precisa conservar el estilo y el "
 "tipo de vocabulario"
 
-#: ../tm-settings.php:112 ../wp-textmaster/trunk/wp-textmaster.php:494
+#: ../tm-settings.php:127
 msgid "Paramétrage TextMaster"
 msgstr "Parametraje TextMaster"
 
-#: ../tm-settings.php:118 ../tm-settings.php:119
+#: ../tm-settings.php:133 ../tm-settings.php:134
 msgid "Général"
 msgstr "General"
 
-#: ../tm-settings.php:119
+#: ../tm-settings.php:134
 msgid "Rédaction"
 msgstr "Redacción"
 
-#: ../tm-settings.php:120 ../wp-textmaster.php:147
-#: ../wp-textmaster/trunk/wp-textmaster.php:139
+#: ../tm-settings.php:135 ../wp-textmaster.php:148
 msgid "Relecture"
 msgstr "Relectura"
 
-#: ../tm-settings.php:121 ../wp-textmaster.php:273
-#: ../wp-textmaster/trunk/wp-textmaster.php:265
+#: ../tm-settings.php:136 ../wp-textmaster.php:274
 msgid "Traduction"
 msgstr "Traducción"
 
-#: ../tm-settings.php:129 ../wp-textmaster/trunk/wp-textmaster.php:501
+#: ../tm-settings.php:144
 msgid "Accès API"
 msgstr "API acceso"
 
-#: ../tm-settings.php:133 ../wp-textmaster/trunk/wp-textmaster.php:505
+#: ../tm-settings.php:148
 msgid "Api key: "
 msgstr "API llave"
 
-#: ../tm-settings.php:137 ../wp-textmaster/trunk/wp-textmaster.php:509
+#: ../tm-settings.php:152
 msgid "Api secret: "
 msgstr "API secreto"
 
-#: ../tm-settings.php:142 ../wp-textmaster/trunk/wp-textmaster.php:514
+#: ../tm-settings.php:157
 msgid ""
 "Vous trouverez les api_key et api_secret sur le site <a href=\"http://fr."
 "textmaster.com/?pid=4f1db74529e1673829000009\" target=\"_blank\">TextMaster</"
@@ -390,80 +381,79 @@ msgstr ""
 "Encontrarás los API llaves y API secreto en el sitio TextMaster, en la "
 "rúbrica plugins"
 
-#: ../tm-settings.php:147 ../wp-textmaster/trunk/wp-textmaster.php:519
+#: ../tm-settings.php:162
 msgid "Pour quelles activités "
 msgstr "Para qué actividades"
 
-#: ../tm-settings.php:153
+#: ../tm-settings.php:168
 msgid "Rédaction "
 msgstr "Redacción"
 
-#: ../tm-settings.php:159 ../wp-textmaster/trunk/wp-textmaster.php:525
+#: ../tm-settings.php:174
 msgid "Relecture "
 msgstr "Relectura"
 
-#: ../tm-settings.php:165 ../wp-textmaster/trunk/wp-textmaster.php:532
+#: ../tm-settings.php:180
 msgid "Traduction: "
 msgstr "Traducción"
 
-#: ../tm-settings.php:177
+#: ../tm-settings.php:192
 msgid "Paramètres de rédaction par défaut "
 msgstr "Parámetros de traducción por defecto"
 
-#: ../tm-settings.php:181 ../tm-settings.php:261 ../tm-settings.php:346
-#: ../wp-textmaster/trunk/wp-textmaster.php:542
-#: ../wp-textmaster/trunk/wp-textmaster.php:615
+#: ../tm-settings.php:196 ../tm-settings.php:444 ../tm-settings.php:529
 msgid "Niveau de service: "
 msgstr "Nivel de servicio"
 
-#: ../tm-settings.php:197 ../tm-settings.php:277
-#: ../wp-textmaster/trunk/wp-textmaster.php:558
+#: ../tm-settings.php:212 ../tm-settings.php:460
 msgid "Langue: "
 msgstr "Idioma"
 
-#: ../tm-settings.php:223 ../tm-settings.php:303 ../tm-settings.php:414
-#: ../wp-textmaster/trunk/wp-textmaster.php:584
-#: ../wp-textmaster/trunk/wp-textmaster.php:683
+#: ../tm-settings.php:238 ../tm-settings.php:486 ../tm-settings.php:597
 msgid "Categorie: "
 msgstr "Categoría"
 
-#: ../tm-settings.php:257 ../wp-textmaster/trunk/wp-textmaster.php:538
+#: ../tm-settings.php:365
+msgid "Auteur:"
+msgstr "Autor:"
+
+#: ../tm-settings.php:398 ../wp-textmaster.php:44
+msgid "Mise en page"
+msgstr "Confección"
+
+#: ../tm-settings.php:440
 msgid "Paramètres de relecture par défaut "
 msgstr "Parámetros de relectura por defecto"
 
-#: ../tm-settings.php:330 ../tm-settings.php:441
+#: ../tm-settings.php:513 ../tm-settings.php:624
 msgid "Message de briefing: "
 msgstr "Mensaje de briefing"
 
-#: ../tm-settings.php:343 ../wp-textmaster/trunk/wp-textmaster.php:612
+#: ../tm-settings.php:526
 msgid "Paramètres de traduction par défaut "
 msgstr "Parámetros de traducción por defecto"
 
-#: ../tm-settings.php:362 ../wp-textmaster/trunk/wp-textmaster.php:631
+#: ../tm-settings.php:545
 msgid "Langue source: "
 msgstr "Idioma de origen"
 
-#: ../tm-settings.php:388 ../wp-textmaster/trunk/wp-textmaster.php:657
+#: ../tm-settings.php:571
 msgid "Langue destination: "
 msgstr "Idioma de destino"
 
-#: ../tm-settings.php:452 ../wp-textmaster/trunk/wp-textmaster.php:711
+#: ../tm-settings.php:635
 msgid "Sauvegarder les paramtètres"
 msgstr "Salvar los parámetros"
 
-#: ../wp-textmaster.php:26 ../wp-textmaster/trunk/wp-textmaster.php:23
+#: ../wp-textmaster.php:26
 msgid "Merci d'installer l'extension crul pour php."
 msgstr "Gracias por instalar la extensión curl para php"
 
 #: ../wp-textmaster.php:33 ../wp-textmaster.php:34
-#: ../wp-textmaster/trunk/wp-textmaster.php:30
-#: ../wp-textmaster/trunk/wp-textmaster.php:31
 msgid "TextMaster Relecture"
 msgstr "TextMaster relectura"
 
 #: ../wp-textmaster.php:38 ../wp-textmaster.php:39
-#: ../wp-textmaster/trunk/wp-textmaster.php:35
-#: ../wp-textmaster/trunk/wp-textmaster.php:36
 msgid "TextMaster traduction"
 msgstr "TextMaster traducción"
 
@@ -475,89 +465,83 @@ msgstr "Iniciar la redacción"
 msgid "Options"
 msgstr "Opciones"
 
-#: ../wp-textmaster.php:44
-msgid "Mise en page"
-msgstr "Confección"
+#: ../wp-textmaster.php:45
+msgid "Auteurs"
+msgstr "Autores"
 
-#: ../wp-textmaster.php:127 ../wp-textmaster/trunk/wp-textmaster.php:119
+#: ../wp-textmaster.php:128
 msgid "Cet article a &eacute;t&eacute; relu."
 msgstr "Este artículo estuvo releido"
 
-#: ../wp-textmaster.php:127 ../wp-textmaster.php:136
-#: ../wp-textmaster/trunk/wp-textmaster.php:119
-#: ../wp-textmaster/trunk/wp-textmaster.php:128
+#: ../wp-textmaster.php:128 ../wp-textmaster.php:137
 msgid "Voir / Valider la relecture"
 msgstr "Ver / validar la relectura"
 
-#: ../wp-textmaster.php:132 ../wp-textmaster/trunk/wp-textmaster.php:124
+#: ../wp-textmaster.php:133
 msgid "Cet article est en cours de relecture."
 msgstr "Este artículo esta siendo releido"
 
-#: ../wp-textmaster.php:136 ../wp-textmaster/trunk/wp-textmaster.php:128
+#: ../wp-textmaster.php:137
 msgid "Vous avez d&eacute;j&agrave; valid&eacute; la relecture de cet article."
 msgstr "Ya has validado la relectura de este artículo"
 
-#: ../wp-textmaster.php:136 ../wp-textmaster/trunk/wp-textmaster.php:128
+#: ../wp-textmaster.php:137
 msgid "Voir la relecture"
 msgstr "Ver la relectura"
 
-#: ../wp-textmaster.php:143 ../wp-textmaster.php:269
-#: ../wp-textmaster/trunk/wp-textmaster.php:135
-#: ../wp-textmaster/trunk/wp-textmaster.php:261
+#: ../wp-textmaster.php:144 ../wp-textmaster.php:270
 msgid "Merci de sauvegarder cet article."
 msgstr "Gracias por salvar este artículo"
 
-#: ../wp-textmaster.php:206 ../wp-textmaster/trunk/wp-textmaster.php:198
+#: ../wp-textmaster.php:207
 msgid "Langue d'origine :"
 msgstr "Idioma de origen"
 
-#: ../wp-textmaster.php:223 ../wp-textmaster/trunk/wp-textmaster.php:215
+#: ../wp-textmaster.php:224
 msgid "Traduction en :"
 msgstr "Traducir a "
 
-#: ../wp-textmaster.php:252 ../wp-textmaster/trunk/wp-textmaster.php:244
+#: ../wp-textmaster.php:253
 msgid "Cet article a &eacute;t&eacute; traduit."
 msgstr "Este artículo estuvo traducido"
 
-#: ../wp-textmaster.php:252 ../wp-textmaster.php:261
-#: ../wp-textmaster/trunk/wp-textmaster.php:244
-#: ../wp-textmaster/trunk/wp-textmaster.php:253
+#: ../wp-textmaster.php:253 ../wp-textmaster.php:262
 msgid "Voir / Valider la traduction"
 msgstr "Ver / validar la traducción"
 
-#: ../wp-textmaster.php:257 ../wp-textmaster/trunk/wp-textmaster.php:249
+#: ../wp-textmaster.php:258
 msgid "Cet article est en cours de traduction."
 msgstr "Este artículo está siendo traducido"
 
-#: ../wp-textmaster.php:261 ../wp-textmaster/trunk/wp-textmaster.php:253
+#: ../wp-textmaster.php:262
 msgid ""
 "Vous avez d&eacute;j&agrave; valid&eacute; la traduction de cet article."
 msgstr "Ya has validado la traducción de este artículo"
 
-#: ../wp-textmaster.php:261 ../wp-textmaster/trunk/wp-textmaster.php:253
+#: ../wp-textmaster.php:262
 msgid "Voir la traduction"
 msgstr "Ver la traducción"
 
-#: ../wp-textmaster.php:347 ../wp-textmaster/trunk/wp-textmaster.php:336
+#: ../wp-textmaster.php:348
 msgid "La relecture de cet article est lancée."
 msgstr "La relectura de este artículo ya ha empezado"
 
-#: ../wp-textmaster.php:350 ../wp-textmaster/trunk/wp-textmaster.php:339
+#: ../wp-textmaster.php:351
 msgid "Cet article est déjà en cours de relecture."
 msgstr "Este artículo ya está siendo releido"
 
-#: ../wp-textmaster.php:353 ../wp-textmaster/trunk/wp-textmaster.php:342
+#: ../wp-textmaster.php:354
 msgid "La relecture de cet article est terminée."
 msgstr "La relectura de este artículo esta terminada"
 
-#: ../wp-textmaster.php:413 ../wp-textmaster/trunk/wp-textmaster.php:401
+#: ../wp-textmaster.php:414
 msgid "La traduction de cet article est lancée."
 msgstr "La traducción de este artículo ha empezado"
 
-#: ../wp-textmaster.php:416 ../wp-textmaster/trunk/wp-textmaster.php:404
+#: ../wp-textmaster.php:417
 msgid "Cet article est déjà en cours de traduction."
 msgstr "Este artículo ya está siendo traducido"
 
-#: ../wp-textmaster.php:419 ../wp-textmaster/trunk/wp-textmaster.php:407
+#: ../wp-textmaster.php:420
 msgid "La traduction de cet article est terminée."
 msgstr "La traducción de ese artículo está acabada"
