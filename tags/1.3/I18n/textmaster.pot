@@ -1,0 +1,182 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: wp-texmaster\n"
+"POT-Creation-Date: 2012-10-23 13:38+0100\n"
+"PO-Revision-Date: 2012-10-23 13:39+0100\n"
+"Last-Translator: T. Perrin <lupuz.yonderboy@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e;_c\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../approuve_doc.php:59
+msgid "Valider"
+msgstr ""
+
+#: ../approuve_doc.php:61
+msgid ""
+"En validant ce travail, il sera appouvé sur Textmaster et copier comme "
+"contenu de votre article. Il vous faudra sauvegarder ce dernier pour "
+"utiliser ce contenu."
+msgstr ""
+
+#: ../wp-textmaster.php:23
+msgid "Merci d'installer l'extension crul pour php."
+msgstr ""
+
+#: ../wp-textmaster.php:44 ../wp-textmaster.php:104 ../wp-textmaster.php:416
+msgid "Merci de v&eacute;rifier les api_key et api_secret de Textmaster"
+msgstr ""
+
+#: ../wp-textmaster.php:50 ../wp-textmaster.php:109
+msgid "Categorie:"
+msgstr ""
+
+#: ../wp-textmaster.php:69
+msgid "Cet article a &eacute;t&eacute; relu."
+msgstr ""
+
+#: ../wp-textmaster.php:69 ../wp-textmaster.php:156
+msgid "Voir / valider"
+msgstr ""
+
+#: ../wp-textmaster.php:69 ../wp-textmaster.php:78
+msgid "Voir / Valider la relecture"
+msgstr ""
+
+#: ../wp-textmaster.php:74
+msgid "Cet article est en cours de relecture."
+msgstr ""
+
+#: ../wp-textmaster.php:78
+msgid "Vous avez d&eacute;j&agrave; valid&eacute; la relecture de cet article."
+msgstr ""
+
+#: ../wp-textmaster.php:78
+msgid "Voir la relecture"
+msgstr ""
+
+#: ../wp-textmaster.php:85 ../wp-textmaster.php:173
+msgid "Merci de sauvegarder cet article."
+msgstr ""
+
+#: ../wp-textmaster.php:89
+msgid "Relecture"
+msgstr ""
+
+#: ../wp-textmaster.php:122
+msgid "Langue d'origine :"
+msgstr ""
+
+#: ../wp-textmaster.php:133
+msgid "Traduction en :"
+msgstr ""
+
+#: ../wp-textmaster.php:156
+msgid "Cet article a &eacute;t&eacute; traduit."
+msgstr ""
+
+#: ../wp-textmaster.php:156 ../wp-textmaster.php:165
+msgid "Voir / Valider la traduction"
+msgstr ""
+
+#: ../wp-textmaster.php:161
+msgid "Cet article est en cours de traduction."
+msgstr ""
+
+#: ../wp-textmaster.php:165
+msgid ""
+"Vous avez d&eacute;j&agrave; valid&eacute; la traduction de cet article."
+msgstr ""
+
+#: ../wp-textmaster.php:165
+msgid "Voir la traduction"
+msgstr ""
+
+#: ../wp-textmaster.php:177
+msgid "Traduction"
+msgstr ""
+
+#: ../wp-textmaster.php:244
+msgid "La relecture de cet article est lancée."
+msgstr ""
+
+#: ../wp-textmaster.php:247
+msgid "Cet article est déjà en cours de relecture."
+msgstr ""
+
+#: ../wp-textmaster.php:250
+msgid "La relecture de cet article est terminée."
+msgstr ""
+
+#: ../wp-textmaster.php:307
+msgid "La traduction de cet article est lancée."
+msgstr ""
+
+#: ../wp-textmaster.php:310
+msgid "Cet article est déjà en cours de traduction."
+msgstr ""
+
+#: ../wp-textmaster.php:313
+msgid "La traduction de cet article est terminée."
+msgstr ""
+
+#: ../wp-textmaster.php:354
+msgid "Les paramètres ont été sauvegaradés."
+msgstr ""
+
+#: ../wp-textmaster.php:372
+msgid "Paramétrage Textmaster"
+msgstr ""
+
+#: ../wp-textmaster.php:378
+msgid "Api key: "
+msgstr ""
+
+#: ../wp-textmaster.php:382
+msgid "Api secret: "
+msgstr ""
+
+#: ../wp-textmaster.php:387
+msgid ""
+"Vous trouverez les api_key et api_secret sur le site <a href=\"http://fr."
+"textmaster.com/?pid=4f1db74529e1673829000009\" target=\"_blank\">Textmaster</"
+"a>, dans la rubrique plugins."
+msgstr ""
+
+#: ../wp-textmaster.php:391
+msgid "Niveau de langage: "
+msgstr ""
+
+#: ../wp-textmaster.php:395
+msgid "Basic"
+msgstr ""
+
+#: ../wp-textmaster.php:396
+msgid "Normal"
+msgstr ""
+
+#: ../wp-textmaster.php:397
+msgid "Expert"
+msgstr ""
+
+#: ../wp-textmaster.php:411
+msgid "Langue pour les relectures: "
+msgstr ""
+
+#: ../wp-textmaster.php:438
+msgid "Utiliser Texmaster relecture: "
+msgstr ""
+
+#: ../wp-textmaster.php:445
+msgid "Utiliser Texmaster traduction: "
+msgstr ""
+
+#: ../wp-textmaster.php:453
+msgid "Sauvegarder les paramtètres"
+msgstr ""
