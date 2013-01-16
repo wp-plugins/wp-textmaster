@@ -1,10 +1,10 @@
-=== WP TextMaster ===
+﻿=== WP TextMaster ===
 Contributors: lupuz
 Donate link:
 Tags: translation, Proofread, proofreading, copywriting, TextMaster
 Requires at least: 3.3
 Tested up to: 3.5
-Stable tag: 1.2
+Stable tag: 1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,6 +29,8 @@ Ce plugin permet d'utiliser les services de r&eacute;daction, traduction et de r
 
 
 == Changelog ==
+
+v 1.4 fixes
 
 v 1.3 Add TextMaster Author for copywriting and some défaults params
 
