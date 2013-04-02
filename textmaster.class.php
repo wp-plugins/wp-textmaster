@@ -134,6 +134,7 @@ class textmaster_api{
 	function makeProject($name, $type, $language_from='fr',  $language_to='fr', $category, $project_briefing, $language_level, $work_template='Default', $vocabulary_type ='not_specified', $grammatical_person ='not_specified', $target_reader_groups = 'not_specified',$authors = ''){
 
 		$name = str_replace('&raquo;', '"',$name);
+		$name = str_replace('&laquo;', '"',$name);
 		$name = str_replace('&nbsp;', ' ',$name);
 		$project['name'] = str_replace('&lsquo;', "'",$name);
 
@@ -258,6 +259,7 @@ class textmaster_api{
 	function addDocument($idProjet, $title, $word_count, $original_content='', $word_count_rule ='1', $keyword_list = '', $keywords_repeat_count = ''){
 
 		$title = str_replace('&raquo;', '"',$title);
+		$title = str_replace('&laquo;', '"',$title);
 		$title = str_replace('&nbsp;', ' ',$title);
 		$document['title'] = str_replace('&lsquo;', "'",$title);
 		$document['word_count'] = $word_count;
