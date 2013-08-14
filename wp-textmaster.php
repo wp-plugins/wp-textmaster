@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: TextMaster plugin
-Plugin URI: http://www.c1blog.com/plugin-textmaster-pour-wordpress/
+Plugin URI: http://fr.app.textmaster.com/developpeur/applications
 Description: Plugin for TextMaster copywriting, readproof and translation services
-Author: Textmaster
+Author: Textmaster, TextMaster SA
 Version: 0.4
 Author URI: http://wwwtextmaster.com
 Text Domain: textmaster
@@ -30,13 +30,25 @@ function dependent_activate()
 function texmaster_add_metaboxes() {
 	if (get_option('textmaster_useReadproof') == 'Y')
 	{
-		add_meta_box('wp_textmaster_readproof', __('TextMaster Relecture', 'textmaster'), 'wp_texmaster_readproof_metaboxes', 'post', 'side', 'default');
-		add_meta_box('wp_textmaster_readproof', __('TextMaster Relecture', 'textmaster'), 'wp_texmaster_readproof_metaboxes', 'page', 'side', 'default');
+//		add_meta_box('wp_textmaster_readproof', __('TextMaster Relecture', 'textmaster'), 'wp_texmaster_readproof_metaboxes', 'post', 'side', 'default');
+//		add_meta_box('wp_textmaster_readproof', __('TextMaster Relecture', 'textmaster'), 'wp_texmaster_readproof_metaboxes', 'page', 'side', 'default');
+
+		$post_types = get_post_types();
+		foreach ( $post_types as $post_type )
+			if ($post_type != 'textmaster_redaction')
+				add_meta_box('wp_textmaster_readproof', __('TextMaster Relecture', 'textmaster'), 'wp_texmaster_readproof_metaboxes',  $post_type, 'side', 'default');
+
 	}
 	if (get_option('textmaster_useTraduction') == 'Y')
 	{
-		add_meta_box('wp_textmaster_traduction', __('TextMaster traduction', 'textmaster'), 'wp_texmaster_traduction_metaboxes', 'post', 'side', 'default');
-		add_meta_box('wp_textmaster_traduction', __('TextMaster traduction', 'textmaster'), 'wp_texmaster_traduction_metaboxes', 'page', 'side', 'default');
+//		add_meta_box('wp_textmaster_traduction', __('TextMaster traduction', 'textmaster'), 'wp_texmaster_traduction_metaboxes', 'post', 'side', 'default');
+//		add_meta_box('wp_textmaster_traduction', __('TextMaster traduction', 'textmaster'), 'wp_texmaster_traduction_metaboxes', 'page', 'side', 'default');
+
+		$post_types = get_post_types();
+		foreach ( $post_types as $post_type )
+			if ($post_type != 'textmaster_redaction')
+				add_meta_box('wp_textmaster_traduction', __('TextMaster Traduction', 'textmaster'), 'wp_texmaster_traduction_metaboxes', $post_type, 'side', 'default');
+
 	}
 
 	add_meta_box('wp_textmaster_redaction_defaut', __('Lancer la rédation', 'textmaster'), 'wp_texmaster_redaction_defaut_metaboxes', 'textmaster_redaction', 'side', 'default');
@@ -321,12 +333,15 @@ function callback_readproof(){
 	if ($idProjet == '' || $checkStatut == 'canceled')
 	{
 		$retProjet = $tApi->makeProject(get_the_title($postID), 'proofreading', $language, $language, $categorie, get_option('textmaster_readproofBriefing'), $languageLevel);
-		$idProjet = $retProjet['projects']['id'];
+		if (is_array($retProjet))
+			$idProjet = $retProjet['projects']['id'];
+		else
+			$ret = utf8_decode(__('Erreur lors de la création de votre projet ('.$retProjet.')' ,'textmaster'));
 	}
 
 
 	// nouveau projet
-	if (is_array($retProjet))
+	if (is_array($retProjet) ||  $idProjet != '')
 	{
 		//	$ret = serialize($ret);
 		update_post_meta($postID, 'textmasterId', $idProjet);
@@ -340,10 +355,9 @@ function callback_readproof(){
 		$retLaunch = $tApi->launchProject($idProjet);
 		$retLaunch = json_decode($retLaunch, TRUE);
 		if (array_key_exists('error',$retLaunch))
-		{
-
 			$ret = 'Error '.utf8_decode($retLaunch['error'][0]) ;
-		}
+		else if (array_key_exists('credits',$retLaunch))
+			$ret = 'Error '.utf8_decode($retLaunch['credits'][0]);
 		else
 			$ret = utf8_decode(__('La relecture de cet article est lancée.','textmaster'));
 	}
@@ -388,11 +402,14 @@ function callback_traduction(){
 	{
 		$retProjet = $tApi->makeProject(get_the_title($postID), 'translation', $langOrigine, $langDestination, $categorie, get_option('textmaster_traductionBriefing'), $languageLevel);
 		//	print_r($retProjet);
-		$idProjet = $retProjet['projects']['id'];
+		if (is_array($retProjet))
+			$idProjet = $retProjet['projects']['id'];
+		else
+			$ret = utf8_decode(__('Erreur lors de la création de votre projet ('.$retProjet.')' ,'textmaster'));
 	}
 
 	// nouveau projet
-	if (is_array($retProjet))
+	if (is_array($retProjet) ||  $idProjet != '')
 	{
 		//	$ret = serialize($ret);
 		update_post_meta($postID, 'textmasterIdTrad', $idProjet);
@@ -405,11 +422,11 @@ function callback_traduction(){
 	if ($result == 'paused' || $result == 'in_creation') {
 		$retLaunch = $tApi->launchProject($idProjet);
 		$retLaunch = json_decode($retLaunch, TRUE);
-		if (array_key_exists('error',$retLaunch))
-		{
 
+		if (array_key_exists('error',$retLaunch) )
 			$ret = 'Error '.utf8_decode($retLaunch['error'][0]);
-		}
+		else if (array_key_exists('credits',$retLaunch))
+			$ret = 'Error '.utf8_decode($retLaunch['credits'][0]);
 		else
 			$ret = utf8_decode(__('La traduction de cet article est lancée.','textmaster'));
 	}

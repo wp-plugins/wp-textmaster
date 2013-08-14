@@ -1,4 +1,4 @@
-<?
+<?php
 include "../../../wp-load.php";
 
 if ($_GET['valide'] == 1) {
@@ -107,6 +107,6 @@ _e('En validant ce travail, il sera appouvé sur Textmaster et copier comme cont
 </div>
 </body>
 </html>
-<?
+<?php
 }
 ?>

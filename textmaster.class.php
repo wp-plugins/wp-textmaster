@@ -1,9 +1,17 @@
 <?php
 
+
 /*
 * API textmaster
 * V 0.4
 */
+
+if (!defined('PHP_VERSION_ID')) {
+	$version = explode('.',PHP_VERSION);
+
+	define('PHP_VERSION_ID', ($version[0] * 10000 + $version[1] * 100 + $version[2]));
+}
+
 class textmaster_api{
 
 	var $keyapi ='';
@@ -275,7 +283,12 @@ class textmaster_api{
 		$ch = $this->init();
 
 		curl_setopt($ch, CURLOPT_POST, 1);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(array('document' => $document), JSON_HEX_APOS | JSON_HEX_QUOT ));
+		if (PHP_VERSION_ID > 50300) {
+			curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(array('document' => $document), JSON_HEX_APOS | JSON_HEX_QUOT ));
+		}
+	 	else {
+			curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(array('document' => $document)));
+		}
 		$url = $this->urlAPi . '/projects/'.$idProjet.'/documents';
 	//	echo $url;
 		curl_setopt($ch, CURLOPT_URL, $url );
