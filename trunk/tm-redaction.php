@@ -235,12 +235,12 @@ function wp_texmaster_redaction_defaut_metaboxes(){
 		<div id="publishing-action">
 		<img src="/wp-admin/images/wpspin_light.gif" class="ajax-loading" id="ajax-loading" alt="">
 		<input name="original_publish" type="hidden" id="original_publish" value="Publier">
-		<input type="submit" name="publish" id="publish" class="button-primary" value="<? echo __('Sauver','textmaster') ?>" tabindex="5" accesskey="p">
-		<br/><br/><input name="redaction" type="button" class="button button-highlighted" id="redaction" tabindex="6" accesskey="r" value="<? echo __('Lancer la rédaction','textmaster') ?>" <? echo $disableRedaction ?>>
+		<input type="submit" name="publish" id="publish" class="button-primary" value="<?php echo __('Sauver','textmaster') ?>" tabindex="5" accesskey="p">
+		<br/><br/><input name="redaction" type="button" class="button button-highlighted" id="redaction" tabindex="6" accesskey="r" value="<?php echo __('Lancer la rédaction','textmaster') ?>" <?php echo $disableRedaction ?>>
 		</div>
 		</div>
 		<div style="clear:both"></div>
-<?
+<?php
 		echo '<br/><div id="resultTextmaster">'.$txtRet.'</div><br/>';
 	}
 }
@@ -536,7 +536,7 @@ function callback_redaction(){
 		}
 
 		// nouveau projet
-		if (is_array($retProjet))
+		if (is_array($retProjet) ||  $idProjet != '')
 		{
 			//	$ret = serialize($ret);
 			update_post_meta($postID, 'textmasterId', $idProjet);
@@ -549,10 +549,9 @@ function callback_redaction(){
 			$retLaunch = $tApi->launchProject($idProjet);
 			$retLaunch = json_decode($retLaunch, TRUE);
 			if (array_key_exists('error',$retLaunch))
-			{
-
 				$ret = 'Error '.utf8_decode($retLaunch['error'][0]) ;
-			}
+			else if (array_key_exists('credits',$retLaunch))
+				$ret = 'Error '.utf8_decode($retLaunch['credits'][0]);
 			else
 				$ret = utf8_decode(__('La rédaction de cet article est lancée.','textmaster'));
 		}

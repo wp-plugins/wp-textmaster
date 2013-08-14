@@ -130,10 +130,10 @@ function texmaster_admin() {
     <form name="textmaster_form" method="post" action="<?php echo str_replace( '%7E', '~', $_SERVER['REQUEST_URI']); ?>">
         <input type="hidden" name="textmaster_hidden" value="Y">
         <ul class="tabs">
-		<li class="t1"><a class="t1 tab" title="<?php _e('Général','textmaster'); ?>"><? _e('Général','textmaster')?></a></li>
-		<li class="t2"><a class="t2 tab" title="<?php _e('Général','textmaster'); ?>"><? _e('Rédaction','textmaster')?></a></li>
-		<li class="t3"><a class="t3 tab" title="<?php _e('Relecture','textmaster'); ?>"><? _e('Relecture','textmaster')?></a></li>
-		<li class="t4"><a class="t4 tab" title="<?php _e('Traduction','textmaster'); ?>"><? _e('Traduction','textmaster')?></a></li>
+		<li class="t1"><a class="t1 tab" title="<?php _e('Général','textmaster'); ?>"><?php_e('Général','textmaster')?></a></li>
+		<li class="t2"><a class="t2 tab" title="<?php _e('Général','textmaster'); ?>"><?php _e('Rédaction','textmaster')?></a></li>
+		<li class="t3"><a class="t3 tab" title="<?php _e('Relecture','textmaster'); ?>"><?php _e('Relecture','textmaster')?></a></li>
+		<li class="t4"><a class="t4 tab" title="<?php _e('Traduction','textmaster'); ?>"><?php_e('Traduction','textmaster')?></a></li>
 		</ul>
 
 		<!-- l'onglet général-->
@@ -211,7 +211,7 @@ function texmaster_admin() {
 	        <tr valign="top">
 	        <th scope="row"><?php _e("Langue: ",'textmaster' ); ?></th>
 	        <td>
-	        <?
+	        <?php
 	if ($languages['message'] != '') {
 		_e('Merci de v&eacute;rifier les api_key et api_secret de TextMaster','textmaster');
 	}
@@ -229,7 +229,7 @@ function texmaster_admin() {
 		}
 		?>
 				</select>
-				<?
+				<?php
 	}
 	?>
 			</td>
@@ -237,7 +237,7 @@ function texmaster_admin() {
 	 		<tr valign="top">
 	        <th scope="row"><?php _e("Categorie: ",'textmaster' ); ?></th>
 	        <td>
-		 	<?
+		 	<?php
 	if ($categories['message'] != '') {
 		_e('Merci de v&eacute;rifier les api_key et api_secret de TextMaster','textmaster');
 	}
@@ -255,7 +255,7 @@ function texmaster_admin() {
 		}
 		?>
 				</select>
-				<?
+				<?php
 	}
 	?>
         </td>
@@ -263,7 +263,7 @@ function texmaster_admin() {
  		<tr valign="top">
         <th scope="row"><?php _e("Type de Vocabulaire:",'textmaster' ); ?></th>
         <td>
-	 	<?
+	 	<?php
 		if ($categories['message'] != '') {
 			_e('Merci de v&eacute;rifier les api_key et api_secret de TextMaster','textmaster');
 		}
@@ -286,7 +286,7 @@ function texmaster_admin() {
 			}
 			?>
 					</select>
-					<?
+					<?php
 		}
 		?>
         </td>
@@ -294,7 +294,7 @@ function texmaster_admin() {
  		<tr valign="top">
         <th scope="row"><?php _e("Personne grammaticale:",'textmaster' ); ?></th>
         <td>
-	 	<?
+	 	<?php
 		if ($categories['message'] != '') {
 			_e('Merci de v&eacute;rifier les api_key et api_secret de TextMaster','textmaster');
 		}
@@ -322,7 +322,7 @@ function texmaster_admin() {
 			}
 			?>
 						</select>
-						<?
+						<?php
 		}
 		?>
         </td>
@@ -330,7 +330,7 @@ function texmaster_admin() {
 		<tr valign="top">
         <th scope="row"><?php _e("Public Ciblé:",'textmaster' ); ?></th>
         <td>
-	 	<?
+	 	<?php
 		if ($categories['message'] != '') {
 			_e('Merci de v&eacute;rifier les api_key et api_secret de TextMaster','textmaster');
 		}
@@ -356,7 +356,7 @@ function texmaster_admin() {
 			}
 			?>
 							</select>
-							<?
+							<?php
 		}
 		?>
         </td>
@@ -364,7 +364,7 @@ function texmaster_admin() {
 		<tr valign="top">
         <th scope="row"><?php _e("Auteur:",'textmaster' ); ?></th>
         <td>
-	 	<?
+	 	<?php
 		if ($categories['message'] != '') {
 			_e('Merci de v&eacute;rifier les api_key et api_secret de TextMaster','textmaster');
 		}
@@ -389,7 +389,7 @@ function texmaster_admin() {
 			}
 			?>
 								</select>
-								<?
+								<?php
 		}
 		?>
         </td>
@@ -459,7 +459,7 @@ function texmaster_admin() {
         <tr valign="top">
         <th scope="row"><?php _e("Langue: ",'textmaster' ); ?></th>
         <td>
-        <?
+        <?php
 	if ($languages['message'] != '') {
 		_e('Merci de v&eacute;rifier les api_key et api_secret de TextMaster','textmaster');
 	}
@@ -477,7 +477,7 @@ function texmaster_admin() {
 		}
 		?>
 		</select>
-		<?
+		<?php
 	}
 	?>
 		</td>
@@ -485,7 +485,7 @@ function texmaster_admin() {
  		<tr valign="top">
         <th scope="row"><?php _e("Categorie: ",'textmaster' ); ?></th>
         <td>
-	 	<?
+	 	<?php
 	if ($categories['message'] != '') {
 		_e('Merci de v&eacute;rifier les api_key et api_secret de TextMaster','textmaster');
 	}
@@ -503,7 +503,7 @@ function texmaster_admin() {
 		}
 		?>
 			</select>
-			<?
+			<?php
 	}
 	?>
         </td>
@@ -544,7 +544,7 @@ function texmaster_admin() {
        	<tr valign="top">
         <th scope="row"><?php _e("Langue source: ",'textmaster' ); ?></th>
         <td>
-        <?
+        <?php
 	if ($languages['message'] != '') {
 		_e('Merci de v&eacute;rifier les api_key et api_secret de TextMaster','textmaster');
 	}
@@ -562,7 +562,7 @@ function texmaster_admin() {
 		}
 		?>
 			</select>
-			<?
+			<?php
 	}
 	?>
 		</td>
@@ -570,7 +570,7 @@ function texmaster_admin() {
    		<tr valign="top">
         <th scope="row"><?php _e("Langue destination: ",'textmaster' ); ?></th>
         <td>
-        <?
+        <?php
 	if ($languages['message'] != '') {
 		_e('Merci de v&eacute;rifier les api_key et api_secret de TextMaster','textmaster');
 	}
@@ -588,7 +588,7 @@ function texmaster_admin() {
 		}
 		?>
 			</select>
-			<?
+			<?php
 	}
 	?>
 		</td>
@@ -596,7 +596,7 @@ function texmaster_admin() {
 		<tr valign="top">
         <th scope="row"><?php _e("Categorie: ",'textmaster' ); ?></th>
         <td>
-	 	<?
+	 	<?php
 	if ($categories['message'] != '') {
 		_e('Merci de v&eacute;rifier les api_key et api_secret de TextMaster','textmaster');
 	}
@@ -614,7 +614,7 @@ function texmaster_admin() {
 		}
 		?>
 				</select>
-				<?
+				<?php
 	}
 	?>
         </td>
@@ -636,7 +636,7 @@ function texmaster_admin() {
         </p>
     </form>
     </div>
-	<?
+	<?php
 }
 
 ?>
