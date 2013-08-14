@@ -1,5 +1,5 @@
 ﻿=== WP TextMaster ===
-Contributors: lupuz
+Contributors: lupuz, TextMaster SA
 Donate link:
 Tags: translation, Proofread, proofreading, copywriting, TextMaster
 Requires at least: 3.3
