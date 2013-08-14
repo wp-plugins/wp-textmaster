@@ -4,7 +4,7 @@ Donate link:
 Tags: translation, Proofread, proofreading, copywriting, TextMaster
 Requires at least: 3.3
 Tested up to: 3.5
-Stable tag: 0.4.2
+Stable tag: 0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,5 +32,5 @@ Ce plugin permet d'utiliser les services de r&eacute;daction, traduction et de r
 
 V 0.4 first release
 V 0.4.1 some fix
-V 0.4.2 fix "short_open_tag = Off" bug
+V 0.5 fix "short_open_tag = Off" bug
 == Upgrade notice ==
