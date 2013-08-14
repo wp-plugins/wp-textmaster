@@ -3,7 +3,7 @@ Contributors: lupuz, TextMaster SA
 Donate link:
 Tags: translation, Proofread, proofreading, copywriting, TextMaster
 Requires at least: 3.3
-Tested up to: 3.5
+Tested up to: 3.6
 Stable tag: 0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
