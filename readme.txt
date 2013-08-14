@@ -30,7 +30,11 @@ Ce plugin permet d'utiliser les services de r&eacute;daction, traduction et de r
 
 == Changelog ==
 
-V 0.4 first release
-V 0.4.1 some fix
-V 0.5 fix "short_open_tag = Off" bug
+= 0.5 =
+* fix "short_open_tag = Off" bug
+
+= 0.4 =
+* first release
+
+
 == Upgrade notice ==
