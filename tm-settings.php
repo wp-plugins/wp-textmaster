@@ -130,10 +130,10 @@ function texmaster_admin() {
     <form name="textmaster_form" method="post" action="<?php echo str_replace( '%7E', '~', $_SERVER['REQUEST_URI']); ?>">
         <input type="hidden" name="textmaster_hidden" value="Y">
         <ul class="tabs">
-		<li class="t1"><a class="t1 tab" title="<?php _e('Général','textmaster'); ?>"><?php_e('Général','textmaster')?></a></li>
+		<li class="t1"><a class="t1 tab" title="<?php _e('Général','textmaster'); ?>"><?php _e('Général','textmaster')?></a></li>
 		<li class="t2"><a class="t2 tab" title="<?php _e('Général','textmaster'); ?>"><?php _e('Rédaction','textmaster')?></a></li>
 		<li class="t3"><a class="t3 tab" title="<?php _e('Relecture','textmaster'); ?>"><?php _e('Relecture','textmaster')?></a></li>
-		<li class="t4"><a class="t4 tab" title="<?php _e('Traduction','textmaster'); ?>"><?php_e('Traduction','textmaster')?></a></li>
+		<li class="t4"><a class="t4 tab" title="<?php _e('Traduction','textmaster'); ?>"><?php _e('Traduction','textmaster')?></a></li>
 		</ul>
 
 		<!-- l'onglet général-->
