@@ -4,8 +4,8 @@ Plugin Name: TextMaster plugin
 Plugin URI: http://fr.app.textmaster.com/developpeur/applications
 Description: Plugin for TextMaster copywriting, readproof and translation services
 Author: Textmaster, TextMaster SA
-Version: 0.5
-Author URI: http://wwwtextmaster.com
+Version: 0.5.1
+Author URI: http://www.textmaster.com
 Text Domain: textmaster
 */
 
