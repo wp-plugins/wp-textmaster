@@ -4,7 +4,7 @@ Plugin Name: TextMaster plugin
 Plugin URI: http://fr.app.textmaster.com/developpeur/applications
 Description: Plugin for TextMaster copywriting, readproof and translation services
 Author: Textmaster, TextMaster SA
-Version: 0.5.1
+Version: 0.5.2
 Author URI: http://www.textmaster.com
 Text Domain: textmaster
 */
@@ -445,6 +445,25 @@ function callback_traduction(){
 
 }
 
+add_filter('plugin_action_links', 'texmaster_plugin_action_links', 10, 2);
+
+function texmaster_plugin_action_links($links, $file) {
+	static $this_plugin;
+
+	if (!$this_plugin) {
+		$this_plugin = plugin_basename(__FILE__);
+	}
+
+	if ($file == $this_plugin) {
+		// The "page" query string value must be equal to the slug
+		// of the Settings admin page we defined earlier, which in
+		// this case equals "myplugin-settings".
+		$settings_link = '<a href="' . get_bloginfo('wpurl') . '/wp-admin/options-general.php?page=Textmaster">'.echo __( 'Paramétrage TextMaster' ,'textmaster').'</a>';
+		array_unshift($links, $settings_link);
+	}
+
+	return $links;
+}
 
 
 register_activation_hook( __FILE__, 'dependent_activate' );
