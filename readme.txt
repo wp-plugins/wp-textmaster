@@ -31,7 +31,8 @@ Get access to over 65,000 experts in copywriting, translation and proofreading f
 
 == Screenshots ==
 
-1. TextMaster translation
+1. TextMaster translation
+
 2. Zoom on TextMaster translation module
 
 == Changelog ==
