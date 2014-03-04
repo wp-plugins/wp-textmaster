@@ -1,0 +1,91 @@
+.options_pricetm {
+	display:inline-block;
+	width:150px;
+	min-height:25px;
+}
+.coutOptionTm {
+	display:inline-block;
+	margin-left:20px;
+}
+#textmaster_settings ul.tabs {
+	/*float: left;*/
+	display: inline-table;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+#textmaster_settings ul.tabs li {
+	list-style: none;
+	float: left;
+	margin: 0;
+	padding: 0;
+}
+#textmaster_settings ul.tabs li a {
+	overflow: hidden;
+/*	display: block;*/
+	margin: 0 4px 0 0;
+	padding: 10px 12px;
+	border-color: #DFDFDF #DFDFDF #CCC;
+	border-width: 1px 1px 0 1px;
+	border-style:solid solid none solid;
+	background-color: #F1F1F1;
+	color: #999;
+	height:35px;
+	-webkit-border-top-right-radius: 4px;
+	-webkit-border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	border-top-left-radius: 4px;
+	cursor:pointer;
+}
+#textmaster_settings ul.tabs li a:hover {
+}
+
+
+/* pour cache le menu custom post */
+#menu-posts-textmaster_redaction ul li.wp-first-item{
+	display:none;
+}
+#showOptionsRedaction, #showOptionsTraduction, #showOptionsReadproof,
+#showAuthorsRedaction, #showAuthorsReadproof, #showAuthorsTraduction {
+	font-weight:bold;
+	cursor:pointer;
+}
+/* The current selected tab */
+#textmaster_settings ul.tabs li a.tab-current {
+	border-color: #CCC #CCC #E9E9E9;
+	background-color: #E9E9E9;
+	color: #333;
+}
+
+/* The content shown when a tab is selected */
+#textmaster_settings div {
+	/*float: left;*/
+	display: block;
+	width: 90%;
+	border:solid 1px;
+	border-color: #CCC #CCC #E9E9E9;
+	margin:0;
+	padding:0;
+	margin-top:5px;
+	background-color: #E9E9E9;
+}
+
+
+/* Set the CSS to make sure the other tabs' content isn't shown other than the first */
+#textmaster_settings div.t2, #textmaster_settings div.t3, #textmaster_settings div.t4 {
+	display: none;
+
+}
+
+#textmaster_settings table th {
+	padding-left:15px;
+}
+
+#textmaster_settings span.settingActivites{
+	display:inline-block;
+	width:250px;
+}
+
+#resultTextmaster, .tmInfos {
+	padding:0;
+}
