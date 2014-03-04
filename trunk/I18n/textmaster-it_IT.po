@@ -1,0 +1,944 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: wp-texmaster\n"
+"POT-Creation-Date: 2014-03-04 11:45+0100\n"
+"PO-Revision-Date: 2014-03-04 11:45+0100\n"
+"Last-Translator: T. Perrin <lupuz.yonderboy@gmail.com>\n"
+"Language-Team: \n"
+"Language: it_IT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.4\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e;_c\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../ajax_getAuthors.php:57
+msgid "Aucun de de vos TextMasters ne correspond aux critères du projet"
+msgstr "Nessuno dei tuoi autori corrisponde ai criteri"
+
+#: ../approuve_doc.php:26
+msgid "Untitled"
+msgstr "Senza titolo"
+
+#: ../approuve_doc.php:227 ../readproof_bulk.php:162 ../tm-redaction.php:296
+#: ../tm-trad_relecture.php:185 ../tm-trad_relecture.php:679
+#: ../traduction_bulk.php:176
+msgid "Merci de patienter"
+msgstr "Attendere prego"
+
+#: ../approuve_doc.php:228
+msgid "Valider"
+msgstr "Conferma"
+
+#: ../approuve_doc.php:229
+msgid "Valider et créer un article"
+msgstr "Approva e crea un post"
+
+#: ../approuve_doc.php:230
+msgid "Valider et créer une page"
+msgstr "Approva e crea una pagina"
+
+#: ../approuve_doc.php:233
+msgid ""
+"En validant ce travail, il sera appouvé sur Textmaster et copier comme "
+"contenu de votre article. Il vous faudra sauvegarder ce dernier pour "
+"utiliser ce contenu."
+msgstr ""
+"Dando la conferma a  questo lavoro, questo sarà approvato su TextMaster e "
+"verrà copiato come contenuto del tuo articolo. Dovrai salvare quest' ultimo "
+"per utilizzare il suo contenuto."
+
+#: ../createUser.php:57 ../tm-settings.php:263
+msgid "Créer un compte TextMaster"
+msgstr "Crea un account TextMaster"
+
+#: ../createUser.php:61
+msgid "Impossible de créer votre compte, merci de corriger les erreurs."
+msgstr "Impossibile creare un account. Ti preghiamo di correggere gli errori."
+
+#: ../createUser.php:64
+msgid "Votre compte a bien été créé."
+msgstr "Il tuo account è stato creato."
+
+#: ../createUser.php:70
+msgid "Prénom: "
+msgstr "Nome:"
+
+#: ../createUser.php:80
+msgid "Nom: "
+msgstr "Cognome:"
+
+#: ../createUser.php:90
+msgid "Société: "
+msgstr "Azienda:"
+
+#: ../createUser.php:100
+msgid "Adresse: "
+msgstr "Indirizzo:"
+
+#: ../createUser.php:110
+msgid "Code Postal: "
+msgstr "Codice postale:"
+
+#: ../createUser.php:120
+msgid "Ville: "
+msgstr "Città:"
+
+#: ../createUser.php:130
+msgid "Pays: "
+msgstr "Paese:"
+
+#: ../createUser.php:155
+msgid "Numéro de téléphone: "
+msgstr "Numero di telefono:"
+
+#: ../createUser.php:165
+msgid "Email: "
+msgstr "E-mail:"
+
+#: ../createUser.php:175 ../tm-settings.php:248
+msgid "Mot de passe: "
+msgstr "Password:"
+
+#: ../createUser.php:185
+msgid "Confirmer votre mot de passe: "
+msgstr "Conferma password:"
+
+#: ../createUser.php:198
+msgid "Créer mon compte"
+msgstr "Crea il mio account"
+
+#: ../readproof_bulk.php:44 ../traduction_bulk.php:43
+msgid "Merci de séléctionner au moins un article"
+msgstr "Seleziona almeno un post"
+
+#: ../readproof_bulk.php:63 ../tm-redaction.php:130 ../tm-redaction.php:334
+#: ../tm-redaction.php:421 ../tm-redaction.php:458 ../tm-settings.php:371
+#: ../tm-settings.php:397 ../tm-settings.php:423 ../tm-settings.php:451
+#: ../tm-settings.php:479 ../tm-settings.php:508 ../tm-settings.php:594
+#: ../tm-settings.php:678 ../tm-settings.php:704 ../tm-settings.php:730
+#: ../tm-settings.php:756 ../tm-settings.php:784 ../tm-settings.php:812
+#: ../tm-settings.php:841 ../tm-settings.php:983 ../tm-settings.php:1009
+#: ../tm-settings.php:1035 ../tm-settings.php:1063 ../tm-settings.php:1091
+#: ../tm-settings.php:1120 ../tm-trad_relecture.php:13
+#: ../tm-trad_relecture.php:354 ../tm-trad_relecture.php:442
+#: ../tm-trad_relecture.php:487 ../tm-trad_relecture.php:852
+#: ../tm-trad_relecture.php:941 ../traduction_bulk.php:62
+msgid "Merci de v&eacute;rifier vos informations de connexion à TextMaster"
+msgstr "Verifica i tuoi dati di accesso a TextMaster"
+
+#: ../readproof_bulk.php:65 ../traduction_bulk.php:64
+msgid "Nom du projet :"
+msgstr "Nome del progetto:"
+
+#: ../readproof_bulk.php:68 ../tm-redaction.php:145
+#: ../tm-trad_relecture.php:28 ../tm-trad_relecture.php:504
+#: ../traduction_bulk.php:68
+msgid "Categorie:"
+msgstr "Categoria:"
+
+#: ../readproof_bulk.php:83 ../tm-redaction.php:163
+#: ../tm-trad_relecture.php:47 ../tm-trad_relecture.php:523
+#: ../traduction_bulk.php:83
+msgid "Niveau de service:"
+msgstr "Livello del servizio:"
+
+#: ../readproof_bulk.php:95 ../readproof_bulk.php:122
+#: ../readproof_bulk.php:134 ../readproof_bulk.php:146
+#: ../readproof_bulk.php:166 ../tm-redaction.php:179 ../tm-redaction.php:235
+#: ../tm-redaction.php:250 ../tm-redaction.php:265 ../tm-redaction.php:311
+#: ../tm-trad_relecture.php:64 ../tm-trad_relecture.php:101
+#: ../tm-trad_relecture.php:115 ../tm-trad_relecture.php:130
+#: ../tm-trad_relecture.php:189 ../tm-trad_relecture.php:539
+#: ../tm-trad_relecture.php:594 ../tm-trad_relecture.php:609
+#: ../tm-trad_relecture.php:624 ../tm-trad_relecture.php:683
+#: ../traduction_bulk.php:95 ../traduction_bulk.php:136
+#: ../traduction_bulk.php:148 ../traduction_bulk.php:160
+#: ../traduction_bulk.php:180
+msgid "Coût"
+msgstr "Costo"
+
+#: ../readproof_bulk.php:99 ../tm-redaction.php:184
+#: ../tm-trad_relecture.php:71
+msgid "Langue :"
+msgstr "Lingua:"
+
+#: ../readproof_bulk.php:120 ../tm-redaction.php:233 ../tm-settings.php:538
+#: ../tm-settings.php:871 ../tm-settings.php:1150 ../tm-trad_relecture.php:99
+#: ../tm-trad_relecture.php:592 ../traduction_bulk.php:134
+msgid "Contrôle qualité :"
+msgstr "Controllo qualità:"
+
+#: ../readproof_bulk.php:121 ../readproof_bulk.php:133
+#: ../readproof_bulk.php:145 ../tm-redaction.php:234 ../tm-redaction.php:249
+#: ../tm-redaction.php:264 ../tm-settings.php:549 ../tm-settings.php:566
+#: ../tm-settings.php:583 ../tm-settings.php:882 ../tm-settings.php:899
+#: ../tm-settings.php:916 ../tm-settings.php:1161 ../tm-settings.php:1178
+#: ../tm-settings.php:1195 ../tm-trad_relecture.php:100
+#: ../tm-trad_relecture.php:114 ../tm-trad_relecture.php:129
+#: ../tm-trad_relecture.php:593 ../tm-trad_relecture.php:608
+#: ../tm-trad_relecture.php:623 ../traduction_bulk.php:135
+#: ../traduction_bulk.php:147 ../traduction_bulk.php:159
+msgid "Oui"
+msgstr "Sì"
+
+#: ../readproof_bulk.php:121 ../readproof_bulk.php:133
+#: ../readproof_bulk.php:145 ../tm-redaction.php:234 ../tm-redaction.php:249
+#: ../tm-redaction.php:264 ../tm-settings.php:549 ../tm-settings.php:566
+#: ../tm-settings.php:583 ../tm-settings.php:882 ../tm-settings.php:899
+#: ../tm-settings.php:916 ../tm-settings.php:1161 ../tm-settings.php:1178
+#: ../tm-settings.php:1195 ../tm-trad_relecture.php:100
+#: ../tm-trad_relecture.php:114 ../tm-trad_relecture.php:129
+#: ../tm-trad_relecture.php:593 ../tm-trad_relecture.php:608
+#: ../tm-trad_relecture.php:623 ../traduction_bulk.php:135
+#: ../traduction_bulk.php:147 ../traduction_bulk.php:159
+msgid "Non"
+msgstr "No"
+
+#: ../readproof_bulk.php:132 ../tm-redaction.php:248 ../tm-settings.php:555
+#: ../tm-settings.php:888 ../tm-settings.php:1167 ../tm-trad_relecture.php:113
+#: ../tm-trad_relecture.php:607 ../traduction_bulk.php:146
+msgid "Expertise :"
+msgstr "Autore specializzato:"
+
+#: ../readproof_bulk.php:144 ../tm-redaction.php:263 ../tm-settings.php:572
+#: ../tm-settings.php:905 ../tm-settings.php:1184 ../tm-trad_relecture.php:128
+#: ../tm-trad_relecture.php:622 ../traduction_bulk.php:158
+msgid "Commande prioritaire :"
+msgstr "Ordine prioritario:"
+
+#: ../readproof_bulk.php:153 ../tm-trad_relecture.php:137
+#: ../tm-trad_relecture.php:634 ../traduction_bulk.php:167
+msgid "Briefing :"
+msgstr "Briefing:"
+
+#: ../readproof_bulk.php:162 ../tm-settings.php:232
+#: ../tm-trad_relecture.php:1038
+msgid "Relecture"
+msgstr "Rilettura"
+
+#: ../readproof_bulk.php:166 ../tm-redaction.php:314
+#: ../tm-trad_relecture.php:192 ../tm-trad_relecture.php:686
+#: ../traduction_bulk.php:180
+msgid "mots"
+msgstr "parole"
+
+#: ../readproof_bulk.php:166 ../tm-redaction.php:314
+#: ../tm-trad_relecture.php:192 ../tm-trad_relecture.php:686
+#: ../traduction_bulk.php:180
+msgid "Crédits:"
+msgstr "Crediti:"
+
+#: ../readproof_bulk.php:166 ../tm-redaction.php:317
+#: ../tm-trad_relecture.php:195 ../tm-trad_relecture.php:689
+#: ../traduction_bulk.php:180
+msgid "Créditer mon compte"
+msgstr "Aggiungi crediti al mio account"
+
+#: ../readproof_bulk.php:196 ../traduction_bulk.php:211
+msgid "Erreur lors de la création de votre projet"
+msgstr "Si è verificato un errore durante la creazione del progetto"
+
+#: ../readproof_bulk.php:206
+msgid "La relecture de ces articles est déjà"
+msgstr "La richiesta di proodreading è attualmente"
+
+#: ../readproof_bulk.php:275 ../readproof_bulk.php:277
+#: ../tm-trad_relecture.php:313 ../tm-trad_relecture.php:315
+#: ../tm-trad_relecture.php:337 ../tm-trad_relecture.php:808
+#: ../tm-trad_relecture.php:810 ../tm-trad_relecture.php:833
+#: ../traduction_bulk.php:293 ../traduction_bulk.php:295
+msgid "Error"
+msgstr "Errore"
+
+#: ../readproof_bulk.php:283
+msgid "La relecture de ces articles est lancée."
+msgstr "La richiesta di proofreading è stata inviata."
+
+#: ../textmaster.class.php:240
+msgid "Regular"
+msgstr ""
+
+#: ../textmaster.class.php:241
+msgid "Premium"
+msgstr ""
+
+#: ../textmaster.class.php:247 ../textmaster.class.php:256
+#: ../textmaster.class.php:270 ../textmaster.class.php:461
+msgid "Non spécifié"
+msgstr "Non specificato"
+
+#: ../textmaster.class.php:248
+msgid "Populaire"
+msgstr "Popolare"
+
+#: ../textmaster.class.php:249
+msgid "Technique"
+msgstr "Tecnico"
+
+#: ../textmaster.class.php:250
+msgid "Romancé"
+msgstr "Romanzato"
+
+#: ../textmaster.class.php:257
+msgid "Je > 1ère personne - Singulier"
+msgstr "Io > prima persona - Singolare"
+
+#: ../textmaster.class.php:258
+msgid "Tu > 2ème Personne - Singulier"
+msgstr "Tu > seconda persona - Singolare"
+
+#: ../textmaster.class.php:259
+msgid "Il > 3ème personne - Singulier Masculin"
+msgstr "Egli > terza persona - Singolare maschile"
+
+#: ../textmaster.class.php:260
+msgid "Elle > 3ème personne - Singulier Féminin"
+msgstr "Ella > terza persona - Singolare Femminile"
+
+#: ../textmaster.class.php:261
+msgid "On > 3ème personne - Singulier Neutre"
+msgstr "Si > terza persona - Singolare Impersonale"
+
+#: ../textmaster.class.php:262
+msgid "Nous > 1ère personne - Pluriel"
+msgstr "Noi > prima persona - Plurale"
+
+#: ../textmaster.class.php:263
+msgid "Vous > 2ème Personne - Pluriel"
+msgstr "Voi > seconda persona - Plurale"
+
+#: ../textmaster.class.php:264
+msgid "Ils/elles > 3ème Personne - Pluriel"
+msgstr "Essi / Esse > terza persona - Plurale"
+
+#: ../textmaster.class.php:271
+msgid "Enfants > 13 ans et moins"
+msgstr "Bambini > fino ai 13 anni"
+
+#: ../textmaster.class.php:272
+msgid "Adolescent > entre 14 et 18 ans"
+msgstr "Adolescenti > tra i 14 e i 18 anni"
+
+#: ../textmaster.class.php:273
+msgid "Jeunes adultes > entre 19 et 29 ans"
+msgstr "Giovani adulti > tra i 19 e i 29 anni"
+
+#: ../textmaster.class.php:274
+msgid "Adultes > entre 30 et 59 ans"
+msgstr "Adulti > tra i 30 e i 59 anni"
+
+#: ../textmaster.class.php:275
+msgid "Séniors > 60 ans et plus"
+msgstr "Senior > 60 anni e oltre"
+
+#: ../textmaster.class.php:675 ../textmaster.class.php:678
+msgid "En attente"
+msgstr "In attesa"
+
+#: ../textmaster.class.php:678 ../textmaster.class.php:690
+msgid "Incomplet"
+msgstr "Incompleto"
+
+#: ../textmaster.class.php:681
+msgid "En cours"
+msgstr "In corso"
+
+#: ../textmaster.class.php:684
+msgid "Controle qualité"
+msgstr "Controllo della qualità"
+
+#: ../textmaster.class.php:687
+msgid "A valider"
+msgstr "Da confermare"
+
+#: ../textmaster.class.php:693
+msgid "Terminé"
+msgstr "Finito"
+
+#: ../textmaster.class.php:696
+msgid "En pause"
+msgstr "In pausa"
+
+#: ../textmaster.class.php:699
+msgid "Annulé"
+msgstr "Annullato"
+
+#: ../textmaster.class.php:702 ../tm-redaction.php:545
+msgid "NC"
+msgstr "NA"
+
+#: ../tm-projets.php:16 ../tm-settings.php:7
+msgid "Tous les projets TextMaster"
+msgstr "Tutti i progetti TextMaster"
+
+#: ../tm-projets.php:37
+msgid "projet"
+msgstr "progetto"
+
+#: ../tm-projets.php:38
+msgid "projets"
+msgstr "progetti"
+
+#: ../tm-projets.php:70
+msgid "Voir tous les type de projet"
+msgstr "Vedi tutti i tipi di progetto"
+
+#: ../tm-projets.php:71 ../tm-projets.php:256
+msgid "translation"
+msgstr "traduzione"
+
+#: ../tm-projets.php:72 ../tm-projets.php:260
+msgid "copywriting"
+msgstr "copywriting"
+
+#: ../tm-projets.php:73 ../tm-projets.php:258
+msgid "proofreading"
+msgstr "revisione"
+
+#: ../tm-projets.php:79 ../tm-redaction.php:739 ../tm-trad_relecture.php:1176
+msgid "Voir tous les status TextMaster"
+msgstr "Vedi tutti gli stati TextMaster"
+
+#: ../tm-projets.php:97
+msgid "Voir toutes les catégories"
+msgstr "Vedi tutte le categorie"
+
+#: ../tm-projets.php:113
+msgid "Nom"
+msgstr "Nome"
+
+#: ../tm-projets.php:114
+msgid "Type"
+msgstr "Tipo"
+
+#: ../tm-projets.php:117
+msgid "Category"
+msgstr "Categoria"
+
+#: ../tm-projets.php:118 ../tm-redaction.php:51
+msgid "Status"
+msgstr "Status"
+
+#: ../tm-projets.php:119
+msgid "Créé le"
+msgstr "Creato"
+
+#: ../tm-projets.php:121
+msgid "Terminé le"
+msgstr "Completato"
+
+#: ../tm-redaction.php:6
+msgid "TextMaster"
+msgstr "TextMaster"
+
+#: ../tm-redaction.php:7
+msgid "Rédactions TM"
+msgstr "Redazioni TM"
+
+#: ../tm-redaction.php:8
+msgid "Rédaction TM"
+msgstr "Redazione TM"
+
+#: ../tm-redaction.php:9
+msgid "Nouvelle rédaction"
+msgstr "Nuovo ordine di copywriting"
+
+#: ../tm-redaction.php:10
+msgid "Créer une rédaction TextMaster"
+msgstr "Creare una redazione di TextMaster"
+
+#: ../tm-redaction.php:11
+msgid "Editer une rédaction TextMaster"
+msgstr "Pubblicare una redazione di TextMaster"
+
+#: ../tm-redaction.php:12
+msgid "Aucune rédaction TextMaster trouvée"
+msgstr "Nessuna redazione di TextMaster trovata"
+
+#: ../tm-redaction.php:33 ../tm-redaction.php:36 ../tm-redaction.php:38
+#: ../tm-redaction.php:39
+msgid "Projet de rédaction sauvegardé."
+msgstr "Progetto di redazione salvato."
+
+#: ../tm-redaction.php:62
+msgid "Brouillon"
+msgstr "Copia"
+
+#: ../tm-redaction.php:113
+msgid ""
+"C'est ici que vous donnez les instructions concernant votre demande de "
+"rédaction."
+msgstr "Inserisci qui le istruzioni per il tuo progetto di copywriting."
+
+#: ../tm-redaction.php:201
+msgid "+/- 10%"
+msgstr "+ / - 10 %"
+
+#: ../tm-redaction.php:202
+msgid "Au moins"
+msgstr "Almeno"
+
+#: ../tm-redaction.php:203
+msgid "Maximum"
+msgstr "Al massimo"
+
+#: ../tm-redaction.php:210
+msgid "Nombre de mot :"
+msgstr "Numero di parole:"
+
+#: ../tm-redaction.php:276
+msgid "Cet article a &eacute;t&eacute; rédigé."
+msgstr "Questo articolo è stato redatto."
+
+#: ../tm-redaction.php:276 ../tm-trad_relecture.php:155
+#: ../tm-trad_relecture.php:652
+msgid "Voir / valider"
+msgstr "Vedere / Confermare"
+
+#: ../tm-redaction.php:276 ../tm-redaction.php:285 ../tm-redaction.php:580
+msgid "Voir / Valider la rédaction"
+msgstr "Vedere / Confermare la redazione"
+
+#: ../tm-redaction.php:281
+msgid "Cet article est en cours de rédaction."
+msgstr "Questo articolo è in fase di redazione."
+
+#: ../tm-redaction.php:285
+msgid "Vous avez d&eacute;j&agrave; valid&eacute; la rédaction de cet article."
+msgstr "Hai già confermato la redazione di questo articolo."
+
+#: ../tm-redaction.php:285
+msgid "Voir la rédaction"
+msgstr "Vedere la redazione"
+
+#: ../tm-redaction.php:303
+msgid "Sauver"
+msgstr "Salvare"
+
+#: ../tm-redaction.php:304
+msgid "Lancer la rédaction"
+msgstr "Iniziare la redazione"
+
+#: ../tm-redaction.php:338 ../tm-trad_relecture.php:358
+#: ../tm-trad_relecture.php:856
+msgid "Plus d'options"
+msgstr "Più opzioni"
+
+#: ../tm-redaction.php:340 ../tm-trad_relecture.php:360
+#: ../tm-trad_relecture.php:858
+msgid "Mots-clés:"
+msgstr "Parole - chiave"
+
+#: ../tm-redaction.php:340 ../tm-trad_relecture.php:360
+#: ../tm-trad_relecture.php:858
+msgid "séparés par des virgules"
+msgstr "Separate da delle virgole"
+
+#: ../tm-redaction.php:347 ../tm-trad_relecture.php:367
+#: ../tm-trad_relecture.php:865
+msgid "A répéter :"
+msgstr "Da ripetere:"
+
+#: ../tm-redaction.php:348 ../tm-trad_relecture.php:368
+#: ../tm-trad_relecture.php:866
+msgid "fois"
+msgstr "volta"
+
+#: ../tm-redaction.php:350 ../tm-settings.php:419 ../tm-settings.php:752
+#: ../tm-settings.php:1031 ../tm-trad_relecture.php:370
+#: ../tm-trad_relecture.php:869
+msgid "Type de Vocabulaire:"
+msgstr "Tipo di Vocabolario"
+
+#: ../tm-redaction.php:369 ../tm-settings.php:447 ../tm-settings.php:780
+#: ../tm-settings.php:1059 ../tm-trad_relecture.php:390
+#: ../tm-trad_relecture.php:889
+msgid "Personne grammaticale:"
+msgstr "Persona grammaticale:"
+
+#: ../tm-redaction.php:388 ../tm-settings.php:475 ../tm-settings.php:808
+#: ../tm-settings.php:1087 ../tm-trad_relecture.php:410
+#: ../tm-trad_relecture.php:909
+msgid "Public Ciblé:"
+msgstr "Pubblico di riferimento:"
+
+#: ../tm-redaction.php:462 ../tm-trad_relecture.php:446
+#: ../tm-trad_relecture.php:945
+msgid "Vos auteurs"
+msgstr "I tuoi autori"
+
+#: ../tm-redaction.php:580
+msgid "Ce projet a été rédigé, vous pouvez le"
+msgstr "Questo progetto è stato redatto."
+
+#: ../tm-redaction.php:580
+msgid "valider dès maintenant"
+msgstr "Il progetto può essere approvato."
+
+#: ../tm-redaction.php:669 ../tm-trad_relecture.php:271
+#: ../tm-trad_relecture.php:767
+msgid "Erreur lors de la création de votre projet ("
+msgstr "Si è verificato un errore durante la creazione del progetto ("
+
+#: ../tm-redaction.php:697
+msgid "La rédaction de cet article est lancée."
+msgstr "La redazione di questo articolo è iniziata"
+
+#: ../tm-redaction.php:707
+msgid "Cet article est déjà en cours de rédaction."
+msgstr "Questo articolo è già in fase di redazione."
+
+#: ../tm-redaction.php:710
+msgid "La rédaction de cet article est terminée."
+msgstr "La redazione di questo articolo è terminata."
+
+#: ../tm-settings.php:7
+msgid "Suivi des projets"
+msgstr "Segui i tuoi progetti"
+
+#: ../tm-settings.php:8 ../tm-settings.php:223
+msgid "Paramétrage TextMaster"
+msgstr "Impostazioni di TextMaster"
+
+#: ../tm-settings.php:8 ../wp-textmaster.php:198
+msgid "Réglages"
+msgstr "Impostazioni"
+
+#: ../tm-settings.php:41
+msgid ""
+"Impossbile de se connecter à TextMaster, merci de vérifier votre email et "
+"mot de passe."
+msgstr ""
+"Impossibile connettersi a TextMaster. Verifica la tua e-mail e la password."
+
+#: ../tm-settings.php:169
+msgid "Les paramètres ont été sauvegaradés."
+msgstr "Le impostazioni sono state salvate."
+
+#: ../tm-settings.php:229 ../tm-settings.php:231
+msgid "Général"
+msgstr "Generale"
+
+#: ../tm-settings.php:230 ../tm-trad_relecture.php:1026
+#: ../traduction_bulk.php:176
+msgid "Traduction"
+msgstr "Traduzione:"
+
+#: ../tm-settings.php:231
+msgid "Rédaction"
+msgstr "Redazione"
+
+#: ../tm-settings.php:240
+msgid "Accès TextMaster"
+msgstr "Configurazione TextMaster"
+
+#: ../tm-settings.php:244
+msgid "Email TextMaster: "
+msgstr "E-mail TextMaster:"
+
+#: ../tm-settings.php:254
+msgid "Vous avez actuellement :"
+msgstr "Hai attualmente:"
+
+#: ../tm-settings.php:257
+msgid "Vous pouvez créditer votre compte TextMaster à cette adresse :"
+msgstr "Per caricare credito nel tuo account, clicca qui:"
+
+#: ../tm-settings.php:262
+msgid ""
+"Ces informations  correspondent à votre compte TextMaster, si vous n'avez "
+"pas encore créé de compte, vous pouvez le faire en utilisant ce lien:"
+msgstr ""
+"Usa i tuoi dati di accesso a TextMaster. Se non hai ancora un account, "
+"clicca questo link per registrarti:"
+
+#: ../tm-settings.php:264
+msgid "Créer un compte TextMaster."
+msgstr "Crea un account TextMaster"
+
+#: ../tm-settings.php:269
+msgid "Pour quelles activités "
+msgstr "Attiva le seguenti categorie di progetti:"
+
+#: ../tm-settings.php:275
+msgid "Rédaction "
+msgstr "Redazione"
+
+#: ../tm-settings.php:282
+msgid "Relecture "
+msgstr "Rilettura"
+
+#: ../tm-settings.php:285 ../tm-settings.php:295
+msgid "Activer les actions groupées "
+msgstr "Abilita ordini multipli"
+
+#: ../tm-settings.php:292
+msgid "Traduction: "
+msgstr "Traduzione:"
+
+#: ../tm-settings.php:317
+msgid "Sauvegardez les paramètres"
+msgstr "Salva impostazioni"
+
+#: ../tm-settings.php:346
+msgid "Paramètres de rédaction par défaut "
+msgstr "Impostazioni di redazione di default"
+
+#: ../tm-settings.php:350 ../tm-settings.php:656 ../tm-settings.php:962
+msgid "Niveau de service: "
+msgstr "Livello del servizio:"
+
+#: ../tm-settings.php:362 ../tm-settings.php:550 ../tm-settings.php:567
+#: ../tm-settings.php:584 ../tm-settings.php:668 ../tm-settings.php:883
+#: ../tm-settings.php:900 ../tm-settings.php:917 ../tm-settings.php:974
+#: ../tm-settings.php:1162 ../tm-settings.php:1179 ../tm-settings.php:1196
+msgid "mot"
+msgstr "parola"
+
+#: ../tm-settings.php:367 ../tm-settings.php:979
+msgid "Langue: "
+msgstr "Lingua:"
+
+#: ../tm-settings.php:393 ../tm-settings.php:726 ../tm-settings.php:1005
+msgid "Categorie: "
+msgstr "Categoria:"
+
+#: ../tm-settings.php:504 ../tm-settings.php:837 ../tm-settings.php:1116
+msgid "Auteur:"
+msgstr "Autore:"
+
+#: ../tm-settings.php:589 ../wp-textmaster.php:181
+msgid "Mise en page"
+msgstr "Formato della pagina"
+
+#: ../tm-settings.php:636
+msgid ""
+"Bonjour,\n"
+"Merci de procéder à la traduction du texte. Il est impératif de conserver le "
+"style et le type de vocabulaire.\n"
+"Merci"
+msgstr ""
+"Buongiorno, \n"
+"Ti preghiamo di procedere alla traduzione del testo. E' obbligatorio "
+"mantenere lo stile e il tipo di vocabolario. \n"
+"\vGrazie"
+
+#: ../tm-settings.php:653
+msgid "Paramètres de traduction par défaut "
+msgstr "Impostazioni di traduzione di default"
+
+#: ../tm-settings.php:674
+msgid "Langue source: "
+msgstr "Lingua di partenza:"
+
+#: ../tm-settings.php:700
+msgid "Langue destination: "
+msgstr "Lingua di destinazione:"
+
+#: ../tm-settings.php:922 ../tm-settings.php:1201
+msgid "Message de briefing: "
+msgstr "Messaggio di briefing:"
+
+#: ../tm-settings.php:942
+msgid ""
+"Bonjour,\n"
+"Merci de procéder à la correction du texte. Il est impératif de conserver le "
+"style et le type de vocabulaire.\n"
+"Merci"
+msgstr ""
+"Buongiorno, \n"
+"Ti preghiamo di procedere alla correzione del testo. E' obbligatorio "
+"mantenere lo stile e il tipo di vocabolario. \n"
+"Grazie"
+
+#: ../tm-settings.php:958
+msgid "Paramètres de relecture par défaut "
+msgstr "Impostazioni di rilettura di default"
+
+#: ../tm-trad_relecture.php:155
+msgid "Cet article a &eacute;t&eacute; relu."
+msgstr "Questo articolo è stato riletto."
+
+#: ../tm-trad_relecture.php:155 ../tm-trad_relecture.php:166
+msgid "Voir / Valider la relecture"
+msgstr "Vedere / Confermare la rilettura"
+
+#: ../tm-trad_relecture.php:161
+msgid "Cet article est en cours de relecture."
+msgstr "Questo articolo è in fase di rilettura."
+
+#: ../tm-trad_relecture.php:166
+msgid "Vous avez d&eacute;j&agrave; valid&eacute; la relecture de cet article."
+msgstr "Hai già confermato la rilettura di questo articolo."
+
+#: ../tm-trad_relecture.php:166
+msgid "Voir la relecture"
+msgstr "Vedere la rilettura"
+
+#: ../tm-trad_relecture.php:174 ../tm-trad_relecture.php:672
+msgid "Merci de sauvegarder cet article."
+msgstr "Ti preghiamo di salvare questo articolo."
+
+#: ../tm-trad_relecture.php:187 ../tm-trad_relecture.php:681
+msgid "Envoyer"
+msgstr "Iniziare"
+
+#: ../tm-trad_relecture.php:321
+msgid "La relecture de cet article est lancée."
+msgstr "La rilettura di questo articolo è iniziata."
+
+#: ../tm-trad_relecture.php:331
+msgid "Cet article est déjà en cours de relecture."
+msgstr "Questo articolo è già in fase di rilettura."
+
+#: ../tm-trad_relecture.php:334
+msgid "La relecture de cet article est terminée."
+msgstr "La rilettura di questo articolo è terminata."
+
+#: ../tm-trad_relecture.php:543 ../traduction_bulk.php:99
+msgid "Langue d'origine :"
+msgstr "Lingua di origine:"
+
+#: ../tm-trad_relecture.php:561 ../traduction_bulk.php:112
+msgid "Traduction en :"
+msgstr "Traduzione in:"
+
+#: ../tm-trad_relecture.php:652
+msgid "Cet article a &eacute;t&eacute; traduit."
+msgstr "Questo articolo è stato tradotto"
+
+#: ../tm-trad_relecture.php:652 ../tm-trad_relecture.php:663
+msgid "Voir / Valider la traduction"
+msgstr "Vedere / Confermare la traduzione"
+
+#: ../tm-trad_relecture.php:658
+msgid "Cet article est en cours de traduction."
+msgstr "Questo articolo è in fase di traduzione"
+
+#: ../tm-trad_relecture.php:663
+msgid ""
+"Vous avez d&eacute;j&agrave; valid&eacute; la traduction de cet article."
+msgstr "Hai già confermato la traduzione di questo articolo"
+
+#: ../tm-trad_relecture.php:663
+msgid "Voir la traduction"
+msgstr "Vedere la traduzione"
+
+#: ../tm-trad_relecture.php:816
+msgid "La traduction de cet article est lancée."
+msgstr "La traduzione di questo articolo è iniziata."
+
+#: ../tm-trad_relecture.php:827
+msgid "Cet article est déjà en cours de traduction."
+msgstr "Questo articolo è già in fase di traduzione."
+
+#: ../tm-trad_relecture.php:830
+msgid "La traduction de cet article est terminée."
+msgstr "La traduzione di questo articolo è terminata."
+
+#: ../tm-trad_relecture.php:1000
+msgid "Status TextMaster"
+msgstr "Stato"
+
+#: ../tm-trad_relecture.php:1023 ../tm-trad_relecture.php:1035
+#: ../tm-trad_relecture.php:1177
+msgid "A traduire/relire"
+msgstr "Per tradurre / corretta"
+
+#: ../tm-trad_relecture.php:1052 ../tm-trad_relecture.php:1053
+#: ../tm-trad_relecture.php:1064
+msgid "Traduction TextMaster"
+msgstr "Traduzione TextMaster"
+
+#: ../tm-trad_relecture.php:1076 ../tm-trad_relecture.php:1077
+#: ../tm-trad_relecture.php:1087
+msgid "Relecture TextMaster"
+msgstr "Revisione TextMaster"
+
+#: ../traduction_bulk.php:221
+msgid "La traduction de ces articles est déjà"
+msgstr "La richiesta di traduzione è attualmente"
+
+#: ../traduction_bulk.php:301
+msgid "La traduction de ces articles est lancée."
+msgstr "La richiesta di traduzione è già stata inviata."
+
+#: ../wp-textmaster.php:38
+msgid "Merci d'installer l'extension crul pour php."
+msgstr "Ti preghiamo di installare l' estensione crul per php."
+
+#: ../wp-textmaster.php:43
+msgid "Ce sera multi-site bientôt ! "
+msgstr "Presto in versione multisito!"
+
+#: ../wp-textmaster.php:92 ../wp-textmaster.php:102 ../wp-textmaster.php:113
+msgid "Erreur : impossible de créer la table : "
+msgstr ""
+
+#: ../wp-textmaster.php:156
+msgid "TextMaster Traduction"
+msgstr "Traduzione TextMaster"
+
+#: ../wp-textmaster.php:171
+msgid "TextMaster Relecture"
+msgstr "Rilettura di TextMaster"
+
+#: ../wp-textmaster.php:179
+msgid "Lancer la rédation"
+msgstr "Iniziare la redazione"
+
+#: ../wp-textmaster.php:373 ../wp-textmaster.php:396
+msgid "Informations TextMaster"
+msgstr "Notifiche TextMaster"
+
+#: ../wp-textmaster.php:374
+msgid ""
+"De nouvelles traduction ou relecture sont disponibles. Vous pouvez les "
+"valider dès maintenant."
+msgstr ""
+"Ci sono nuovi progetti di traduzione o revisione in attesa della tua "
+"approvazione."
+
+#: ../wp-textmaster.php:397
+msgid ""
+"De nouvelles rédactions sont disponibles. Vous pouvez les valider dès "
+"maintenant."
+msgstr ""
+"Ci sono nuovi progetti di copywriting in attesa della tua approvazione."
+
+#~ msgid "Ajouter"
+#~ msgstr "Aggiungi"
+
+#~ msgid "valider"
+#~ msgstr "confermarlo"
+
+#~ msgid "Options"
+#~ msgstr "Opzioni"
+
+#~ msgid "Basic"
+#~ msgstr "Basic"
+
+#~ msgid "Standard"
+#~ msgstr "Standard"
+
+#~ msgid "Accès API"
+#~ msgstr "Accesso API"
+
+#~ msgid "Api key: "
+#~ msgstr "Api key:"
+
+#~ msgid "Api secret: "
+#~ msgstr "Api secret:"
+
+#~ msgid ""
+#~ "Vous trouverez les api_key et api_secret sur le site <a href=\"http://fr."
+#~ "textmaster.com/?pid=4f1db74529e1673829000009\" target=\"_blank"
+#~ "\">TextMaster</a>, dans la rubrique plugins."
+#~ msgstr ""
+#~ "Troverai le tue api_key e api_secret sul sito <a href=\"http://fr."
+#~ "textmaster.com/?pid=4f1db74529e1673829000009\" target=\"_blank"
+#~ "\">TextMaster</a>, nella rubrica ' plugin '"
