@@ -662,7 +662,7 @@ function callback_redaction(){
 		$checkStatut = $tApi->getProjetStatus($idProjet);
 		if ($idProjet == '' || $checkStatut == 'canceled')
 		{
-			$retProjet = $tApi->makeProject(get_the_title($postID), 'copywriting', $language, $language, $categorie, $content, $languageLevel, $qualityRedaction, $expertiseRedaction, $priorityRedaction, $templateTM, $vocabularyType, $grammaticalPerson, $targetReaderGroup, $authors);
+			$retProjet = $tApi->makeProject(get_the_title($post_id), 'copywriting', $language, $language, $categorie, $content, $languageLevel, $qualityRedaction, $expertiseRedaction, $priorityRedaction, $templateTM, $vocabularyType, $grammaticalPerson, $targetReaderGroup, $authors);
 			if (is_array($retProjet))
 				$idProjet = $retProjet['id'];
 			else
@@ -673,9 +673,9 @@ function callback_redaction(){
 		if (is_array($retProjet) ||  $idProjet != '')
 		{
 			//	$ret = serialize($ret);
-			update_post_meta($postID, 'textmasterId', $idProjet);
-			$ret = $tApi->addDocument($idProjet, get_the_title($postID) ,$wordCount, '', $wordCountRule, $keywords, $keywordsRepeatCount);
-			update_post_meta($postID, 'textmasterDocumentId', $ret['id']);
+			update_post_meta($post_id, 'textmasterId', $idProjet);
+			$ret = $tApi->addDocument($idProjet, get_the_title($post_id) ,$wordCount, '', $wordCountRule, $keywords, $keywordsRepeatCount);
+			update_post_meta($post_id, 'textmasterDocumentId', $ret['id']);
 		}
 
 		$result = $tApi->getProjetStatus($idProjet);
@@ -693,7 +693,7 @@ function callback_redaction(){
 			else
 			{
 				$result = $tApi->getProjetStatus($idProjet);
-				update_post_meta($postID, 'textmasterStatusRedaction', $result);
+				update_post_meta($post_id, 'textmasterStatusRedaction', $result);
 				$ret = __('La rédaction de cet article est lancée.','textmaster');
 				wpDelTempProjet('wp_'.$postID);
 				wp_schedule_single_event( time() + 1, 'cron_syncProjets' );
