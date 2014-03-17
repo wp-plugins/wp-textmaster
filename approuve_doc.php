@@ -7,6 +7,7 @@ if (isset($_GET['valide']) && $_GET['valide'] == 1) {
 	$tApi->secretapi = get_option('textmaster_api_secret');
 	$tApi->keyapi =  get_option('textmaster_api_key');
 
+//	print_r($_GET);
 
 	if ($_GET['type'] == 'redaction' || $_GET['new_article'] == 1 || $_GET['new_article'] == 2) {
 
@@ -120,8 +121,10 @@ if ($_GET['type'] == 'redaction'){
 		$infos = $tApi->getDocumentInfos($idProjet, $textmasterDocumentId);
 	}
 
-	if (key_exists('documents', $infos))
+	if (key_exists('documents', $infos)){
 		$work = $infos['documents'][0];
+		$infos['id'] = $infos['documents'][0]['id'];
+	}
 	else
 		$work = $infos;
 
@@ -141,8 +144,10 @@ else if ($_GET['type'] == 'trad'){
 		$infos = $tApi->getDocumentInfos($idProjet, $textmasterDocumentId);
 	}
 
-	if (key_exists('documents', $infos))
+	if (key_exists('documents', $infos)){
 		$work = $infos['documents'][0];
+		$infos['id'] = $infos['documents'][0]['id'];
+	}
 	else
 		$work = $infos;
 
@@ -162,8 +167,11 @@ else
 		$infos = $tApi->getDocumentInfos($idProjet, $textmasterDocumentId);
 	}
 
-	if (key_exists('documents', $infos))
+	if (key_exists('documents', $infos)){
 		$work = $infos['documents'][0];
+		$infos['id'] = $infos['documents'][0]['id'];
+	}
+
 	else
 		$work = $infos;
 
