@@ -1,4 +1,4 @@
-=== TextMaster WordPress Translation Plugin ===
+=== WP TextMaster ===
 
 Contributors: lupuz, TextMaster SA
 
