@@ -2,7 +2,7 @@
                                                                      
                                                                      
                                              
-=== WP TextMaster ===
+=== TextMaster WordPress Translation Plugin ===
 
 Contributors: lupuz, TextMaster SA
 
@@ -12,7 +12,7 @@ Requires at least: 3.3
 
 Tested up to: 3.8
 
-Stable tag: 1.1.1
+Stable tag: 1.1
 
 License: GPLv2 or later
 
@@ -20,19 +20,19 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 
 
-Access professional translation, SEO web content writing and proofreading services directly through your WordPress site. 
+A WordPress translation plugin that also allows you to order SEO web content and proofreading directly through your WordPress site. 
 
 
 
 == Description ==
 
-With the [TextMaster](http://www.textmaster.com/?pid=4f1db74529e1673829000009) plugin, you can easily have your site translated and proofread by native-speaking professionals in over 100 language pairs, right from your admin panel. You can also add engaging SEO web content written by one of our expert authors. No matter how big or small your project, TextMaster’s on-demand service is available 24/7 around the world.  
+With the [TextMaster](http://www.textmaster.com/?pid=4f1db74529e1673829000009) WordPress translation plugin, you can easily have your site translated and proofread by native-speaking professionals in over 100 language pairs, right from your admin panel. You can also add engaging SEO web content written by one of our expert authors. No matter how big or small your project, TextMaster’s on-demand translation services and web content writers are available 24/7 around the world.  
 
 = Features =
 
-Get access to over 60,000 experts in translation, proofreading and copywriting. Still not convinced? Here are a few more ways that TextMaster makes your life easier:
+Get access to over 60,000 experts in translation, proofreading and copywriting. Still not convinced? Here are a few more ways that that TextMaster WordPress translation plugin makes your life easier:
 
-* High quality content guaranteed* Rigorous selection process - we only take the best experts!* Available 24/7 from anywhere in the world* Translation in over 100 language pairs* Experts in 40+ of subjects* Level of service that matches your project* 12 hour average turnaround time* Intuitive platform for specific or large tasks* Flexible, competitive rates based the size and frequency of your order
+* High quality web content and translations guaranteed* Rigorous selection process - we only take the best experts!* Available 24/7 from anywhere in the world* Translation in over 100 language pairs* Experts in 40+ of subjects* Level of service that matches your project* 12 hour average turnaround time* Intuitive platform for specific or large tasks* Flexible, competitive rates based the size and frequency of your order
 
 = Support =
 
@@ -66,7 +66,7 @@ Visit our [official website](http://www.textmaster.com/?pid=4f1db74529e167382900
 == Frequently asked questions ==
 
 
-= How does the plugin work? =The plugin allows you to order translation, copywriting and proofreading of your pages or posts directly through WordPress. You can either create a new post/page with the finished text or replace existing posts and pages. = How do I make a purchase? =Making a purchase is simple. Just log into your account on TextMaster.com and buy à la carte or purchase a bundle (with extra bonus). You’ll see your credits the next time you use the plugin on WordPress.= How long will it take to process my order? =This depends on the size of your text and the options that you have chosen. The average turnaround time is 12 hours, although longer or more complex texts can take more time. Visit our FAQ page for more answers: <http://textmaster.com/client-faq> 
+= How does the WordPress translation plugin work? =The translation plugin allows you to order translation, copywriting and proofreading of your pages or posts directly through WordPress. You can either create a new post/page with the finished text or replace existing posts and pages. = How do I make a purchase? =Making a purchase is simple. Just log into your account on TextMaster.com and buy à la carte or purchase a bundle (with extra bonus). You’ll see your credits the next time you use the translation plugin on WordPress.= How long will it take to process my order? =This depends on the size of your text and the options that you have chosen. The average turnaround time is 12 hours, although longer or more complex texts can take more time. Visit our FAQ page for more answers: <http://textmaster.com/client-faq> 
 
 
 
@@ -76,7 +76,7 @@ Visit our [official website](http://www.textmaster.com/?pid=4f1db74529e167382900
 
 1. TextMaster translation
 
-2. The TextMaster plugin in the sidebar on Pages and Posts
+2. The TextMaster translation plugin in the sidebar on Pages and Posts
 
 
 
