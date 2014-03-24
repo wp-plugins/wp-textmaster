@@ -1,7 +1,3 @@
-
-
-
-
 === TextMaster WordPress Translation Plugin ===
 
 Contributors: lupuz, TextMaster SA
