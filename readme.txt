@@ -22,7 +22,7 @@ A WordPress translation plugin that also allows you to order SEO web content and
 
 == Description ==
 
-With the TextMaster WordPress translation plugin, you can easily have your site translated and proofread by native-speaking professionals in over 100 language pairs, right from your admin panel. You can also add engaging SEO web content written by one of our expert authors. No matter how big or small your project, TextMaster’s on-demand translation services and web content writers are available 24/7 around the world.
+With the [TextMaster](http://www.textmaster.com/?pid=4f1db74529e1673829000009) WordPress translation plugin, you can easily have your site translated and proofread by native-speaking professionals in over 100 language pairs, right from your admin panel. You can also add engaging SEO web content written by one of our expert authors. No matter how big or small your project, TextMaster’s on-demand translation services and web content writers are available 24/7 around the world.
 
 = Features =
 
@@ -67,7 +67,7 @@ Visit our [official website](http://www.textmaster.com/?pid=4f1db74529e167382900
 
 
 
-== Frequently Asked Questions ==
+== Frequently asked questions ==
 
 
 = How does the WordPress translation plugin work? =
@@ -81,7 +81,6 @@ Making a purchase is simple. Just log into your account on TextMaster.com and bu
 This depends on the size of your text and the options that you have chosen. The average turnaround time is 12 hours, although longer or more complex texts can take more time.
 
 Visit our FAQ page for more answers: <http://textmaster.com/client-faq>
-
 
 
 
