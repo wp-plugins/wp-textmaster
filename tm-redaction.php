@@ -62,15 +62,15 @@ function manage_textmaster_redaction_columns($column_name, $id){
 				echo __('Brouillon','textmaster' );
 			else
 			{
-				$tApi = new textmaster_api();
-			//	$tApi->secretapi = get_option('textmaster_api_secret');
-			//	$tApi->keyapi =  get_option('textmaster_api_key');
+				$tApi = new textmaster_api(get_option_tm('textmaster_api_key'), get_option_tm('textmaster_api_secret'));
+			//	$tApi->secretapi = get_option_tm('textmaster_api_secret');
+			//	$tApi->keyapi =  get_option_tm('textmaster_api_key');
 			//	$idProjet = get_post_meta($id,'textmasterId', TRUE);
 				echo $tApi->getLibStatus( get_post_meta($id,'textmasterStatusRedaction', TRUE));
 			}
 			break;
 		case 'Date':
-			echo date_i18n(get_option('date_format') ,get_the_time( 'U', $post_id ));
+			echo date_i18n(get_option_tm('date_format') ,get_the_time( 'U', $post_id ));
 			break;
 		default:
 			break;
@@ -115,39 +115,68 @@ function textmaster_defaut_content( $content ) {
 	return $content;
 }
 
+
 function wp_texmaster_redaction_defaut_metaboxes(){
+	global $post;
+
+	$result = '';
+
+	$tApi = new textmaster_api(get_option_tm('textmaster_api_key'), get_option_tm('textmaster_api_secret'));
+
+//	$idProjet = get_post_meta($post->ID,'textmasterIdTrad', TRUE);
+//	$idDocument = get_post_meta($post->ID,'textmasterDocumentIdTrad', TRUE);
+
+//	if ($idDocument != '')
+//		$result = $tApi->getDocumentStatus($idProjet, $idDocument);
+//	else if ($idProjet != '')
+//		$result = $tApi->getProjetStatus($idProjet);
+	// la trad n'est pas faite chez TM
+//	if ($result != 'in_review')
+		redaction_defaut_metaboxes_pre($tApi);
+//	else
+//		metaboxes_post($tApi, 'redaction',$idProjet, $idDocument);
+
+}
+
+function redaction_defaut_metaboxes_pre(&$tApi){
 	global $post;
 
 	$txtRet = '';
 
-	$tApi = new textmaster_api();
-	$tApi->secretapi = get_option('textmaster_api_secret');
-	$tApi->keyapi =  get_option('textmaster_api_key');
+//	$tApi = new textmaster_api(get_option_tm('textmaster_api_key'), get_option_tm('textmaster_api_secret'));
+	//	$tApi->secretapi = get_option_tm('textmaster_api_secret');
+	//	$tApi->keyapi =  get_option_tm('textmaster_api_key');
 
 
-	$categories = $tApi->getCategories();
-	if (isset($categories['message']) && $categories['message'] != '') {
+	if ($tApi->secretapi == '' && $tApi->keyapi == '') {
 		_e('Merci de v&eacute;rifier vos informations de connexion à TextMaster','textmaster');
 	}
 	else
 	{
-		$textmaster_email = get_option('textmaster_email');
-		$textmaster_password = get_option('textmaster_password');
+		$textmaster_email = get_option_tm('textmaster_email');
+		$textmaster_password = get_option_tm('textmaster_password');
 		if ($textmaster_password != '' && $textmaster_email != '') {
 			$oOAuth = new TextMaster_OAuth2();
 			$token = $oOAuth->getToken($textmaster_email, $textmaster_password);
 			$infosUser = $oOAuth->getUserInfos($token);
-			$lang = explode('_', get_locale());
+			$local = get_locale();
+			if ($local != '')
+				$lang = explode('_', $local);
+			else
+				$lang[0] = 'en';
 			$urlAchat = 'http://'.$lang[0].'.'.URL_TM_BOUTIQUE.'?auth_token='.$infosUser['authentication_token'];
 			$infosClient = $tApi->getUserInfos();
 		}
-
+		$categories = $tApi->getCategories();
 		echo '<label>'.__('Categorie:','textmaster').'</label>';
 		echo '<select id="select_textmasterCat" name="select_textmasterCat" style="width:235px;">';
 		if (get_post_meta($post->ID, 'textmasterCategorie', true) != '')
 			$catSelected = get_post_meta($post->ID, 'textmasterCategorie', true);
 		else
-			$catSelected = get_option('textmaster_redactionCategorie');
+			$catSelected = get_option_tm('textmaster_redactionCategorie');
+
+		if ($catSelected == '' || !isset($catSelected))
+			$catSelected = CATEGORIE_DEFAUT;
 
 		foreach($categories as $categorie)
 		{
@@ -158,7 +187,7 @@ function wp_texmaster_redaction_defaut_metaboxes(){
 		}
 		echo '</select><br/><br/>';
 
-	$languageLevels = $tApi->getLanguageLevels();
+		$languageLevels = $tApi->getLanguageLevels();
 
 		echo '<label>'.__('Niveau de service:','textmaster').'</label>';
 		echo '<select id="select_textmasterLanguageLevel" name="select_textmasterLanguageLevel" style="width:235px;">';
@@ -166,17 +195,20 @@ function wp_texmaster_redaction_defaut_metaboxes(){
 		if (get_post_meta($post->ID, 'textmasterLanguageLevel', true) != '')
 			$languageLevelSelected = get_post_meta($post->ID, 'textmasterLanguageLevel', true);
 		else
-			$languageLevelSelected = get_option('textmaster_redactionLanguageLevel');
+			$languageLevelSelected = get_option_tm('textmaster_redactionLanguageLevel');
 
-		foreach($languageLevels as $key => $languageLevel)
+		foreach($languageLevels['copywrite'] as $key => $languageLevel)
 		{
-			if ($languageLevelSelected == $key)
-				echo '<option value="'.$key.'" selected="selected">'.$languageLevel.'</option>';
+			if ($languageLevelSelected == $languageLevel["name"])
+				echo '<option value="'.$languageLevel["name"].'" selected="selected">'.$languageLevel["name"].'</option>';
 			else
-				echo '<option value="'.$key.'">'.$languageLevel.'</option>';
+				echo '<option value="'.$languageLevel["name"].'">'.$languageLevel["name"].'</option>';
 		}
 		echo '</select><br/>';
-		echo '<div>'. __('Coût', 'textmaster').' : <strong id="priceTextmasterBase">NC</strong> '. $infosClient['wallet']['currency_code'] .'</div><br/>';
+		echo '<div>'. __('Coût', 'textmaster').' : <strong id="priceTextmasterBase">NC</strong> ';
+		if (is_array($infosClient))
+			echo $infosClient['wallet']['currency_code'];
+		echo '</div><br/>';
 
 
 		$languages = $tApi->getLanguages();
@@ -187,7 +219,7 @@ function wp_texmaster_redaction_defaut_metaboxes(){
 		if (get_post_meta($post->ID, 'textmasterLang', true) != '')
 			$languageSelected = get_post_meta($post->ID, 'textmasterLang', true);
 		else
-			$languageSelected = get_option('textmaster_redactionLanguage');
+			$languageSelected = get_option_tm('textmaster_redactionLanguage');
 
 		foreach($languages as $language)
 		{
@@ -222,7 +254,7 @@ function wp_texmaster_redaction_defaut_metaboxes(){
 		if (get_post_meta($post->ID, 'textmasterQualityRedaction', true) != '')
 			$textmaster_qualityRedaction = get_post_meta($post->ID, 'textmasterQualityRedaction', true);
 		else
-			$textmaster_qualityRedaction = get_option('textmaster_qualityRedaction');
+			$textmaster_qualityRedaction = get_option_tm('textmaster_qualityRedaction');
 		$chkNo = '';
 		$chkYes = '';
 		if($textmaster_qualityRedaction =="false")
@@ -232,12 +264,15 @@ function wp_texmaster_redaction_defaut_metaboxes(){
 
 		echo '<label class="options_pricetm">'.__('Contrôle qualité :','textmaster').'</label> ';
 		echo '<input type="radio" name="radio_textmasterQuality" class="radio_textmasterQuality" value="true" '.$chkYes.' /> '.__('Oui','textmaster').' <input type="radio" name="radio_textmasterQuality" class="radio_textmasterQuality" value="false" '.$chkNo.'/> '.__('Non','textmaster').'<br/>';
-		echo '<div>'. __('Coût', 'textmaster').' : + <strong id="priceTextmasterQuality">NC</strong> '. $infosClient['wallet']['currency_code'] .'</div><br/>';
+		echo '<div>'. __('Coût', 'textmaster').' : + <strong id="priceTextmasterQuality">NC</strong> ';
+		if (is_array($infosClient))
+			echo $infosClient['wallet']['currency_code'];
+		echo '</div><br/>';
 
 		if (get_post_meta($post->ID, 'textmasterExpertiseRedaction', true) != '')
 			$textmaster_expertiseRedaction = get_post_meta($post->ID, 'textmasterExpertiseRedaction', true);
 		else
-			$textmaster_expertiseRedaction = get_option('textmaster_expertiseRedaction');
+			$textmaster_expertiseRedaction = get_option_tm('textmaster_expertiseRedaction');
 		$chkNo = '';
 		$chkYes = '';
 		if($textmaster_expertiseRedaction =="false")
@@ -245,14 +280,17 @@ function wp_texmaster_redaction_defaut_metaboxes(){
 		else
 			$chkYes = 'checked="checked"';
 
-		echo '<label class="options_pricetm">'.__('Expertise :','textmaster').'</label> ';
-		echo '<input type="radio" name="radio_textmasterExpertise" class="radio_textmasterExpertise" value="true" '.$chkYes.' /> '.__('Oui','textmaster').' <input type="radio" name="radio_textmasterExpertise" class="radio_textmasterExpertise" value="false" '.$chkNo.'/> '.__('Non','textmaster').'<br/>';
-		echo '<div>'. __('Coût', 'textmaster').' : + <strong id="priceTextmasterExpertise">NC</strong> '. $infosClient['wallet']['currency_code'] .'</div><br/>';
+//		echo '<label class="options_pricetm">'.__('Expertise :','textmaster').'</label> ';
+//		echo '<input type="radio" name="radio_textmasterExpertise" class="radio_textmasterExpertise" value="true" '.$chkYes.' /> '.__('Oui','textmaster').' <input type="radio" name="radio_textmasterExpertise" class="radio_textmasterExpertise" value="false" '.$chkNo.'/> '.__('Non','textmaster').'<br/>';
+//		echo '<div>'. __('Coût', 'textmaster').' : + <strong id="priceTextmasterExpertise">NC</strong> ';
+//		if (is_array($infosClient))
+//			echo $infosClient['wallet']['currency_code'] ;
+//		echo '</div><br/>';
 
 		if (get_post_meta($post->ID, 'textmaster_priorityRedaction', true) != '')
 			$textmaster_priorityRedaction = get_post_meta($post->ID, 'textmasterPriorityRedaction', true);
 		else
-			$textmaster_priorityRedaction = get_option('textmaster_priorityRedaction');
+			$textmaster_priorityRedaction = get_option_tm('textmaster_priorityRedaction');
 		$chkNo = '';
 		$chkYes = '';
 		if($textmaster_priorityRedaction =="false")
@@ -262,7 +300,10 @@ function wp_texmaster_redaction_defaut_metaboxes(){
 
 		echo '<label class="options_pricetm">'.__('Commande prioritaire :','textmaster').'</label> ';
 		echo '<input type="radio" name="radio_textmasterPriority" class="radio_textmasterPriority" value="true" '.$chkYes.'/> '.__('Oui','textmaster').' <input type="radio" name="radio_textmasterPriority" class="radio_textmasterPriority" value="false" '.$chkNo.'/> '.__('Non','textmaster').'<br/>';
-		echo '<div>'. __('Coût', 'textmaster').' : + <strong id="priceTextmasterPriority">NC</strong> '. $infosClient['wallet']['currency_code'] .'</div><br/>';
+		echo '<div>'. __('Coût', 'textmaster').' : + <strong id="priceTextmasterPriority">NC</strong> ';
+		if (is_array($infosClient))
+			echo $infosClient['wallet']['currency_code'] ;
+		echo '</div><br/>';
 
 		$disableRedaction = '';
 		$idProjet = get_post_meta($post->ID,'textmasterId', TRUE);
@@ -273,7 +314,7 @@ function wp_texmaster_redaction_defaut_metaboxes(){
 
 			if ($result == 'in_review')
 			{
-				$txtRet = __('Cet article a &eacute;t&eacute; rédigé.','textmaster').'<div id="publishing-action"><input name="Voir" type="button" class="button button-highlighted" id="see" tabindex="5" accesskey="p" value="'.__('Voir / valider','textmaster').'" onclick="tb_show(\''.__('Voir / Valider la rédaction','textmaster').'\',\''. plugins_url('', __FILE__).'/approuve_doc.php?post_id='.$post->ID.'&type=redaction&height=700&width=630\');"></div><div style="clear:both"></div>';
+				$txtRet = __('Cet article a &eacute;t&eacute; rédigé.','textmaster').'<div id="publishing-action"><input name="Voir" type="button" class="button button-highlighted" id="see" tabindex="5" accesskey="p" value="'.__('Voir / valider','textmaster').'" onclick="tb_show(\''.__('Voir / Valider la rédaction','textmaster').'\',\''. plugins_url('', __FILE__).'/approuve_doc.php?post_id='.$post->ID.'&type=redaction&height=500&width=630&TB_iframe=true\');"></div><div style="clear:both"></div>';
 				$disableRedaction = 'disabled=disabled';
 			}
 			else if ( $result == 'in_progress' )
@@ -282,19 +323,19 @@ function wp_texmaster_redaction_defaut_metaboxes(){
 				$disableRedaction = 'disabled=disabled';
 			}
 			else if ($result == 'completed') {
-				$txtRet = __('Vous avez d&eacute;j&agrave; valid&eacute; la rédaction de cet article.','textmaster').'<div id="publishing-action"><input name="Voir" type="button" class="button button-highlighted" id="see" tabindex="5" accesskey="p" value="'.__('Voir la rédaction','textmaster').'" onclick="tb_show(\''.__('Voir / Valider la rédaction','textmaster').'\',\''. plugins_url('', __FILE__).'/approuve_doc.php?post_id='.$post->ID.'&type=redaction&height=700&width=630\');"></div><div style="clear:both"></div>';
+				$txtRet = __('Vous avez d&eacute;j&agrave; valid&eacute; la rédaction de cet article.','textmaster').'<div id="publishing-action"><input name="Voir" type="button" class="button button-highlighted" id="see" tabindex="5" accesskey="p" value="'.__('Voir la rédaction','textmaster').'" onclick="tb_show(\''.__('Voir / Valider la rédaction','textmaster').'\',\''. plugins_url('', __FILE__).'/approuve_doc.php?post_id='.$post->ID.'&type=redaction&height=500&width=630&TB_iframe=true\');"></div><div style="clear:both"></div>';
 				$disableRedaction = 'disabled=disabled';
 			}
 		}
 		else if ($post->post_content == '' ||  $post->post_title == '')
-		 	$disableRedaction = 'disabled="disabled"';
+			$disableRedaction = 'disabled="disabled"';
 
 
-		echo wp_texmaster_redaction_options_metaboxes();
-		echo wp_texmaster_redaction_authors_metaboxes();
+		echo wp_texmaster_redaction_options_metaboxes($tApi);
+		echo wp_texmaster_redaction_authors_metaboxes($tApi);
 
 		echo '<br/><img src="/wp-admin/images/wpspin_light.gif" style="display:none;float:left;margin-top:5px;margin-right:5px;" class="ajax-loading-tmRedaction" alt=""><div style="display:none;float:left;margin-top:5px;margin-right:5px;" class="ajax-loading-tmRedaction"> '.__('Merci de patienter', 'textmaster').'</div>';
-?>
+		?>
 
 		<br/><br/>
 		<div class="major-publishing-actions">
@@ -321,16 +362,16 @@ function wp_texmaster_redaction_defaut_metaboxes(){
 	}
 }
 
-function wp_texmaster_redaction_options_metaboxes(){
+function wp_texmaster_redaction_options_metaboxes(&$tApi){
 	global $post;
 
 
-	$tApi = new textmaster_api();
-	$tApi->secretapi = get_option('textmaster_api_secret');
-	$tApi->keyapi =  get_option('textmaster_api_key');
+//	$tApi = new textmaster_api(get_option_tm('textmaster_api_key'), get_option_tm('textmaster_api_secret'));
+//	$tApi->secretapi = get_option_tm('textmaster_api_secret');
+//	$tApi->keyapi =  get_option_tm('textmaster_api_key');
 
 	$categories = $tApi->getCategories();
-	if (isset($categories['message']) && $categories['message'] != '') {
+	if ($tApi->secretapi == '' && $tApi->keyapi == ''){
 		_e('Merci de v&eacute;rifier vos informations de connexion à TextMaster','textmaster');
 	}
 	else
@@ -353,7 +394,7 @@ function wp_texmaster_redaction_options_metaboxes(){
 		if (get_post_meta($post->ID, 'textmasterVocabularyType', true) != '')
 			$vocabulary_typeSelected = get_post_meta($post->ID, 'textmasterVocabularyType', true);
 		else
-			$vocabulary_typeSelected = get_option('textmaster_vocabularyType');
+			$vocabulary_typeSelected = get_option_tm('textmaster_vocabularyType');
 
 		$vocabulary_types = $tApi->getVocabularyTypes();
 		foreach($vocabulary_types as $key => $vocabulary_type)
@@ -372,7 +413,7 @@ function wp_texmaster_redaction_options_metaboxes(){
 		if (get_post_meta($post->ID, 'textmasterGrammaticalPerson', true) != '')
 			$grammatical_personSelected = get_post_meta($post->ID, 'textmasterGrammaticalPerson', true);
 		else
-			$grammatical_personSelected = get_option('textmaster_grammaticalPerson');
+			$grammatical_personSelected = get_option_tm('textmaster_grammaticalPerson');
 
 		$grammatical_persons = $tApi->getGrammaticalPersons();
 		foreach($grammatical_persons as $key => $grammatical_person)
@@ -391,7 +432,7 @@ function wp_texmaster_redaction_options_metaboxes(){
 		if (get_post_meta($post->ID, 'textmasterTargetReaderGroup', true) != '')
 			$target_reader_groupSelected = get_post_meta($post->ID, 'textmasterTargetReaderGroup', true);
 		else
-			$target_reader_groupSelected = get_option('textmaster_targetReaderGroup');
+			$target_reader_groupSelected = get_option_tm('textmaster_targetReaderGroup');
 
 		$target_reader_groups = $tApi->getTargetReaderGroups();
 		foreach($target_reader_groups as $key => $target_reader_group)
@@ -411,52 +452,53 @@ function wp_texmaster_redaction_templates_metaboxes(){
 	global $post;
 
 
-	$tApi = new textmaster_api();
-	$tApi->secretapi = get_option('textmaster_api_secret');
-	$tApi->keyapi =  get_option('textmaster_api_key');
+	$tApi = new textmaster_api(get_option_tm('textmaster_api_key'), get_option_tm('textmaster_api_secret'));
+//	$tApi->secretapi = get_option_tm('textmaster_api_secret');
+//	$tApi->keyapi =  get_option_tm('textmaster_api_key');
 
 	$templates = $tApi->getTemplates();
 
-	if (count($templates) == 0) {
+	if ($tApi->secretapi == '' && $tApi->keyapi == '')
 		_e('Merci de v&eacute;rifier vos informations de connexion à TextMaster','textmaster');
-	}
 	else
 	{
 		if (get_post_meta($post->ID, 'textmasterTemplate', true) != '')
 			$templateSelected = get_post_meta($post->ID, 'textmasterTemplate', true);
 		else
-			$templateSelected = get_option('textmaster_Template');
+			$templateSelected = get_option_tm('textmaster_Template');
 
 
 		echo '<ul style="display:inline-block;">';
-		foreach($templates as $key => $template)
-		{
-			echo '<li style="width:150px;display:inline-block;min-height:340px;vertical-align:top;margin:10px;">';
-			if ($templateSelected == $template['name'])
-				$checked = 'checked="checked"';
-			else
-				$checked = '';
-			echo '<input type="radio" name="radio_textmasterTemplate" id="radio_textmasterTemplate" value="'.$template['name'].'" '.$checked.'>';
-			echo '<img src="'.$template['image_preview_path'].'" />';
-			echo $template['description'];
-			echo '</li>';
+		if (count($templates) != 0) {
+			foreach($templates as $key => $template)
+			{
+				echo '<li style="width:150px;display:inline-block;min-height:340px;vertical-align:top;margin:10px;">';
+				if ($templateSelected == $template['name'])
+					$checked = 'checked="checked"';
+				else
+					$checked = '';
+				echo '<input type="radio" name="radio_textmasterTemplate" id="radio_textmasterTemplate" value="'.$template['name'].'" '.$checked.'>';
+				echo '<img src="'.$template['image_preview_path'].'" />';
+				echo $template['description'];
+				echo '</li>';
+			}
 		}
+
 		echo '</ul>';
 	}
 }
 
-function wp_texmaster_redaction_authors_metaboxes(){
+function wp_texmaster_redaction_authors_metaboxes(&$tApi){
 	global $post;
 
-	$tApi = new textmaster_api();
-	$tApi->secretapi = get_option('textmaster_api_secret');
-	$tApi->keyapi =  get_option('textmaster_api_key');
+//	$tApi = new textmaster_api(get_option_tm('textmaster_api_key'), get_option_tm('textmaster_api_secret'));
+//	$tApi->secretapi = get_option_tm('textmaster_api_secret');
+//	$tApi->keyapi =  get_option_tm('textmaster_api_key');
 
 	$auteurs = $tApi->getAuteurs();
 
-	if (count($auteurs) == 0) {
+	if ($tApi->secretapi == '' && $tApi->keyapi == '')
 		_e('Merci de v&eacute;rifier vos informations de connexion à TextMaster','textmaster');
-	}
 	else
 	{
 		echo '<a id="showAuthorsRedaction"><img src="'.plugins_url('', __FILE__).'/images/plus.png" />' .__('Vos auteurs' ,'textmaster').'</a><br/>';
@@ -466,7 +508,7 @@ function wp_texmaster_redaction_authors_metaboxes(){
 		if (get_post_meta($post->ID, 'textmasterAuthor', true) != '')
 			$auteurSelected = unserialize( get_post_meta($post->ID, 'textmasterAuthor', true));
 		else
-			$auteurSelected = array(get_option('textmaster_author'));
+			$auteurSelected = array(get_option_tm('textmaster_author'));
 
 		foreach($auteurs as $auteur)
 		{
@@ -569,15 +611,15 @@ function textmaster_redaction_notice(){
 
 	if ($pagenow == 'post.php' && 'textmaster_redaction' === get_post_type($post->ID))
 	{
-		$tApi = new textmaster_api();
-		$tApi->secretapi = get_option('textmaster_api_secret');
-		$tApi->keyapi =  get_option('textmaster_api_key');
+		$tApi = new textmaster_api(get_option_tm('textmaster_api_key'), get_option_tm('textmaster_api_secret'));
+		//$tApi->secretapi = get_option_tm('textmaster_api_secret');
+		//$tApi->keyapi =  get_option_tm('textmaster_api_key');
 		$idProjet = get_post_meta($post->ID,'textmasterId', TRUE);
 		$status = $tApi->getProjetStatus($idProjet);
 
 		if ($status == 'in_review') {
 			echo '<div class="updated">
-			   <p>'.__('Ce projet a été rédigé, vous pouvez le','textmaster'). '<a href="javascript:void(tb_show(\''.__('Voir / Valider la rédaction','textmaster').'\',\'/wp-content/plugins/wp-textmaster/approuve_doc.php?post_id='.$post->ID.'&type=redaction&height=650&width=630\'));">'.__('valider dès maintenant','textmaster').'</a></p>
+			   <p>'.__('Ce projet a été rédigé, vous pouvez le','textmaster'). '<a href="javascript:void(tb_show(\''.__('Voir / Valider la rédaction','textmaster').'\',\'/wp-content/plugins/wp-textmaster/approuve_doc.php?post_id='.$post->ID.'&type=redaction&height=500&width=630&TB_iframe=true\'));">'.__('valider dès maintenant','textmaster').'</a></p>
 			</div>';
 		}
 	}
@@ -590,12 +632,20 @@ function callback_redaction(){
 	$language = $_POST['language'];
 	$wordCountRule = $_POST['wordCountRule'];
 	$wordCount = $_POST['wordCount'];
-	$authors = $_POST['authors'];
 
+	$checkStatut = '';
+
+	if (isset($_POST['authors']))
+		$authors = $_POST['authors'];
+	else
+		$authors = "";
+	$textmasterQualityRedaction = '';
 	if (isset($_REQUEST['quality']))
 		$textmasterQualityRedaction = $_REQUEST['quality'];
+	$textmasterExpertiseRedaction = '';
 	if (isset($_REQUEST['expertise']))
 		$textmasterExpertiseRedaction = $_REQUEST['expertise'];
+	$textmasterPriorityRedaction = '';
 	if (isset($_REQUEST['priority']))
 		$textmasterPriorityRedaction = $_REQUEST['priority'];
 
@@ -641,10 +691,10 @@ function callback_redaction(){
 			$ret = 'Error : Merci de saisir un nombre de mot.' ;
 	}
 	else{
-		$tApi = new textmaster_api();
-		$tApi->secretapi = get_option('textmaster_api_secret');
-		$tApi->keyapi =  get_option('textmaster_api_key');
-		$idProjet = get_post_meta($postID,'textmasterId', TRUE);
+		$tApi = new textmaster_api(get_option_tm('textmaster_api_key'), get_option_tm('textmaster_api_secret'));
+		//$tApi->secretapi = get_option_tm('textmaster_api_secret');
+		//$tApi->keyapi =  get_option_tm('textmaster_api_key');
+		$idProjet = get_post_meta($post_id,'textmasterId', TRUE);
 
 		if ($textmasterQualityRedaction == 'true')
 			$qualityRedaction = 'true';
@@ -659,7 +709,8 @@ function callback_redaction(){
 		else
 			$priorityRedaction = 'false';
 
-		$checkStatut = $tApi->getProjetStatus($idProjet);
+		if ($idProjet != '')
+			$checkStatut = $tApi->getProjetStatus($idProjet);
 		if ($idProjet == '' || $checkStatut == 'canceled')
 		{
 			$retProjet = $tApi->makeProject(get_the_title($post_id), 'copywriting', $language, $language, $categorie, $content, $languageLevel, $qualityRedaction, $expertiseRedaction, $priorityRedaction, $templateTM, $vocabularyType, $grammaticalPerson, $targetReaderGroup, $authors);
@@ -667,23 +718,33 @@ function callback_redaction(){
 				$idProjet = $retProjet['id'];
 			else
 				$ret = __('Erreur lors de la création de votre projet ('.$retProjet.')' ,'textmaster');
+		//	var_dump($retProjet);
 		}
 
 		// nouveau projet
-		if (is_array($retProjet) ||  $idProjet != '')
+		if ((isset($retProjet) && is_array($retProjet)) ||  $idProjet != '')
 		{
 			//	$ret = serialize($ret);
 			update_post_meta($post_id, 'textmasterId', $idProjet);
-			$ret = $tApi->addDocument($idProjet, get_the_title($post_id) ,$wordCount, '', $wordCountRule, $keywords, $keywordsRepeatCount);
+			$arrayDocs[0]['title'] = get_the_title($post_id);
+			$arrayDocs[0]['word_count'] = $wordCount;
+			$arrayDocs[0]['original_content'] = '';
+			$arrayDocs[0]['word_count_rule'] = $wordCountRule;
+			$arrayDocs[0]['keyword_list'] = $keywords;
+			$arrayDocs[0]['keywords_repeat_count'] = $keywordsRepeatCount;
+			$ret = $tApi->addDocument($idProjet, $arrayDocs, 'copywriting' );
+		//	var_dump($ret);
 			update_post_meta($post_id, 'textmasterDocumentId', $ret['id']);
 		}
 
 		$result = $tApi->getProjetStatus($idProjet);
+
 		if ($result == 'paused' || $result == 'in_creation') {
 			$retLaunch = $tApi->launchProject($idProjet);
+
 			$retLaunch = json_decode($retLaunch, TRUE);
 
-			if (array_key_exists('errors',$retLaunch))
+			if (is_array($retLaunch) && array_key_exists('errors',$retLaunch))
 			{
 				if (array_key_exists('credits',$retLaunch['errors']))
 					$ret = 'Error '.$retLaunch['errors']['credits'][0];
@@ -695,11 +756,15 @@ function callback_redaction(){
 				$result = $tApi->getProjetStatus($idProjet);
 				update_post_meta($post_id, 'textmasterStatusRedaction', $result);
 				$ret = __('La rédaction de cet article est lancée.','textmaster');
-				wpDelTempProjet('wp_'.$postID);
+				wpDelTempProjet('wp_'.$post_id);
 				wp_schedule_single_event( time() + 1, 'cron_syncProjets' );
-				syncProjets('waiting_assignment');
+		//		syncProjets('waiting_assignment',1);
+				wp_schedule_single_event( time() + 1, 'cron_syncProjets', array('waiting_assignment',1 ) );
+
 				//	syncProjets('in_progress');
-				syncProjets('in_creation');
+			//	syncProjets('in_creation');
+				wp_schedule_single_event( time() + 1, 'cron_syncProjets', array('in_creation',1 ) );
+
 			}
 
 		}
@@ -712,7 +777,7 @@ function callback_redaction(){
 	}
 
 
-
+//	print_r($ret);
 	if (strpos($ret, 'Error') !== FALSE)
 		echo '<br><div class="error">'.$ret.'</div>';
 	else

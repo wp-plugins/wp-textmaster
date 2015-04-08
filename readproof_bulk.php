@@ -1,5 +1,15 @@
 <?php
-include "../../../wp-load.php";
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
+//include "../../../wp-load.php";
+//require_once( $_SERVER['DOCUMENT_ROOT'] . '/wp-load.php' );
+$parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
+require_once( $parse_uri[0] . 'wp-load.php' );
+
+if (!isset($_REQUEST['site']))
+	$_REQUEST['site'] = '';
 ?>
 <!DOCTYPE html>
 <!--[if IE 8]>
@@ -31,9 +41,9 @@ html {
 <body style="padding:10px;margin:0;">
 <form method="post" action="readproof_bulk.php" id="tm_buckform">
 <?php
-$tApi = new textmaster_api();
-$tApi->secretapi = get_option('textmaster_api_secret');
-$tApi->keyapi = get_option('textmaster_api_key');
+$tApi = new textmaster_api(get_option_tm('textmaster_api_key'), get_option_tm('textmaster_api_secret'));
+//$tApi->secretapi = get_option_tm('textmaster_api_secret');
+//$tApi->keyapi = get_option_tm('textmaster_api_key');
 
 $aInfosPost = getInfosPosts($_REQUEST['post_ids']);
 if (count($_POST)!= 0 && $aInfosPost != FALSE) {
@@ -47,13 +57,17 @@ else if (!$aInfosPost) {
 
 	$txtRet = '';
 
-	$textmaster_email = get_option('textmaster_email');
-	$textmaster_password = get_option('textmaster_password');
+	$textmaster_email = get_option_tm('textmaster_email');
+	$textmaster_password = get_option_tm('textmaster_password');
 	if ($textmaster_password != '' && $textmaster_email != '') {
 		$oOAuth = new TextMaster_OAuth2();
 		$token = $oOAuth->getToken($textmaster_email, $textmaster_password);
 		$infosUser = $oOAuth->getUserInfos($token);
-		$lang = explode('_', get_locale());
+		$local = get_locale();
+		if ($local != '')
+			$lang = explode('_', $local);
+		else
+			$lang[0] = 'en';
 		$urlAchat = 'http://' . $lang[0] . '.' . URL_TM_BOUTIQUE . '?auth_token=' . $infosUser['authentication_token'];
 		$infosClient = $tApi->getUserInfos();
 	}
@@ -68,7 +82,7 @@ else if (!$aInfosPost) {
         echo '<label class="options_pricetm">' . __('Categorie:', 'textmaster') . '</label>';
         echo '<select name="select_textmasterCat" id="select_textmasterCat" style="width:235px;">';
 
-        $catSelected = get_option('textmaster_readproofCategorie');
+        $catSelected = get_option_tm('textmaster_readproofCategorie');
 
         foreach($categories as $categorie) {
             if ($catSelected == $categorie['code'])
@@ -83,23 +97,26 @@ else if (!$aInfosPost) {
         echo '<label class="options_pricetm">' . __('Niveau de service:', 'textmaster') . '</label>';
         echo '<select id="select_textmasterReadProofLanguageLevel" name="select_textmasterReadProofLanguageLevel" style="width:235px;">';
 
-        $languageLevelSelected = get_option('textmaster_readproofLanguageLevel');
+        $languageLevelSelected = get_option_tm('textmaster_readproofLanguageLevel');
 
-        foreach($languageLevels as $key => $languageLevel) {
-            if ($languageLevelSelected == $key)
-                echo '<option value="' . $key . '" selected="selected">' . $languageLevel . '</option>';
+        foreach($languageLevels['readproof'] as $key => $languageLevel) {
+            if ($languageLevelSelected == $languageLevel["name"])
+                echo '<option value="' . $languageLevel["name"] . '" selected="selected">' . $languageLevel["name"] . '</option>';
             else
-                echo '<option value="' . $key . '">' . $languageLevel . '</option>';
+                echo '<option value="' . $languageLevel["name"] . '">' . $languageLevel["name"] . '</option>';
         }
         echo '</select>';
-    	echo '<span class="coutOptionTm">'. __('Coût', 'textmaster').' : <strong id="priceTextmasterBaseReadproof">NC</strong> '. $infosClient['wallet']['currency_code'] .'</span><br/>';
+    	echo '<span class="coutOptionTm">'. __('Coût', 'textmaster').' : <strong id="priceTextmasterBaseReadproof">NC</strong> ';
+    	if (is_array($infosClient))
+    		echo $infosClient['wallet']['currency_code'];
+    	echo '</span><br/>';
 
         $languages = $tApi->getLanguages();
 
         echo '<label class="options_pricetm">' . __('Langue :', 'textmaster') . '</label>';
         echo '<select id="select_textmasterReadProofLang" name="select_textmasterReadProofLang" style="width:235px;">';
 
-        $languageSelected = get_option('textmaster_readproofLanguage');
+        $languageSelected = get_option_tm('textmaster_readproofLanguage');
 
         foreach($languages as $language) {
             if ($languageSelected == $language['code'])
@@ -109,7 +126,7 @@ else if (!$aInfosPost) {
         }
         echo '</select><br/>';
 
-        $textmaster_qualityRedaction = get_option('textmaster_qualityReadproof');
+        $textmaster_qualityRedaction = get_option_tm('textmaster_qualityReadproof');
         $chkNo = '';
         $chkYes = '';
         if ($textmaster_qualityRedaction == "false")
@@ -119,9 +136,12 @@ else if (!$aInfosPost) {
 
         echo '<label class="options_pricetm">' . __('Contrôle qualité :', 'textmaster') . '</label> ';
         echo '<input type="radio" name="radio_textmasterQualityReadproof" class="radio_textmasterQualityReadproof" value="true" ' . $chkYes . ' /> ' . __('Oui','textmaster') . ' <input type="radio" name="radio_textmasterQualityReadproof" class="radio_textmasterQualityReadproof" value="false" ' . $chkNo . '/> ' . __('Non','textmaster') ;
-    	echo '<span class="coutOptionTm">'. __('Coût', 'textmaster').' : + <strong id="priceTextmasterQualityReadProof">NC</strong> '. $infosClient['wallet']['currency_code'] .'</span><br/>';
+    	echo '<span class="coutOptionTm">'. __('Coût', 'textmaster').' : + <strong id="priceTextmasterQualityReadProof">NC</strong> ';
+    	if (is_array($infosClient))
+    		echo $infosClient['wallet']['currency_code'];
+    	echo '</span><br/>';
 
-        $textmaster_expertiseRedaction = get_option('textmaster_expertiseReadproof');
+        $textmaster_expertiseRedaction = get_option_tm('textmaster_expertiseReadproof');
         $chkNo = '';
         $chkYes = '';
         if ($textmaster_expertiseRedaction == "false")
@@ -129,11 +149,14 @@ else if (!$aInfosPost) {
         else
             $chkYes = 'checked="checked"';
 
-        echo '<label class="options_pricetm">' . __('Expertise :', 'textmaster') . '</label> ';
-        echo '<input type="radio" name="radio_textmasterExpertiseReadproof" class="radio_textmasterExpertiseReadproof" value="true" ' . $chkYes . ' /> ' . __('Oui','textmaster') . ' <input type="radio" name="radio_textmasterExpertiseReadproof" class="radio_textmasterExpertiseReadproof" value="false" ' . $chkNo . '/> ' . __('Non','textmaster') ;
-    	echo '<span class="coutOptionTm">'. __('Coût', 'textmaster').' : + <strong id="priceTextmasterExpertiseReadproof">NC</strong> '. $infosClient['wallet']['currency_code'] .'</span><br/>';
+    //    echo '<label class="options_pricetm">' . __('Expertise :', 'textmaster') . '</label> ';
+     //   echo '<input type="radio" name="radio_textmasterExpertiseReadproof" class="radio_textmasterExpertiseReadproof" value="true" ' . $chkYes . ' /> ' . __('Oui','textmaster') . ' <input type="radio" name="radio_textmasterExpertiseReadproof" class="radio_textmasterExpertiseReadproof" value="false" ' . $chkNo . '/> ' . __('Non','textmaster') ;
+   // 	echo '<span class="coutOptionTm">'. __('Coût', 'textmaster').' : + <strong id="priceTextmasterExpertiseReadproof">NC</strong> ';
+    //	if (is_array($infosClient))
+    //		echo $infosClient['wallet']['currency_code'];
+    //	echo '</span><br/>';
 
-        $textmaster_priorityRedaction = get_option('textmaster_priorityReadproof');
+        $textmaster_priorityRedaction = get_option_tm('textmaster_priorityReadproof');
         $chkNo = '';
         $chkYes = '';
         if ($textmaster_priorityRedaction == "false")
@@ -143,12 +166,15 @@ else if (!$aInfosPost) {
 
         echo '<label class="options_pricetm">' . __('Commande prioritaire :', 'textmaster') . '</label> ';
         echo '<input type="radio" name="radio_textmasterPriorityReadproof" class="radio_textmasterPriorityReadproof" value="true" ' . $chkYes . '/> ' . __('Oui','textmaster') . ' <input type="radio" name="radio_textmasterPriorityReadproof" class="radio_textmasterPriorityReadproof" value="false" ' . $chkNo . '/> ' . __('Non','textmaster') ;
-    	echo '<span class="coutOptionTm">'. __('Coût', 'textmaster').' : + <strong id="priceTextmasterPriorityReadproof">NC</strong> '. $infosClient['wallet']['currency_code'] .'</span><br/>';
+    	echo '<span class="coutOptionTm">'. __('Coût', 'textmaster').' : + <strong id="priceTextmasterPriorityReadproof">NC</strong> ';
+    	if (is_array($infosClient))
+    		echo $infosClient['wallet']['currency_code'];
+    	echo '</span><br/>';
 
-		wp_texmaster_readproof_options_metaboxes();
-    	wp_texmaster_readproof_authors_metaboxes();
+//		wp_texmaster_readproof_options_metaboxes();
+    	wp_texmaster_readproof_authors_metaboxes($tApi);
 
-   		$textmasterBriefing_readproof = get_option('textmaster_readproofBriefing');
+   		$textmasterBriefing_readproof = get_option_tm('textmaster_readproofBriefing');
 
     	echo '<br/><label>'.__('Briefing :','textmaster').'</label><br/>';
     	echo '<textarea style="width:620px;height:70px;" name="text_textmasterBriefing_readproof" id="text_textmasterBriefing_readproof">'.$textmasterBriefing_readproof.'</textarea><br/>';
@@ -156,14 +182,23 @@ else if (!$aInfosPost) {
     	// secu si pas assez de crédits
     	$disabled = '';
     	$prixTotal = $tApi->getPricings($aInfosPost['totalWords']);
-    	if ($prixTotal > $infosClient['wallet']['current_money'])
+    	if (is_array($infosClient) && $prixTotal > $infosClient['wallet']['current_money'])
     		$disabled = 'disabled=disabled';
 
         echo '<br/><img src="/wp-admin/images/wpspin_light.gif" style="display:none;float:left;margin-top:5px;margin-right:5px;" class="ajax-loading-tmBluckReadProof" alt=""><div style="display:none;float:left;margin-top:5px;margin-right:5px;" class="ajax-loading-tmBluckReadProof">'.__('Merci de patienter','textmaster').'</div><div id="publishing-action"><input name="save" type="submit" class="button button-highlighted" id="bulk_readproof" tabindex="5" accesskey="p" value="' . __('Relecture', 'textmaster') . '" '.$disabled.' onclick="jQuery(\'.ajax-loading-tmBluckReadProof\').show();"></div>';
         echo '<div style="clear:both"></div><div id="resultTextmaster" class="tmInfos">' . $txtRet . '</div>';
 
     	echo '<div style="font-weight:bold;">';
-        echo '<div class="tmInfos">' . __('Coût', 'textmaster') . ' : <span id="priceTextmasterReadProof">NC</span> '.$infosClient['wallet']['currency_code'].' (<span class="nbMots"></span> '.__('mots','textmaster').')</div><div class="tmInfos">'.__('Crédits:', 'textmaster').' <span class="walletTextmaster">'.$infosClient['wallet']['current_money'].'</span> '.$infosClient['wallet']['currency_code'].' <a href="' . $urlAchat . '" target="_blank">' . __('Créditer mon compte', 'textmaster') . '</a></div>';
+        echo '<div class="tmInfos">' . __('Coût', 'textmaster') . ' : <span id="priceTextmasterReadProof">NC</span> ';
+    	if (is_array($infosClient))
+    		echo $infosClient['wallet']['currency_code'];
+    	echo ' (<span class="nbMots"></span> '.__('mots','textmaster').')</div><div class="tmInfos">'.__('Crédits:', 'textmaster').' <span class="walletTextmaster">';
+    	if (is_array($infosClient))
+    		echo $infosClient['wallet']['current_money'];
+    	echo '</span> ';
+    	if (is_array($infosClient))
+    		$infosClient['wallet']['currency_code'];
+    	echo ' <a href="' . $urlAchat . '" target="_blank">' . __('Créditer mon compte', 'textmaster') . '</a></div>';
        	echo '</div>';
 
 		echo '<input type="hidden" name="forceWordsCount" id="forceWordsCount" value="'.$aInfosPost['totalWords'].'"/>';
@@ -184,11 +219,27 @@ function launchReadproof($aInfosPost){
 
 	$textmasterQualityReadproof = '';
 
+	if (!isset($_POST['radio_textmasterExpertiseReadproof']))
+		$_POST['radio_textmasterExpertiseReadproof'] = '';
+	if (!isset($_POST['select_textmasterVocabularyType_readproof']))
+		$_POST['select_textmasterVocabularyType_readproof'] = '';
+	if (!isset($_POST['select_textmasterGrammaticalPerson_readproof']))
+		$_POST['select_textmasterGrammaticalPerson_readproof'] = '';
+	if (!isset($_POST['select_textmasterTargetReaderGroup_readproof']))
+		$_POST['select_textmasterTargetReaderGroup_readproof'] = '';
+	if (!isset($_POST['text_textmasterKeywords_readproof']))
+		$_POST['text_textmasterKeywords_readproof'] = '';
+	if (!isset($_POST['text_textmasterKeywordsRepeatCount_readproof']))
+		$_POST['text_textmasterKeywordsRepeatCount_readproof'] = '';
+	if (!isset($_POST['text_textmasterKeywords_readproof']))
+		$_POST['text_textmasterKeywords_readproof'] = '';
+
+
 	// on créer le projet
 	if ($_POST['textmasterNomProjet'] != '')
-		$retProjet = $tApi->makeProject($_POST['textmasterNomProjet'], 'proofreading', $_POST['select_textmasterReadProofLang'], $_POST['select_textmasterReadProofLang'], $_POST['select_textmasterCat'], $_POST['text_textmasterBriefing_readproof'], $_POST['select_textmasterReadProofLanguageLevel'], $_POST['radio_textmasterQualityReadproof'], $_POST['radio_textmasterExpertiseReadproof'], $_POST['radio_textmasterPriorityReadproof'],'',  $_REQUEST['select_textmasterVocabularyType_readproof'], $_REQUEST['select_textmasterGrammaticalPerson_readproof'], $_REQUEST['select_textmasterTargetReaderGroup_readproof'], $_POST['check_textmasterAuthorReadproof']);
+		$retProjet = $tApi->makeProject($_POST['textmasterNomProjet'], 'proofreading', $_POST['select_textmasterReadProofLang'], $_POST['select_textmasterReadProofLang'], $_POST['select_textmasterCat'], $_POST['text_textmasterBriefing_readproof'], $_POST['select_textmasterReadProofLanguageLevel'], $_POST['radio_textmasterQualityReadproof'], $_POST['radio_textmasterExpertiseReadproof'], $_POST['radio_textmasterPriorityReadproof'],'',  $_POST['select_textmasterVocabularyType_readproof'], $_POST['select_textmasterGrammaticalPerson_readproof'], $_POST['select_textmasterTargetReaderGroup_readproof'], $_POST['check_textmasterAuthorReadproof']);
 	else
-		$retProjet = $tApi->makeProject('WordPress -'. date('Y-m-d'),  'proofreading', $_POST['select_textmasterReadProofLang'], $_POST['select_textmasterReadProofLang'], $_POST['select_textmasterCat'], $_POST['text_textmasterBriefing_readproof'], $_POST['select_textmasterReadProofLanguageLevel'], $_POST['radio_textmasterQualityReadproof'], $_POST['radio_textmasterExpertiseReadproof'], $_POST['radio_textmasterPriorityReadproof'],'',  $_REQUEST['select_textmasterVocabularyType_readproof'], $_REQUEST['select_textmasterGrammaticalPerson_readproof'], $_REQUEST['select_textmasterTargetReaderGroup_readproof'], $_POST['check_textmasterAuthorReadproof']);
+		$retProjet = $tApi->makeProject('WordPress -'. date('Y-m-d'),  'proofreading', $_POST['select_textmasterReadProofLang'], $_POST['select_textmasterReadProofLang'], $_POST['select_textmasterCat'], $_POST['text_textmasterBriefing_readproof'], $_POST['select_textmasterReadProofLanguageLevel'], $_POST['radio_textmasterQualityReadproof'], $_POST['radio_textmasterExpertiseReadproof'], $_POST['radio_textmasterPriorityReadproof'],'',  $_POST['select_textmasterVocabularyType_readproof'], $_POST['select_textmasterGrammaticalPerson_readproof'], $_POST['select_textmasterTargetReaderGroup_readproof'], $_POST['check_textmasterAuthorReadproof']);
 
 	if (is_array($retProjet))
 		$idProjet = $retProjet['id'];
@@ -198,10 +249,11 @@ function launchReadproof($aInfosPost){
 	$nbDocAjouter = 0;
 
 	if ($idProjet != '') {
+
 		$strRet = '<ul>';
 		foreach ($aInfosPost as $post) {
-			if ($post['content']->ID != '') {
-				$idTm = get_post_meta($post['content']->ID, 'textmasterId', true);
+			if (is_object($post['content']) && $post['content']->ID != '') {
+				$idTm = get_post_meta_tm($post['content']->ID, 'textmasterId', true, $_REQUEST['site']);
 				if ($idTm != '') {
 					$strRet .= '<li><div class="error"><strong>'.$post['content']->post_title.'</strong> '.__('La relecture de ces articles est déjà', 'textmaster').' : '.$tApi->getLibStatus($tApi->getProjetStatus($idTm)).'</div></li>';
 				}
@@ -219,16 +271,16 @@ function launchReadproof($aInfosPost){
 
 					update_post_meta($post['id'], 'textmaster_BriefingReadproof',		$_POST['text_textmasterBriefing_readproof']);
 
-					if (isset($_REQUEST['text_textmasterKeywords_readproof']))
-						update_post_meta($post['id'], 'textmasterKeywords_readproof', $_REQUEST['text_textmasterKeywords_readproof']);
-					if (isset($_REQUEST['text_textmasterKeywordsRepeatCount_readproof']))
-						update_post_meta($post['id'], 'textmasterKeywordsRepeatCount_readproof', $_REQUEST['text_textmasterKeywordsRepeatCount_readproof']);
-					if (isset($_REQUEST['select_textmasterVocabularyType_readproof']))
-						update_post_meta($post['id'], 'textmasterVocabularyType_readproof', $_REQUEST['select_textmasterVocabularyType_readproof']);
-					if (isset($_REQUEST['select_textmasterGrammaticalPerson_readproof']))
-						update_post_meta($post['id'], 'textmasterGrammaticalPerson_readproof', $_REQUEST['select_textmasterGrammaticalPerson_readproof']);
-					if (isset($_REQUEST['select_textmasterTargetReaderGroup_readproof']))
-						update_post_meta($post['id'], 'textmasterTargetReaderGroup_readproof', $_REQUEST['select_textmasterTargetReaderGroup_readproof']);
+					if (isset($_POST['text_textmasterKeywords_readproof']))
+						update_post_meta($post['id'], 'textmasterKeywords_readproof', $_POST['text_textmasterKeywords_readproof']);
+					if (isset($_POST['text_textmasterKeywordsRepeatCount_readproof']))
+						update_post_meta($post['id'], 'textmasterKeywordsRepeatCount_readproof', $_POST['text_textmasterKeywordsRepeatCount_readproof']);
+					if (isset($_POST['select_textmasterVocabularyType_readproof']))
+						update_post_meta($post['id'], 'textmasterVocabularyType_readproof', $_POST['select_textmasterVocabularyType_readproof']);
+					if (isset($_POST['select_textmasterGrammaticalPerson_readproof']))
+						update_post_meta($post['id'], 'textmasterGrammaticalPerson_readproof', $_POST['select_textmasterGrammaticalPerson_readproof']);
+					if (isset($_POST['select_textmasterTargetReaderGroup_readproof']))
+						update_post_meta($post['id'], 'textmasterTargetReaderGroup_readproof', $_POST['select_textmasterTargetReaderGroup_readproof']);
 
 					if (isset($_POST['check_textmasterAuthorReadproof']))
 						update_post_meta($post['id'], 'textmasterReadProofAuthor', serialize($_POST['check_textmasterAuthorReadproof']));
@@ -238,9 +290,73 @@ function launchReadproof($aInfosPost){
 						//	$ret = serialize($ret);
 						update_post_meta($post['id'], 'textmasterId', $idProjet);
 						$contentText = cleanWpTxt( $post['content']->post_content);
+						$fullContent = '';
+
+						if( checkInstalledPlugin('Advanced Custom Fields')) {
+							$fields = getExtrasFields($post['content']->ID, '', $_REQUEST['site']);
+							if (count($fields) != 0) {
+								foreach ( $fields as $name => $param) {
+									if ($name != 'acf_nonce' && trim($param) != ''){
+										$arrayDocs[$nbDocAjouter]['original_content'][$name]["original_phrase"] = $param;
+										$fullContent .= cleanWpTxt( $param );
+									}
+
+								}
+							}
+
+							$arrayDocs[$nbDocAjouter]['original_content']['content']["original_phrase"] = $post['content']->post_content;
+							if ($post['content']->post_excerpt != ''){
+								$arrayDocs[$nbDocAjouter]['original_content']["post_excerpt"]["original_phrase"] = $post['content']->post_excerpt;
+								$fullContent .= cleanWpTxt( $post['content']->post_excerpt );
+							}
+							$nbMots = $tApi->countWords( $post['content']->post_title .' '.$contentText.' '.$fullContent);
+						}
+
+						if(  checkInstalledPlugin('Meta Box')) {
+							$fields = getExtrasFields($post['content']->ID, 'metabox', $_REQUEST['site']);
+							if (count($fields) != 0) {
+								foreach ( $fields as $name => $param) {
+									if (is_string($param) && trim($param) != ''){
+										$arrayDocs[$nbDocAjouter]['original_content'][$name]["original_phrase"] = $param;
+										$fullContent .= cleanWpTxt( $param );
+									}
+
+								}
+							}
+
+							$arrayDocs[$nbDocAjouter]['original_content']['content']["original_phrase"] = $post['content']->post_content;
+							if ($post['content']->post_excerpt != ''){
+								$arrayDocs[$nbDocAjouter]['original_content']["post_excerpt"]["original_phrase"] = $post['content']->post_excerpt;
+								$fullContent .= cleanWpTxt( $post['content']->post_excerpt );
+							}
+							$nbMots = $tApi->countWords( $post['content']->post_title .' '.$contentText.' '.$fullContent);
+						}
+
+						if( !checkInstalledPlugin('Advanced Custom Fields') && !checkInstalledPlugin('Meta Box')) {
+							if ($post['content']->post_excerpt != ''){
+								$arrayDocs[$nbDocAjouter]['original_content']['content']["original_phrase"] = $post['content']->post_content;
+								$arrayDocs[$nbDocAjouter]['original_content']["post_excerpt"]["original_phrase"] = $post['content']->post_excerpt;
+								$contentText = cleanWpTxt( $post['content']->post_excerpt ).' '.cleanWpTxt( $post['content']->post_content );
+							}
+							else
+								$arrayDocs[$nbDocAjouter]['original_content'] = $post['content']->post_content;
+							//$nbMots = str_word_count($contentText, 0, "àâäéèêëïîöôùüû");
+							$nbMots = $tApi->countWords(  $post['content']->post_title .' '.$contentText);
+					//		$arrayDocs[$nbDocAjouter]['original_content'] = $post['content']->post_content;
+						}
+
 						//$nbMots = str_word_count($contentText, 0, "àâäéèêëïîöôùüû");
-						$nbMots = textmaster_api::countWords(  $post['content']->post_title .' '.$contentText);
-						$ret = $tApi->addDocument($idProjet, $post['content']->post_title , $nbMots, $post['content']->post_content, 1, $_REQUEST['text_textmasterKeywords_readproof'], $_REQUEST['text_textmasterKeywordsRepeatCount_readproof']);
+						$nbMots = $tApi->countWords(  $post['content']->post_title .' '.$contentText);
+						$arrayDocs[$nbDocAjouter]['title'] = $post['content']->post_title;
+						$arrayDocs[$nbDocAjouter]['word_count'] = $nbMots;
+					//	$arrayDocs[$nbDocAjouter]['original_content'] = $post['content']->post_content;
+						$arrayDocs[$nbDocAjouter]['word_count_rule'] = 1;
+						$arrayDocs[$nbDocAjouter]['keyword_list'] = $_POST['text_textmasterKeywords_readproof'];
+						$arrayDocs[$nbDocAjouter]['keywords_repeat_count'] = $_POST['text_textmasterKeywordsRepeatCount_readproof'];
+
+						$arrayDocsId[$nbDocAjouter]['id'] = $post['id'];
+						$arrayDocsId[$nbDocAjouter]['title'] = $post['content']->post_title;
+				/*		$ret = $tApi->addDocument($idProjet, $arrayDocs );
 				//		print_r($ret);
 						if (is_array($ret))
 						{
@@ -253,12 +369,39 @@ function launchReadproof($aInfosPost){
 						}
 						else
 							$strRet .= '<li><strong>'.$post['content']->post_title.'</strong><div class="error"> '.$ret.'</div></li>';
-
+*/						$nbDocAjouter++;
 					}
 
 
 				}
 			}
+
+		}
+
+		if (isset($arrayDocs) && count($arrayDocs) != 0) {
+			$retTotalDocs = $tApi->addDocument($idProjet, $arrayDocs );
+			if (count($arrayDocs) == 1)
+				$retTotal[0] = $retTotalDocs;
+			else
+				$retTotal = $retTotalDocs;
+			//		print_r($ret);
+			//	update_post_meta($post['id'], 'textmasterDocumentIdTrad', $ret['id']);
+			if (is_array($retTotal))
+			{
+				foreach ($retTotal as $id => $ret) {
+					if (is_array($ret) && array_key_exists('id',$ret))
+					{
+						update_post_meta($arrayDocsId[$id]['id'], 'textmasterDocumentId', $ret['id']);
+									//		update_post_meta($post['id'], 'tm_lang', $_POST['select_textmasterLangDestination']);
+						$strRet .= '<li><strong>'.$arrayDocsId[$id]['title'].'</strong><div class="updated">'.__('La relecture de ces articles est lancée.','textmaster').'</div></li>';
+						//	$nbDocAjouter++;
+					}
+					else
+						$strRet .= '<li><strong>'.$arrayDocsId[$id]['title'].'</strong> <div class="error"> '.$ret.'</div></li>';
+				}
+			}
+			else if (is_object($post['content']))
+				$strRet .= '<li><strong>'.$arrayDocsId[$id]['title'].'</strong> <div class="error"> '.$ret.'</div></li>';
 
 		}
 		if ($nbDocAjouter >= 1) {
@@ -272,24 +415,35 @@ function launchReadproof($aInfosPost){
 			if (@array_key_exists('errors',$errs))
 			{
 				if (@array_key_exists('credits',$errs['errors']))
-					$strRet .= '<li><strong>'.$post['content']->post_title.'</strong><div class="error">'.__('Error').$errs['errors']['credits'][0].'</div></li>';
-				else
-					$strRet .= '<li><strong>'.$post['content']->post_title.'</strong><div class="error">'.__('Error').$errs['errors']['status'][0] .'</div></li>';
+					$strRet .= '<li><strong>'.$arrayDocsId[$id]['title'].'</strong><div class="error">'.__('Error').$errs['errors']['credits'][0].'</div></li>';
+				else if (@array_key_exists('status',$errs['errors']))
+					$strRet .= '<li><strong>'.$arrayDocsId[$id]['title'].'</strong><div class="error">'.__('Error').$errs['errors']['status'][0] .'</div></li>';
 
 				update_post_meta($post['id'], 'textmasterId', '');
 				update_post_meta($post['id'], 'textmasterDocumentId', '');
 			}
 			else{
-				$strRet .= '<li><strong>'.$post['content']->post_title.'</strong><div class="updated">'.__('La relecture de ces articles est lancée.','textmaster').'</div></li>';
-				wp_schedule_single_event( time() + 1, 'cron_syncProjets', array('in_progress') );
-				syncProjets('waiting_assignment');
+			//
+				wp_schedule_single_event( time() + 1, 'cron_syncProjets', array('in_progress', 1) );
+				wp_schedule_single_event( time() + 1, 'cron_syncProjets', array('waiting_assignment', 1) );
+			//	syncProjets('waiting_assignment');
 				//syncProjets('in_progress');
-				syncProjets('in_creation');
+				wp_schedule_single_event( time() + 1, 'cron_syncProjets', array('in_creation', 1) );
+			//	syncProjets('in_creation');
 			}
 		}
 
 		$strRet .= '</ul>';
 	}
+	$strRet .= '<script>';
+	$strRet .= "jQuery(document).ready(function($) {\n";
+	//		$str .= "alert(jQuery('#TB_closeWindowButton', window.parent.document).length);\n";
+	$strRet .= "jQuery('#TB_closeWindowButton', window.parent.document).click( function () {\n";
+	//		$str .= "	alert('reload');\n";
+	$strRet .= "	window.parent.location.reload();\n";
+	$strRet .= "	return false; });\n";
+	$strRet .= "});\n";
+	$strRet .= '</script>';
 
 	return $strRet;
 }

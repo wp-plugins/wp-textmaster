@@ -1,0 +1,7 @@
+#tm_langs_selector ul {
+	list-style:none;
+	display:inline-block;
+}
+#tm_langs_selector ul li{
+	display:inline-block;
+}

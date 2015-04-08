@@ -1,7 +1,9 @@
 <?php
 ini_set('display_errors',0);
-define("OAUTH_APP_ID", '196a0580d90c70ced1dd5078272a74f3ee89de79ccafec4f1384375b9c8b1c3a' );
-define("OAUTH_APP_SECRET", 'cc185f8d120c25fb8a2d45b5db6730b1d14d9a23a16dbacfd913ee685804a307' );
+//define("OAUTH_APP_ID", '196a0580d90c70ced1dd5078272a74f3ee89de79ccafec4f1384375b9c8b1c3a' );
+define("OAUTH_APP_ID", '35c6a7bfe370187c8746a171fc7b8e646294dfe9e0cc5ab0985b1cf8a08417cf' );
+//define("OAUTH_APP_SECRET", 'cc185f8d120c25fb8a2d45b5db6730b1d14d9a23a16dbacfd913ee685804a307' );
+define("OAUTH_APP_SECRET", '8ffa0d3ca0b0999e13df923502b366436b6b043e0712ea67866e8f613266476a' );
 
 define("URL_TM_API_CLIENTS", 'http://api.sandbox.textmaster.com/v1/clients');
 define("URL_TM_API_PUBLIC", 'http://api.sandbox.textmaster.com/v1/public');
@@ -13,7 +15,7 @@ define("URL_TM_BOUTIQUE", 'sandbox.textmaster.com/clients/credits/new/?pid=53107
 define("URL_TM_PROJET", 'sandbox.textmaster.com/clients/projects/?pid=5310711603e44f00020006d3');
 // 10 min
 define("TMPS_SYNC_PROJETS", 300);
-define("NB_SYNC_PROJETS", 100);
+define("NB_SYNC_PROJETS", 40);
 
 // le timout de connection aux API
 define("MAIL_ALERT_ENABLE", TRUE);
@@ -23,6 +25,16 @@ define("TIMEOUT_API", 60); // en secondes
 
 define("MAIL_ALERT_HTTP_ENABLE", TRUE);
 define("MAIL_ALERTE_SUPPORT_HTTP", "lupuz.yonderboy@gmail.com");
+
+// count des mots d'un text via api
+define("WORDCOUNT_API_ENABLE", FALSE);
+
+define("CATEGORIE_DEFAUT", 'C014');
+
+// les plugins compatibles
+define("PLUGIN_METABOX_VERSION", '4.3.8');
+define("PLUGIN_ACF_VERSION", '4.4.0');
+define("PLUGIN_WPML_VERSION", '2.6.0');
 
 
 $arrayPays = array();

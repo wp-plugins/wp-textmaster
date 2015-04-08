@@ -6,9 +6,9 @@ Tags: translation, localization, internationalization, multilingual, web content
 
 Requires at least: 3.3
 
-Tested up to: 3.8
+Tested up to: 4.1
 
-Stable tag: 1.1
+Stable tag: 1.2
 
 License: GPLv2 or later
 
@@ -95,6 +95,16 @@ Visit our FAQ page for more answers: <http://textmaster.com/client-faq>
 
 
 == Changelog ==
+
+= 2.1 =
+
+* Added bulk validation
+* Added multi-sites support
+* Added multi-languages management
+* Added ACF (Advanced Custom Fields)  plugin compatible
+* Added metabox plugin compatible
+* Added revision requests for translations
+* Added authors management
 
 = 1.0 =
 

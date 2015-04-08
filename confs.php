@@ -21,7 +21,7 @@ define("URL_TM_PROJET", 'app.textmaster.com/clients/projects/?pid=5310711603e44f
 
 // 10 min
 define("TMPS_SYNC_PROJETS", 300);
-define("NB_SYNC_PROJETS", 100);
+define("NB_SYNC_PROJETS", 40);
 
 // le timout de connection aux API
 define("MAIL_ALERT_ENABLE", FALSE);
@@ -31,6 +31,15 @@ define("TIMEOUT_API", 120); // en secondes
 define("MAIL_ALERT_HTTP_ENABLE", FALSE);
 define("MAIL_ALERTE_SUPPORT_HTTP", "lupuz.yonderboy@gmail.com");
 
+// count des mots d'un text via api
+define("WORDCOUNT_API_ENABLE", FALSE);
+
+define("CATEGORIE_DEFAUT", 'C014');
+
+// les plugins compatibles
+define("PLUGIN_METABOX_VERSION", '4.3.8');
+define("PLUGIN_ACF_VERSION", '4.4.0');
+define("PLUGIN_WPML_VERSION", '2.6.0');
 
 $arrayPays = array();
 $arrayPays['AD'] = 'Andorre';

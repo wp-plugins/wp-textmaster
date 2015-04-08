@@ -1,14 +1,27 @@
 <?php
-require( '../../../wp-load.php' );
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
+//require( '../../../wp-load.php' );
+//require_once( $_SERVER['DOCUMENT_ROOT'] . '/wp-load.php' );
+$parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
+require_once( $parse_uri[0] . 'wp-load.php' );
+
 //include( plugin_dir_path( __FILE__ ). '/textmaster.class.php' );
 
-$tApi = new textmaster_api();
-$tApi->secretapi = get_option('textmaster_api_secret');
-$tApi->keyapi =  get_option('textmaster_api_key');
+$tApi = new textmaster_api(get_option_tm('textmaster_api_key'), get_option_tm('textmaster_api_secret'));
+//$tApi->secretapi = get_option_tm('textmaster_api_secret');
+//$tApi->keyapi =  get_option_tm('textmaster_api_key');
 
 //print_r($_POST);
 
+if (!isset($_POST['quality']))
+	$_POST['quality'] = 'false';
+
+
 $aPrices = $tApi->getPricings($_POST['wordsCount']);
+
 switch ($_POST['type']) {
 	case 'redaction':
 		$prices = $aPrices['copywriting'];
@@ -23,10 +36,10 @@ switch ($_POST['type']) {
 		$prices = false;
 } // switch
 
-//print_r($aPrices);
+//print_r($prices);
 $arrayJson = array();
 if (count($prices) != 0) {
-
+	$arrayJson['price'] = 0;
 	foreach ($prices as $price) {
 		// le prix de base
 		if (isset($_POST['languageLevel']) && $price['name'] == $_POST['languageLevel']) {
@@ -34,7 +47,7 @@ if (count($prices) != 0) {
 			$arrayJson['priceBase'] = $price['value'];
 		}
 		// ajout de l'option quality
-		if (isset($_POST['languageLevel']) && $price['name'] == 'quality' && $_POST['quality'] == 'true' && $_POST['languageLevel'] == 'premium') {
+		if (isset($_POST['languageLevel']) && $price['name'] == 'quality' && $_POST['quality'] == 'true'){ // && $_POST['languageLevel'] == 'premium') {
 			$arrayJson['price'] += $price['value'];
 			$arrayJson['quality'] = $price['value'];
 		} else 	if ($price['name'] == 'quality') {
@@ -48,7 +61,7 @@ if (count($prices) != 0) {
 		} else if ($price['name'] == 'expertise') {
 			$arrayJson['expertise'] = 0;
 		}
-
+		// ajout de l'option priority
 		if (isset($_POST['priority']) &&  $price['name'] == 'priority' && $_POST['priority'] == 'true') {
 			$arrayJson['price'] += $price['value'];
 			$arrayJson['priority'] = $price['value'];

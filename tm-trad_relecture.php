@@ -5,8 +5,8 @@ function wp_texmaster_readproof_metaboxes() {
 	global $post;
 
 	$tApi = new textmaster_api();
-	$tApi->secretapi = get_option('textmaster_api_secret');
-	$tApi->keyapi =  get_option('textmaster_api_key');
+	$tApi->secretapi = get_option_tm('textmaster_api_secret');
+	$tApi->keyapi =  get_option_tm('textmaster_api_key');
 
 	$categories = $tApi->getCategories();
 	if (is_array($categories) && array_key_exists('message',$categories)) {
@@ -14,8 +14,8 @@ function wp_texmaster_readproof_metaboxes() {
 	}
 	else
 	{
-		$textmaster_email = get_option('textmaster_email');
-		$textmaster_password = get_option('textmaster_password');
+		$textmaster_email = get_option_tm('textmaster_email');
+		$textmaster_password = get_option_tm('textmaster_password');
 		if ($textmaster_password != '' && $textmaster_email != '') {
 			$oOAuth = new TextMaster_OAuth2();
 			$token = $oOAuth->getToken($textmaster_email, $textmaster_password);
@@ -31,7 +31,7 @@ function wp_texmaster_readproof_metaboxes() {
 		if (get_post_meta($post->ID, 'textmasterCategorie', true) != '')
 			$catSelected = get_post_meta($post->ID, 'textmasterCategorie', true);
 		else
-			$catSelected = get_option('textmaster_readproofCategorie');
+			$catSelected = get_option_tm('textmaster_readproofCategorie');
 
 		foreach($categories as $categorie)
 		{
@@ -50,7 +50,7 @@ function wp_texmaster_readproof_metaboxes() {
 		if (get_post_meta($post->ID, 'textmasterCategorieReadProofLanguageLevel', true) != '')
 			$languageLevelSelected = get_post_meta($post->ID, 'textmasterReadProofLanguageLevel', true);
 		else
-			$languageLevelSelected = get_option('textmaster_readproofLanguageLevel');
+			$languageLevelSelected = get_option_tm('textmaster_readproofLanguageLevel');
 
 		foreach($languageLevels as $key => $languageLevel)
 		{
@@ -74,7 +74,7 @@ function wp_texmaster_readproof_metaboxes() {
 		if (get_post_meta($post->ID, 'textmasterReadProofLang', true) != '')
 			$languageSelected = get_post_meta($post->ID, 'textmasterReadProofLang', true);
 		else
-			$languageSelected = get_option('textmaster_readproofLanguage');
+			$languageSelected = get_option_tm('textmaster_readproofLanguage');
 
 		foreach($languages as $language)
 		{
@@ -88,7 +88,7 @@ function wp_texmaster_readproof_metaboxes() {
 		if (get_post_meta($post->ID, 'textmasterQualityReadproof', true) != '')
 			$textmaster_qualityRedaction = get_post_meta($post->ID, 'textmasterQualityReadproof', true);
 		else
-			$textmaster_qualityRedaction = get_option('textmaster_qualityReadproof');
+			$textmaster_qualityRedaction = get_option_tm('textmaster_qualityReadproof');
 		$chkNo = '';
 		$chkYes = '';
 		if($textmaster_qualityRedaction =="false")
@@ -102,7 +102,7 @@ function wp_texmaster_readproof_metaboxes() {
 		if (get_post_meta($post->ID, 'textmasterExpertiseReadproof', true) != '')
 			$textmaster_expertiseRedaction = get_post_meta($post->ID, 'textmasterExpertiseReadproof', true);
 		else
-			$textmaster_expertiseRedaction = get_option('textmaster_expertiseReadproof');
+			$textmaster_expertiseRedaction = get_option_tm('textmaster_expertiseReadproof');
 		$chkNo = '';
 		$chkYes = '';
 		if($textmaster_expertiseRedaction =="false")
@@ -117,7 +117,7 @@ function wp_texmaster_readproof_metaboxes() {
 		if (get_post_meta($post->ID, 'textmaster_priorityReadproof', true) != '')
 			$textmaster_priorityRedaction = get_post_meta($post->ID, 'textmasterPriorityReadproof', true);
 		else
-			$textmaster_priorityRedaction = get_option('textmaster_priorityReadproof');
+			$textmaster_priorityRedaction = get_option_tm('textmaster_priorityReadproof');
 		$chkNo = '';
 		$chkYes = '';
 		if($textmaster_priorityRedaction =="false")
@@ -132,7 +132,7 @@ function wp_texmaster_readproof_metaboxes() {
 		if (get_post_meta($post->ID, 'textmaster_BriefingReadproof', true) != '')
 			$textmasterBriefing_readproof = get_post_meta($post->ID, 'textmaster_BriefingReadproof', true);
 		else
-			$textmasterBriefing_readproof = get_option('textmaster_readproofBriefing');
+			$textmasterBriefing_readproof = get_option_tm('textmaster_readproofBriefing');
 
 		echo '<label>'.__('Briefing :','textmaster').'</label>';
 		echo '<textarea style="width:235px;height:100px;" name="text_textmasterBriefing_readproof" id="text_textmasterBriefing_readproof">'.$textmasterBriefing_readproof.'</textarea><br/>';
@@ -254,8 +254,8 @@ function callback_readproof(){
 	$content = $content_post->post_content;
 
 	$tApi = new textmaster_api();
-	$tApi->secretapi = get_option('textmaster_api_secret');
-	$tApi->keyapi =  get_option('textmaster_api_key');
+	$tApi->secretapi = get_option_tm('textmaster_api_secret');
+	$tApi->keyapi =  get_option_tm('textmaster_api_key');
 	$idProjet = get_post_meta($postID,'textmasterId', TRUE);
 
 	//	echo $idProjet;
@@ -346,8 +346,8 @@ function wp_texmaster_readproof_options_metaboxes(){
 
 
 	$tApi = new textmaster_api();
-	$tApi->secretapi = get_option('textmaster_api_secret');
-	$tApi->keyapi =  get_option('textmaster_api_key');
+	$tApi->secretapi = get_option_tm('textmaster_api_secret');
+	$tApi->keyapi =  get_option_tm('textmaster_api_key');
 
 	$categories = $tApi->getCategories();
 	if (array_key_exists('message',$categories) ) {
@@ -373,7 +373,7 @@ function wp_texmaster_readproof_options_metaboxes(){
 		if (get_post_meta($post->ID, 'textmasterVocabularyType_readproof', true) != '')
 			$vocabulary_typeSelected = get_post_meta($post->ID, 'textmasterVocabularyType_readproof', true);
 		else
-			$vocabulary_typeSelected = get_option('textmaster_readproofVocabularyType');
+			$vocabulary_typeSelected = get_option_tm('textmaster_readproofVocabularyType');
 
 		$vocabulary_types = $tApi->getVocabularyTypes();
 		foreach($vocabulary_types as $key => $vocabulary_type)
@@ -393,7 +393,7 @@ function wp_texmaster_readproof_options_metaboxes(){
 		if (get_post_meta($post->ID, 'textmasterGrammaticalPerson_readproof', true) != '')
 			$grammatical_personSelected = get_post_meta($post->ID, 'textmasterGrammaticalPerson_readproof', true);
 		else
-			$grammatical_personSelected = get_option('textmaster_readproofGrammaticalPerson');
+			$grammatical_personSelected = get_option_tm('textmaster_readproofGrammaticalPerson');
 
 		$grammatical_persons = $tApi->getGrammaticalPersons();
 		foreach($grammatical_persons as $key => $grammatical_person)
@@ -413,7 +413,7 @@ function wp_texmaster_readproof_options_metaboxes(){
 		if (get_post_meta($post->ID, 'textmasterTargetReaderGroup_readproof', true) != '')
 			$target_reader_groupSelected = get_post_meta($post->ID, 'textmasterTargetReaderGroup_readproof', true);
 		else
-			$target_reader_groupSelected = get_option('textmaster_readproofTargetReaderGroup');
+			$target_reader_groupSelected = get_option_tm('textmaster_readproofTargetReaderGroup');
 
 		$target_reader_groups = $tApi->getTargetReaderGroups();
 		foreach($target_reader_groups as $key => $target_reader_group)
@@ -433,8 +433,8 @@ function wp_texmaster_readproof_authors_metaboxes(){
 	global $post;
 
 	$tApi = new textmaster_api();
-	$tApi->secretapi = get_option('textmaster_api_secret');
-	$tApi->keyapi =  get_option('textmaster_api_key');
+	$tApi->secretapi = get_option_tm('textmaster_api_secret');
+	$tApi->keyapi =  get_option_tm('textmaster_api_key');
 
 	$auteurs = $tApi->getAuteurs();
 
@@ -450,7 +450,7 @@ function wp_texmaster_readproof_authors_metaboxes(){
 		if (get_post_meta($post->ID, 'textmasterReadProofAuthor', true) != '')
 			$auteurSelected = unserialize( get_post_meta($post->ID, 'textmasterReadProofAuthor', true));
 		else
-			$auteurSelected = array(get_option('textmaster_authorReadproof'));
+			$auteurSelected = array(get_option_tm('textmaster_authorReadproof'));
 
 		foreach($auteurs as $auteur)
 		{
@@ -479,8 +479,8 @@ function wp_texmaster_traduction_metaboxes() {
 	global $post;
 
 	$tApi = new textmaster_api();
-	$tApi->secretapi = get_option('textmaster_api_secret');
-	$tApi->keyapi =  get_option('textmaster_api_key');
+	$tApi->secretapi = get_option_tm('textmaster_api_secret');
+	$tApi->keyapi =  get_option_tm('textmaster_api_key');
 
 	$categories = $tApi->getCategories();
 	if (is_array($categories) && array_key_exists('message',$categories)) {
@@ -489,8 +489,8 @@ function wp_texmaster_traduction_metaboxes() {
 	else
 	{
 
-		$textmaster_email = get_option('textmaster_email');
-		$textmaster_password = get_option('textmaster_password');
+		$textmaster_email = get_option_tm('textmaster_email');
+		$textmaster_password = get_option_tm('textmaster_password');
 		if ($textmaster_password != '' && $textmaster_email != '') {
 			$oOAuth = new TextMaster_OAuth2();
 			$token = $oOAuth->getToken($textmaster_email, $textmaster_password);
@@ -507,7 +507,7 @@ function wp_texmaster_traduction_metaboxes() {
 		if (get_post_meta($post->ID, 'textmasterCategorieTrad', true) != '')
 			$catSelected = get_post_meta($post->ID, 'textmasterCategorieTrad', true);
 		else
-			$catSelected = get_option('textmaster_traductionCategorie');
+			$catSelected = get_option_tm('textmaster_traductionCategorie');
 
 		foreach($categories as $categorie)
 		{
@@ -526,7 +526,7 @@ function wp_texmaster_traduction_metaboxes() {
 		if (get_post_meta($post->ID, 'textmasterTradLanguageLevel', true) != '')
 			$languageLevelSelected = get_post_meta($post->ID, 'textmasterTradLanguageLevel', true);
 		else
-			$languageLevelSelected = get_option('textmaster_traductionLanguageLevel');
+			$languageLevelSelected = get_option_tm('textmaster_traductionLanguageLevel');
 
 		foreach($languageLevels as $key => $languageLevel)
 		{
@@ -546,7 +546,7 @@ function wp_texmaster_traduction_metaboxes() {
 		if (get_post_meta($post->ID, 'textmasterLangOrigine', true) != '')
 			$languageSourceSelected = get_post_meta($post->ID, 'textmasterLangOrigine', true);
 		else
-			$languageSourceSelected = get_option('textmaster_traductionLanguageSource');
+			$languageSourceSelected = get_option_tm('textmaster_traductionLanguageSource');
 
 		foreach($languages as $language)
 		{
@@ -565,7 +565,7 @@ function wp_texmaster_traduction_metaboxes() {
 		if (get_post_meta($post->ID, 'textmasterLangDestination', true) != '')
 			$languageDestinationSelected = get_post_meta($post->ID, 'textmasterLangDestination', true);
 		else
-			$languageDestinationSelected = get_option('textmaster_traductionLanguageDestination');
+			$languageDestinationSelected = get_option_tm('textmaster_traductionLanguageDestination');
 
 		foreach($languages as $language)
 		{
@@ -581,7 +581,7 @@ function wp_texmaster_traduction_metaboxes() {
 		if (get_post_meta($post->ID, 'textmasterQualityTraduction', true) != '')
 			$textmaster_qualityRedaction = get_post_meta($post->ID, 'textmasterQualityTraduction', true);
 		else
-			$textmaster_qualityRedaction = get_option('textmaster_qualityTraduction');
+			$textmaster_qualityRedaction = get_option_tm('textmaster_qualityTraduction');
 		$chkNo = '';
 		$chkYes = '';
 		if($textmaster_qualityRedaction =="false")
@@ -596,7 +596,7 @@ function wp_texmaster_traduction_metaboxes() {
 		if (get_post_meta($post->ID, 'textmasterExpertiseReadproof', true) != '')
 			$textmaster_expertiseRedaction = get_post_meta($post->ID, 'textmasterExpertiseTraduction', true);
 		else
-			$textmaster_expertiseRedaction = get_option('textmaster_expertiseTraduction');
+			$textmaster_expertiseRedaction = get_option_tm('textmaster_expertiseTraduction');
 		$chkNo = '';
 		$chkYes = '';
 		if($textmaster_expertiseRedaction =="false")
@@ -611,7 +611,7 @@ function wp_texmaster_traduction_metaboxes() {
 		if (get_post_meta($post->ID, 'textmaster_priorityTraduction', true) != '')
 			$textmaster_priorityRedaction = get_post_meta($post->ID, 'textmasterPriorityTraduction', true);
 		else
-			$textmaster_priorityRedaction = get_option('textmaster_priorityTraduction');
+			$textmaster_priorityRedaction = get_option_tm('textmaster_priorityTraduction');
 		$chkNo = '';
 		$chkYes = '';
 		if($textmaster_priorityRedaction =="false")
@@ -629,7 +629,7 @@ function wp_texmaster_traduction_metaboxes() {
 		if (get_post_meta($post->ID, 'textmaster_briefingTraduction', true) != '')
 			$textmasterBriefing_traduction = get_post_meta($post->ID, 'textmaster_briefingTraduction', true);
 		else
-			$textmasterBriefing_traduction = get_option('textmaster_traductionBriefing');
+			$textmasterBriefing_traduction = get_option_tm('textmaster_traductionBriefing');
 
 		echo '<label>'.__('Briefing :','textmaster').'</label>';
 		echo '<textarea style="width:235px;height:100px;" name="text_textmasterBriefing_traduction" id="text_textmasterBriefing_traduction">'.$textmasterBriefing_traduction.'</textarea><br/>';
@@ -751,8 +751,8 @@ function callback_traduction(){
 	$content = $content_post->post_content;
 
 	$tApi = new textmaster_api();
-	$tApi->secretapi = get_option('textmaster_api_secret');
-	$tApi->keyapi =  get_option('textmaster_api_key');
+	$tApi->secretapi = get_option_tm('textmaster_api_secret');
+	$tApi->keyapi =  get_option_tm('textmaster_api_key');
 	$idProjet = get_post_meta($postID,'textmasterIdTrad', TRUE);
 
 	$checkStatut = $tApi->getProjetStatus($idProjet);
@@ -844,8 +844,8 @@ function wp_texmaster_traduction_options_metaboxes(){
 
 
 	$tApi = new textmaster_api();
-	$tApi->secretapi = get_option('textmaster_api_secret');
-	$tApi->keyapi =  get_option('textmaster_api_key');
+	$tApi->secretapi = get_option_tm('textmaster_api_secret');
+	$tApi->keyapi =  get_option_tm('textmaster_api_key');
 
 	$categories = $tApi->getCategories();
 	if (array_key_exists('message',$categories)) {
@@ -872,7 +872,7 @@ function wp_texmaster_traduction_options_metaboxes(){
 		if (get_post_meta($post->ID, 'textmasterVocabularyType_traduction', true) != '')
 			$vocabulary_typeSelected = get_post_meta($post->ID, 'textmasterVocabularyType_traduction', true);
 		else
-			$vocabulary_typeSelected = get_option('textmaster_traductionVocabularyType');
+			$vocabulary_typeSelected = get_option_tm('textmaster_traductionVocabularyType');
 
 		$vocabulary_types = $tApi->getVocabularyTypes();
 		foreach($vocabulary_types as $key => $vocabulary_type)
@@ -892,7 +892,7 @@ function wp_texmaster_traduction_options_metaboxes(){
 		if (get_post_meta($post->ID, 'textmasterGrammaticalPerson_traduction', true) != '')
 			$grammatical_personSelected = get_post_meta($post->ID, 'textmasterGrammaticalPerson_traduction', true);
 		else
-			$grammatical_personSelected = get_option('textmaster_traductionGrammaticalPerson');
+			$grammatical_personSelected = get_option_tm('textmaster_traductionGrammaticalPerson');
 
 		$grammatical_persons = $tApi->getGrammaticalPersons();
 		foreach($grammatical_persons as $key => $grammatical_person)
@@ -912,7 +912,7 @@ function wp_texmaster_traduction_options_metaboxes(){
 		if (get_post_meta($post->ID, 'textmasterTargetReaderGroup_traduction', true) != '')
 			$target_reader_groupSelected = get_post_meta($post->ID, 'textmasterTargetReaderGroup_traduction', true);
 		else
-			$target_reader_groupSelected = get_option('textmaster_traductionTargetReaderGroup');
+			$target_reader_groupSelected = get_option_tm('textmaster_traductionTargetReaderGroup');
 
 		$target_reader_groups = $tApi->getTargetReaderGroups();
 		foreach($target_reader_groups as $key => $target_reader_group)
@@ -932,8 +932,8 @@ function wp_texmaster_traduction_authors_metaboxes(){
 	global $post;
 
 	$tApi = new textmaster_api();
-	$tApi->secretapi = get_option('textmaster_api_secret');
-	$tApi->keyapi =  get_option('textmaster_api_key');
+	$tApi->secretapi = get_option_tm('textmaster_api_secret');
+	$tApi->keyapi =  get_option_tm('textmaster_api_key');
 
 	$auteurs = $tApi->getAuteurs();
 
@@ -949,7 +949,7 @@ function wp_texmaster_traduction_authors_metaboxes(){
 		if (get_post_meta($post->ID, 'textmasterTraductionAuthor', true) != '')
 			$auteurSelected = unserialize( get_post_meta($post->ID, 'textmasterTraductionAuthor', true));
 		else
-			$auteurSelected = array(get_option('textmaster_authorTraduction'));
+			$auteurSelected = array(get_option_tm('textmaster_authorTraduction'));
 
 		foreach($auteurs as $auteur)
 		{
@@ -1008,12 +1008,12 @@ function texmaster_columns_content($column_name, $postID) {
 	global $wpdb;
 
 /*	$tApi = new textmaster_api();
-	$tApi->secretapi = get_option('textmaster_api_secret');
-	$tApi->keyapi =  get_option('textmaster_api_key');
+	$tApi->secretapi = get_option_tm('textmaster_api_secret');
+	$tApi->keyapi =  get_option_tm('textmaster_api_key');
 */
 
 	if ($column_name == 'texmaster_status') {
-		if (get_option('textmaster_useTraduction') == 'Y') {
+		if (get_option_tm('textmaster_useTraduction') == 'Y') {
 			$idProjet = get_post_meta($postID,'textmasterIdTrad', TRUE);
 			$req = 'SELECT status FROM '.$wpdb->prefix.'tm_projets WHERE id="'.$idProjet.'"';
 			$status = $wpdb->get_var( $req);
@@ -1025,7 +1025,7 @@ function texmaster_columns_content($column_name, $postID) {
 		//	$tmStatut = $tApi->getLibStatus($tApi->getProjetStatus($idProjet));
 			echo __('Traduction', 'textmaster' ) .' : '.$tmStatut.'<br/>';
 		}
-		if ( get_option('textmaster_useReadproof') == 'Y') {
+		if ( get_option_tm('textmaster_useReadproof') == 'Y') {
 			$idProjet = get_post_meta($postID,'textmasterId', TRUE);
 			$req = 'SELECT status FROM '.$wpdb->prefix.'tm_projets WHERE id="'.$idProjet.'"';
 			$status = $wpdb->get_var( $req);
@@ -1045,7 +1045,7 @@ function texmaster_bulk_actions($actions){
 
 //	if($post_type == 'post' || $post_type == 'page') {
 	if ($post_type != 'textmaster_redaction') {
-		if (get_option('textmaster_useTraductionBulk') == 'Y' || get_option('textmaster_useTraductionBulk') == '' ){
+		if (get_option_tm('textmaster_useTraductionBulk') == 'Y' || get_option_tm('textmaster_useTraductionBulk') == '' ){
 			?>
 			<script type="text/javascript">
 				jQuery(document).ready(function() {
@@ -1069,7 +1069,7 @@ function texmaster_bulk_actions($actions){
 			</script>
 			<?php
 		}
-		if (get_option('textmaster_useReadproofBulk') == 'Y' || get_option('textmaster_useReadproofBulk') == ''){
+		if (get_option_tm('textmaster_useReadproofBulk') == 'Y' || get_option_tm('textmaster_useReadproofBulk') == ''){
 			?>
 			<script type="text/javascript">
 				jQuery(document).ready(function() {

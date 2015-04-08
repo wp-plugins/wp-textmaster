@@ -1,12 +1,26 @@
 <?php
-require( '../../../wp-load.php' );
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
+//require( '../../../wp-load.php' );
+//require_once( $_SERVER['DOCUMENT_ROOT'] . '/wp-load.php' );
+$parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
+require_once( $parse_uri[0] . 'wp-load.php' );
+
 //include( plugin_dir_path( __FILE__ ). '/textmaster.class.php' );
 
 $arrayRet = array();
 
-$tApi = new textmaster_api();
-$tApi->secretapi = get_option('textmaster_api_secret');
-$tApi->keyapi =  get_option('textmaster_api_key');
+if (!isset($_POST['postID']))
+	$_POST['postID'] = '';
+
+
+$tApi = new textmaster_api(get_option_tm('textmaster_api_key'), get_option_tm('textmaster_api_secret'));
+//$tApi->secretapi = get_option_tm('textmaster_api_secret');
+//$tApi->keyapi =  get_option_tm('textmaster_api_key');
+$arrayProjet = array();
+$arrayProjet['ctype'] = '';
 
 if ($_POST['type'] == 'redaction')
 	$arrayProjet['ctype'] = 'copywriting';
@@ -14,7 +28,7 @@ else if ($_POST['type'] == 'traduction')
 	$arrayProjet['ctype'] = 'translation';
 else if ($_POST['type'] == 'readproof')
 	$arrayProjet['ctype'] = 'proofreading';
-$arrayProjet = array();
+
 if (isset( $_POST['language_from']))
 	$arrayProjet['language_from'] = $_POST['language_from'];
 if (isset( $_POST['language_to']))
@@ -62,23 +76,25 @@ echo json_encode($arrayRet);
 
 function checkedAuthor($postId, $type,$auteurId){
 
+	$auteurSelected ='';
+
 	if ($type == 'translation') {
 		if (get_post_meta($postId, 'textmasterTraductionAuthor', true) != '')
 			$auteurSelected = @unserialize( get_post_meta($postId, 'textmasterTraductionAuthor', true));
 		else
-			$auteurSelected = array(get_option('textmaster_authorTraduction'));
+			$auteurSelected = array(get_option_tm('textmaster_authorTraduction'));
 	}
 	else if ($type == 'copywriting') {
 		if (get_post_meta($postId, 'textmasterAuthor', true) != '')
 			$auteurSelected = @unserialize( get_post_meta($postId, 'textmasterAuthor', true));
 		else
-			$auteurSelected = array(get_option('textmaster_author'));
+			$auteurSelected = array(get_option_tm('textmaster_author'));
 	}
 	else if ($type == 'proofreading') {
 		if (get_post_meta($postId, 'textmasterReadProofAuthor', true) != '')
 			$auteurSelected = @unserialize( get_post_meta($postId, 'textmasterReadProofAuthor', true));
 		else
-			$auteurSelected = array(get_option('textmaster_authorReadproof'));
+			$auteurSelected = array(get_option_tm('textmaster_authorReadproof'));
 	}
 
 	if (!is_array($auteurSelected))

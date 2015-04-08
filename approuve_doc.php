@@ -1,15 +1,23 @@
 <?php
-include "../../../wp-load.php";
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
+//include "../../../wp-load.php";
+//require_once( $_SERVER['DOCUMENT_ROOT'] . '/wp-load.php' );
+$parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
+require_once( $parse_uri[0] . 'wp-load.php' );
 
 if (isset($_GET['valide']) && $_GET['valide'] == 1) {
 
-	$tApi = new textmaster_api();
-	$tApi->secretapi = get_option('textmaster_api_secret');
-	$tApi->keyapi =  get_option('textmaster_api_key');
+	$tApi = new textmaster_api(get_option_tm('textmaster_api_key'), get_option_tm('textmaster_api_secret'));
+//	$tApi->secretapi = get_option_tm('textmaster_api_secret');
+//	$tApi->keyapi =  get_option_tm('textmaster_api_key');
 
 //	print_r($_GET);
 
 	if ($_GET['type'] == 'redaction' || $_GET['new_article'] == 1 || $_GET['new_article'] == 2) {
+		$text = '';
 
 		$infos = $tApi->getDocumentInfos($_GET['projectId'], $_GET['docId']);
 	//	print_r($infos);
@@ -19,7 +27,7 @@ if (isset($_GET['valide']) && $_GET['valide'] == 1) {
 		else
 			$work = $infos;
 
-		if ($work['author_work']['title'] != '')
+		if (isset($work['author_work']['title']) && $work['author_work']['title'] != '')
 			$new_post['post_title'] = $work['author_work']['title'];
 		else  if ($infos['title'] != '')
 			$new_post['post_title'] = $work['title'];
@@ -31,18 +39,135 @@ if (isset($_GET['valide']) && $_GET['valide'] == 1) {
 				$text .= '<p>'.nl2br($paragraphes).'</p>';
 		}
 		$new_post['post_content'] = $text;
+		// acf
+		$extras = array();
+		if( checkInstalledPlugin('Advanced Custom Fields') ) {
+			$contentFound = FALSE;
+			$text = '';
+			//	var_dump($work['author_work']);
+			foreach ( $work['author_work'] as $element => $paragraphes) {
+				if ($element == 'post_excerpt'){
+					$new_post['post_excerpt'] = $work['post_excerpt'];
+				} else if ($element == 'content'){
+					$text .= '<p>'.nl2br($paragraphes).'</p>';
+					$contentFound = TRUE;
+				}
+				else {
+					$field = $wpdb->get_var( "SELECT meta_key FROM $table_meta WHERE meta_value = '".$element."'");
+					$extras[substr($field,1)]['val'] = $paragraphes;
+					$extras[substr($field,1)]['field'] = $element;
+				}
 
-		if ($_GET['new_article'] == 2)
+			}
+
+			if (!$contentFound) {
+				foreach ( $work['author_work'] as $element => $paragraphes) {
+					if ($element == 'post_excerpt'){
+						$new_post['post_excerpt'] = $work['post_excerpt'];
+					} else if ($element != 'title')
+						$text .= '<p>'.nl2br($paragraphes).'</p>';
+				}
+			}
+		}
+		if( checkInstalledPlugin('Meta Box')) {
+			$contentFound = FALSE;
+			$text = '';
+	//		var_dump($work['author_work']);
+			foreach ( $work['author_work'] as $element => $paragraphes) {
+				if ($element == 'post_excerpt'){
+					$new_post['post_excerpt'] = $work['post_excerpt'];
+				} else if ($element == 'content'){
+					$text .= '<p>'.nl2br($paragraphes).'</p>';
+					$contentFound = TRUE;
+				}
+				else {
+					$extras[$element]['val'] = $paragraphes;
+					$extras[$element]['field'] = $element;
+				}
+			}
+
+			if (!$contentFound) {
+				foreach ( $work['author_work'] as $element => $paragraphes) {
+					if ($element == 'post_excerpt'){
+						$new_post['post_excerpt'] = $work['post_excerpt'];
+					} else if ($element != 'title')
+						$text .= '<p>'.nl2br($paragraphes).'</p>';
+				}
+
+			}
+		}else {
+			foreach ( $work['author_work'] as $element => $paragraphes) {
+				if ($element == 'post_excerpt'){
+					$new_post['post_excerpt'] = $work['post_excerpt'];
+				} else if ($element != 'title')
+					$text .= '<p>'.nl2br($paragraphes).'</p>';
+			}
+		}
+
+		$new_post['post_content'] = $text;
+
+		if (checkInstalledPlugin('WPML Multilingual CMS') && isset($_GET['lang_icl']) && $_GET['lang_icl'] != '') {
+			$new_post['post_type'] = get_post_type( $_GET['post_id_origine'] );
+		}
+		else if ($_GET['new_article'] == 2)
 			$new_post['post_type'] = 'page';
 		else
 			$new_post['post_type'] = 'post';
 
 		$post_id = wp_insert_post($new_post);
+//echo 'Error ';
+		if (checkInstalledPlugin('WPML Multilingual CMS')) {
+			$infosProjet = $tApi->getProjetInfos($_GET['projectId']);
+	//		var_dump($infosProjet);
+			if (isset($_GET['lang_icl']) && $_GET['lang_icl'] != '') {
+				$tableIclTrads = $wpdb->base_prefix.'icl_translations';
+				$req = 'INSERT INTO '.$tableIclTrads.' (element_type, element_id, trid, language_code, source_language_code)
+						VALUES ("post_'.$new_post['post_type'].'", "'.$post_id.'", "'.$_GET['post_id_origine'].'", "'.$_GET['lang_icl'].'", "'.$infosProjet['language_from'].'")';
+//				echo $req;
+				$wpdb->query($req);
 
+				$req = 'UPDATE '.$tableIclTrads.' SET  language_code="'.$_GET['lang_icl'].'", source_language_code="'.$infosProjet['language_from'].'", trid="'.$_GET['post_id_origine'].'"
+						WHERE element_type="post_'.$new_post['post_type'].'" AND element_id="'.$post_id.'"';
+				$wpdb->query($req);
+//				echo $req;
+
+				$req = 'UPDATE '.$tableIclTrads.' SET source_language_code="'.$infosProjet['language_from'].'",element_id="'.$post_id.'"
+						WHERE element_type="post_'.$new_post['post_type'].'" AND trid="'.$_GET['post_id_origine'].'" AND language_code="'.$_GET['lang_icl'].'"';
+				$wpdb->query($req);
+//				echo $req;
+
+			}
+		}
+
+		if( checkInstalledPlugin('Advanced Custom Fields')&& count($extras) != 0) {
+			foreach ($extras as $key => $extra) {
+				$post_id_base = $wpdb->get_var( "SELECT post_id FROM $table_meta WHERE meta_key = '".$extra['field']."'");
+				$idT = get_IdTrad($post_id_base,$projet_infos['language_to']);
+				$fieldTrad = $wpdb->get_var( "SELECT meta_key FROM $table_meta WHERE post_id = '".$idT."' AND meta_value LIKE '%key%field_%name%".$key."%type%' AND meta_key LIKE 'field_%'");
+
+				update_post_meta( $post_id, '_'.$key, $fieldTrad );
+				update_post_meta( $post_id, $key, $extra['val'] );
+			}
+		}
+		if( checkInstalledPlugin('Meta Box')&& count($extras) != 0) {
+			$aTextF = array();
+			foreach ($extras as $key => $extra) {
+				if (strpos($extra['field'], '_tmtext_') !== FALSE) {
+					$num = str_replace('_tmtext_', '', $extra['field']);
+				$aTextF[$num] = $extra['val'];
+				update_post_meta( $post_id, $extra['field'], $aTextF);
+			}else
+					update_post_meta( $post_id, $extra['field'], $extra['val'] );
+			}
+//			if (count($aTextF) != 0) {
+//				update_post_meta( $post_id, , $aTextF);
+//			}
+		}
 		// on valide chez textmaster
-		$ret = $tApi->valideDoc($_GET['projectId'], $_GET['docId']);
+		if ($tApi->getDocumentStatus($_GET['projectId'], $_GET['docId']) != 'completed' )
+			$ret = $tApi->valideDoc($_GET['projectId'], $_GET['docId']);
 	//	print_r($ret);
-		if (strpos($ret, 'Error') !== FALSE){
+		if (isset($ret) && !is_array($ret ) &&  strpos($ret, 'Error') !== FALSE){
 			if (strpos($ret, 'could not transition from completed via status_complete') !== FALSE) {
 		//		echo $ret;
 				echo $post_id;
@@ -53,12 +178,20 @@ if (isset($_GET['valide']) && $_GET['valide'] == 1) {
 		else{
 			echo $post_id;
 		//	syncProjets();
-			wp_schedule_single_event( time() + 1, 'cron_syncProjets' );
+			wp_schedule_single_event( time() + 1, 'cron_syncProjets', array('', 1) );
 		}
 	}
 	else {
+
 		// on valide chez textmaster
-		$ret = $tApi->valideDoc($_GET['projectId'], $_GET['docId']);
+		if ($tApi->getDocumentStatus($_GET['projectId'], $_GET['docId']) != 'completed' )
+			$ret = $tApi->valideDoc($_GET['projectId'], $_GET['docId'], $_POST['select_textmasterSatisfaction'], $_POST['text_textmaster_message']);
+		// on ajout l'auteur aux textmasters
+		if ($_POST['textmaster_add_author'] == 'Y'){
+			$tApi->addAuthor($_POST['auteur_description'], $_POST['select_textmasterStatutAuteur'], $_POST['auteurTmId']);
+			$_SESSION['lastSyncTmAuteurs']  = '';
+		}
+
 //		print_r($ret);
 		if (strpos($ret, 'Error') !== FALSE){
 			if (strpos($ret, 'could not transition from completed via status_complete') !== FALSE) {
@@ -72,7 +205,7 @@ if (isset($_GET['valide']) && $_GET['valide'] == 1) {
 			echo $post_id;
 //		print_r($ret);
 			//syncProjets();
-			wp_schedule_single_event( time() + 1, 'cron_syncProjets' );
+			wp_schedule_single_event( time() + 1, 'cron_syncProjets', array('', 1) );
 		}
 	}
 }
@@ -106,9 +239,9 @@ else
 <?php
 
 
-$tApi = new textmaster_api();
-$tApi->secretapi = get_option('textmaster_api_secret');
-$tApi->keyapi =  get_option('textmaster_api_key');
+$tApi = new textmaster_api(get_option_tm('textmaster_api_key'), get_option_tm('textmaster_api_secret'));
+//$tApi->secretapi = get_option_tm('textmaster_api_secret');
+//$tApi->keyapi =  get_option_tm('textmaster_api_key');
 if ($_GET['type'] == 'redaction'){
 	$idProjet = get_post_meta($_GET['post_id'],'textmasterId', TRUE);
 	$textmasterDocumentId = get_post_meta($_GET['post_id'],'textmasterDocumentId', TRUE);
@@ -116,7 +249,7 @@ if ($_GET['type'] == 'redaction'){
 	$infos = $tApi->getDocumentInfos($idProjet, $textmasterDocumentId);
 //	print_r($infos);
 	if (!is_array($infos) || count($infos) == 0) {
-		$table_name = $wpdb->prefix . "tm_projets";
+		$table_name = $wpdb->base_prefix . "tm_projets";
 		$textmasterDocumentId = $wpdb->get_var('SELECT idDocument FROM  ' . $table_name . ' WHERE id='.$idProjet.' AND ctype="copywriting" AND name like="%'.get_the_title($_GET['post_id']).'%"');
 		$infos = $tApi->getDocumentInfos($idProjet, $textmasterDocumentId);
 	}
@@ -130,8 +263,8 @@ if ($_GET['type'] == 'redaction'){
 
 }
 else if ($_GET['type'] == 'trad'){
-	$idProjet = get_post_meta($_GET['post_id'],'textmasterIdTrad', TRUE);
-	$textmasterDocumentId = get_post_meta($_GET['post_id'],'textmasterDocumentIdTrad', TRUE);
+	$idProjet = get_IdProjetTrad($_GET['post_id'], $_GET['lang'], 'post'); //get_post_meta($_GET['post_id'],'textmasterIdTrad', TRUE);
+	$textmasterDocumentId = get_IdDocTrad($_GET['post_id'], $_GET['lang']);//$_GET['idDocument'];// get_post_meta($_GET['post_id'],'textmasterDocumentIdTrad', TRUE);
 
 	$infos = $tApi->getDocumentInfos($idProjet, $textmasterDocumentId);
 
@@ -139,7 +272,7 @@ else if ($_GET['type'] == 'trad'){
 	if (!is_array($infos) || count($infos) == 0) {
 	//	$infosListe = $tApi->getDocumentList($idProjet);
 	//	$infos = $infosListe['documents'][0];
-		$table_name = $wpdb->prefix . "tm_projets";
+		$table_name = $wpdb->base_prefix . "tm_projets";
 		$textmasterDocumentId = $wpdb->get_var('SELECT idDocument FROM  ' . $table_name . ' WHERE id='.$idProjet.' AND ctype="translation" AND name like="%'.get_the_title($_GET['post_id']).'%"');
 		$infos = $tApi->getDocumentInfos($idProjet, $textmasterDocumentId);
 	}
@@ -162,7 +295,7 @@ else
 	if (!is_array($infos) || count($infos) == 0) {
 		//$infosListe = $tApi->getDocumentList($idProjet);
 		//$infos = $infosListe['documents'][0];
-		$table_name = $wpdb->prefix . "tm_projets";
+		$table_name = $wpdb->base_prefix . "tm_projets";
 		$textmasterDocumentId = $wpdb->get_var('SELECT idDocument FROM  ' . $table_name . ' WHERE id='.$idProjet.' AND ctype="proofreading" AND name like="%'.get_the_title($_GET['post_id']).'%"');
 		$infos = $tApi->getDocumentInfos($idProjet, $textmasterDocumentId);
 	}
@@ -180,9 +313,9 @@ else
 $text = '';
 //print_r($work);
 if (count($work) != 0) {
-
 	if (@key_exists('title', $work['author_work'])) {
 		foreach ( $work['author_work'] as $element => $paragraphes) {
+//			echo $element.' '.print_r($paragraphes, TRUE);
 			if ($element == 'title')
 				$text .= '<strong id="titreTm">'.$paragraphes.'</strong>';
 			else
@@ -195,7 +328,7 @@ if (count($work) != 0) {
 		$titre = '';
 
 		foreach ( $work['author_work'] as $element => $paragraphes) {
-			$textBrute .= $paragraphes;
+			$textBrute .= '<p>'.$paragraphes.'</p>';
 		}
 
 	//	$lignes = explode("\n", $textBrute );
@@ -228,15 +361,29 @@ if (count($work) != 0) {
 echo '<br/><div style="overflow:auto;max-height:80%;display:block;min-height:500px;" id="textmasterWork">';
 echo $text;
 echo '</div><br/>';
+echo metaboxes_post($tApi, $_GET['type'] , $idProjet, $textmasterDocumentId, $_GET['post_id']);
+echo '<input type="hidden" id="post_id_origine" name="post_id_origine" value="'. $_GET['post_id'].'">';
 echo '<input type="hidden" id="docId" name="docId" value="'. $infos['id'].'">';
 echo '<input type="hidden" id="projectId" name="projectId" value="'. $idProjet.'">';
 echo '<input type="hidden" id="textmaster_type" name="textmaster_type" value="'. $_GET['type'].'">';
 echo '<img src="/wp-admin/images/wpspin_light.gif" style="display:none;float:left;margin-top:5px;margin-right:5px;" id="ajax-loading-validate" alt="">';
 echo '<span id="waitMsgTm" style="display:none;vertical-align:middle;padding-top:5px;height:20px;">'.__('Merci de patienter', 'textmaster').'</span>';
-echo '<div id="publishing-action"><input name="Valider" type="button" class="button button-highlighted" id="useDocTextmaster" tabindex="5" accesskey="v" value="'.__('Valider','textmaster').'"></div>';
+//echo '<div id="publishing-action"><input name="Valider" type="button" class="button button-highlighted" id="useDocTextmaster" tabindex="5" accesskey="v" value="'.__('Valider','textmaster').'"></div>';
+if (checkInstalledPlugin('WPML Multilingual CMS') && $_GET['type'] == 'trad') {
+	$aLangsIcl = icl_get_languages();
+	if (count($aLangsIcl) != 0) {
+		echo '<select name="lang_icl" id="lang_icl">';
+		foreach ($aLangsIcl as $langsIcl) {
+			echo '<option value="'.$langsIcl['language_code']. '">'. $langsIcl['native_name'].'</option>';
+		}
+		echo '</select>';
+		echo '<input name="ValiderPlus" type="button" class="button button-highlighted" id="useDocTextmasterIcl" tabindex="6" accesskey="c" value="'.__('Utiliser comme traduction','textmaster').'">';
+	}
+}
 echo '<div id="publishing-action" style="margin-right:5px;"><input name="ValiderPlus" type="button" class="button button-highlighted" id="useDocTextmasterPlus" tabindex="6" accesskey="c" value="'.__('Valider et créer un article','textmaster').'"></div> ';
 echo '<div id="publishing-action" style="margin-right:5px;"><input name="ValiderPlus" type="button" class="button button-highlighted" id="useDocTextmasterPlusPage" tabindex="6" accesskey="c" value="'.__('Valider et créer une page','textmaster').'"></div> ';
 echo '<div style="clear:both;"></div><br/>';
+
 echo '<div id="resultTM"></div>';
 _e('En validant ce travail, il sera appouvé sur Textmaster et copier comme contenu de votre article. Il vous faudra sauvegarder ce dernier pour utiliser ce contenu.','textmaster');
 echo '<script>window.urlPlugin = "'. plugins_url('', __FILE__).'"; window.urlAdmin = "'. admin_url().'"; </script>';
@@ -246,5 +393,7 @@ echo '<script>window.urlPlugin = "'. plugins_url('', __FILE__).'"; window.urlAdm
 </html>
 <?php
 	// display:inline-block;
+
+
 }
 ?>

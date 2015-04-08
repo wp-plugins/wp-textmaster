@@ -7,6 +7,10 @@
 	display:inline-block;
 	margin-left:20px;
 }
+#textmaster_settings .form-table td{
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
 #textmaster_settings ul.tabs {
 	/*float: left;*/
 	display: inline-table;
@@ -39,7 +43,13 @@
 }
 #textmaster_settings ul.tabs li a:hover {
 }
-
+#textmaster_settings .multilangues{
+	display:none;
+}
+#textmaster_settings ul.list_setting_langs li {
+	width:30%;
+	float:left;
+}
 
 /* pour cache le menu custom post */
 #menu-posts-textmaster_redaction ul li.wp-first-item{
@@ -58,7 +68,7 @@
 }
 
 /* The content shown when a tab is selected */
-#textmaster_settings div {
+#textmaster_settings div.settings {
 	/*float: left;*/
 	display: block;
 	width: 90%;
@@ -72,7 +82,7 @@
 
 
 /* Set the CSS to make sure the other tabs' content isn't shown other than the first */
-#textmaster_settings div.t2, #textmaster_settings div.t3, #textmaster_settings div.t4 {
+#textmaster_settings div.t2, #textmaster_settings div.t3, #textmaster_settings div.t4, #textmaster_settings div.t5  {
 	display: none;
 
 }
@@ -88,4 +98,130 @@
 
 #resultTextmaster, .tmInfos {
 	padding:0;
+}
+
+/* dashboard trad */
+.barPourcent, .progessBar  {
+	border: 1px solid gray;
+	font-size:70%;
+	position: relative;
+	border-radius: 4px;
+	display: inline-block;
+	width:50%;
+	float:right;
+}
+div.barPourcent div.fill, div.progessBar div.fill {
+	display: inline-block;
+	position: absolute;
+	height: 100%;
+	box-shadow: inset 0px 12px 0px rgba(255,255,255,0.2);
+	border-radius: 4px;
+}
+div.barPourcent div.green, div.progessBar div.green{
+	background-color: Green;
+}
+div.barPourcent div.orange{
+	background-color: orange;
+/*/	box-shadow: 0px 0px 5px grey inset;*/
+}
+div.barPourcent div.red{
+	background-color: red;
+}
+.barPourcent .pourcentTrad, .progessBar .pourcentTrad{
+	display:inline-block;
+	margin-left:40%;
+	position: relative;
+	font-weight:bold;
+}
+
+ul.lang_menus {
+	list-style:none;
+	margin:0;
+	padding:0;
+	display:inline-block;
+	margin-left:10px;
+	margin-top:5px
+}
+ul.lang_menus li{
+	padding:0 5px 0 5px;
+	display:inline-block;
+}
+
+/* les messages de support */
+.msg-support-moi {
+	position: relative;
+	padding: 15px;
+	margin: 1em 0 3em;
+	border: 5px solid #000;
+	color: #333;
+	background: #fff;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	margin-left: 30px;
+}
+
+.msg-support-moi:before {
+	content: "";
+	position: absolute;
+	top: 10px;
+	bottom: auto;
+	left: -30px;
+	border-style: solid;
+	border-width: 15px 30px 15px 0;
+	border-color: transparent #000;
+	display: block;
+	width: 0;
+}
+.msg-support-moi:after {
+	content: "";
+	position: absolute;
+	top: 16px;
+	bottom: auto;
+	left: -21px;
+	border-style: solid;
+	border-width: 9px 21px 9px 0;
+	border-color: transparent #fff;
+	display: block;
+	width: 0;
+}
+
+.msg-support-auteur {
+	margin-right: 30px;
+	position: relative;
+	padding: 15px;
+	margin: 1em 0 3em;
+	border: 5px solid #000;
+	color: #333;
+	background: #fff;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	text-align:right;
+}
+.msg-support-auteur:before {
+	content: "";
+	position: absolute;
+	top: 10px;
+	bottom: auto;
+	left: auto;
+	right: -30px;
+	border-style: solid;
+	border-width: 15px 0 15px 30px;
+	border-color: transparent #000;
+	display: block;
+	width: 0;
+}
+.msg-support-auteur:after {
+	content: "";
+	position: absolute;
+	top: 16px;
+	bottom: auto;
+	left: auto;
+	right: -21px;
+	border-style: solid;
+	border-width: 9px 0 9px 21px;
+	border-color: transparent #fff;
+	display: block;
+	width: 0;
 }

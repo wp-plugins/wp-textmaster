@@ -10,16 +10,42 @@ function admin_textmaster_projets(){
 	$listeProjets = new textmaster_projets_Table();
     $listeProjets->prepare_items();
 
+	$html = '';
+	// le filtre par site pour le network
+	if ( is_network_admin() ) {
+		if (function_exists('wp_get_sites')) {
+			$sites = wp_get_sites();
+			if (count($sites) != 0) {
+				$html .= '<select name="tmsite" onChange="jQuery(\'#tmsite\').val(jQuery(this).val());document.location.href=\''. network_admin_url('admin.php?page=Textmaster&tmsite=').'\'+jQuery(this).val()+\'&tmt_type=\'+jQuery(\'#tmt\').val();">';//jQuery(\'#formTMProjets\').submit();
+				foreach ($sites as $site) {
+					$detail = get_blog_details($site['blog_id']);
+					$html .= '<option value="'.$site['blog_id'].'" ';
+					if (isset($_REQUEST['tmsite']) && $_REQUEST['tmsite'] == $site['blog_id'])
+						$html .= 'selected="selected"';
+					$html .= '>'. $detail->blogname .'</option>';
+				}
+				$html .= '</select>';
+			}
+		}
+
+
+		$urlTmt = network_admin_url('admin.php?page=Textmaster&tmt=');
+		$urlTmt_type = network_admin_url('admin.php?page=Textmaster&tmt_type=');
+	}else{
+		$urlTmt = admin_url('edit.php?post_type=textmaster_redaction&page=textmaster-projets&tmt=');
+		$urlTmt_type = admin_url('edit.php?post_type=textmaster_redaction&page=textmaster-projets&tmt=translation&tmt_type=');
+	}
 	?>
 
 			<div class="wrap" id="textmaster_projets">
-				<?php echo "<div id='icon-edit' class='icon32 icon32-posts-textmaster_redaction'><br></div><h2>" . __('Tous les projets TextMaster' , 'textmaster') . "</h2>"; ?>
+				<?php echo "<div id='icon-edit' class='icon32 icon32-posts-textmaster_redaction'><br></div><h2>" . __('Tous les projets TextMaster' , 'textmaster') .' '. $html ."</h2>"; ?>
 
 			<form method="post" id="formTMProjets">
 			<input type="hidden" name="page" value="<?php echo $_REQUEST['page']; ?>"/>
 			<input type="hidden" name="tms" value="<?php echo $_REQUEST['tms']; ?>"/>
 			<input type="hidden" name="tmt" value="<?php echo $_REQUEST['tmt']; ?>"/>
 			<input type="hidden" name="tmc" value="<?php echo $_REQUEST['tmc']; ?>"/>
+			<input type="hidden" name="tmsite" value="<?php echo $_REQUEST['tmsite']; ?>"/>
 			<?php
 				$listeProjets->display();
 
@@ -89,7 +115,7 @@ class textmaster_projets_Table extends WP_List_Table {
 			<?php
 
 			// le filtre par catégories
-			$table_categories =  $wpdb->prefix .'tm_categories';
+			$table_categories =  $wpdb->base_prefix .'tm_categories';
 			$reqCats = 'SELECT * FROM '.$table_categories;
 			$arrayCats = $wpdb->get_results($reqCats, ARRAY_A);
 			if (count($arrayCats) != 0) {
@@ -151,17 +177,17 @@ class textmaster_projets_Table extends WP_List_Table {
 				return $item[ $column_name ];
 			case 'created_at':
 				if ($item[ $column_name ]  != ''&& $item[ $column_name ]  != '0000-00-00 00:00:00')
-					return date_i18n(get_option('date_format') ,strtotime($item[ $column_name ]));
+					return date_i18n(get_option_tm('date_format') ,strtotime($item[ $column_name ]));
 				else
 					return 'NC';
 			/*case 'launched_at':
 				if ($item[ $column_name ]  != '')
-					return date_i18n(get_option('date_format') ,strtotime($item[ $column_name ]));
+					return date_i18n(get_option_tm('date_format') ,strtotime($item[ $column_name ]));
 				else
 					return 'NC';*/
 			case 'completed_at':
 				if ($item[ $column_name ]  != '' && $item[ $column_name ]  != '0000-00-00 00:00:00')
-					return date_i18n(get_option('date_format') ,strtotime($item[ $column_name ]));
+					return date_i18n(get_option_tm('date_format') ,strtotime($item[ $column_name ]));
 				else
 					return 'NC';
 			default:
@@ -172,12 +198,36 @@ class textmaster_projets_Table extends WP_List_Table {
 	function prepare_items(){
 		global $wpdb;
 
-		$table_name = $wpdb->prefix . "tm_projets";
+/*		$time = microtime();
+		$time = explode(' ', $time);
+		$time = $time[1] + $time[0];
+		$start = $time;
+*/
+		$table_name = $wpdb->base_prefix . "tm_projets";
 		$per_page = 40;
-
+		$adminUrl ='';
+		if (isset($_REQUEST['tmsite']) && $_REQUEST['tmsite'] > 1) {
+			$table_post = $wpdb->base_prefix . $_REQUEST['tmsite']."_posts";
+			$table_meta = $wpdb->base_prefix . $_REQUEST['tmsite']."_postmeta";
+			if ( is_network_admin() ){
+				$detail = get_blog_details($_REQUEST['tmsite']);
+				$adminUrl = $detail->siteurl.'/wp-admin/';
+			}
+		}else {
+			if ( is_network_admin())
+				$_REQUEST['tmsite'] = 1;
+			$table_post = $wpdb->prefix . "posts";
+			$table_meta = $wpdb->prefix . "postmeta";
+			if ( is_network_admin() && isset($_REQUEST['tmsite'])){
+				$detail = get_blog_details($_REQUEST['tmsite']);
+				$adminUrl = $detail->siteurl.'/wp-admin/';
+			}
+			else
+				$adminUrl ='';
+		}
 	/*	$tApi = new textmaster_api();
-		$tApi->secretapi = get_option('textmaster_api_secret');
-		$tApi->keyapi = get_option('textmaster_api_key');
+		$tApi->secretapi = get_option_tm('textmaster_api_secret');
+		$tApi->keyapi = get_option_tm('textmaster_api_key');
 
 		$projets = $tApi->getProjectList($_REQUEST['tms'], FALSE, '', 9999999);
 		$total_items = count($projets['projects']);
@@ -200,10 +250,23 @@ class textmaster_projets_Table extends WP_List_Table {
 		if (isset($_REQUEST['tmc']) && $_REQUEST['tmc'] != '')
 			$where .= ' AND category="'.$_REQUEST['tmc'] .'"';
 
-		$total_items = $wpdb->get_var('SELECT COUNT(id) FROM  ' . $table_name . ' WHERE ( creation_channel="api" OR id LIKE "wp_%%") AND archived!=1'.$where);
-		$req = $wpdb->prepare('SELECT * FROM ' . $table_name . ' WHERE (creation_channel="api" OR id LIKE "wp_%%") AND archived!=1 '.$where.' ORDER BY ' . $orderby . ' ' . $order . ' LIMIT %d, %d', ($paged * $per_page), $per_page);
+
+		$total_items = $wpdb->get_var('SELECT COUNT(id) FROM  ' . $table_name . '
+						LEFT JOIN  '.$table_meta.' ON meta_key LIKE "%textmasterDocumentId%" AND meta_value=' . $table_name . '.idDocument
+						 WHERE ( creation_channel="api" OR id LIKE "wp_%%") AND archived!=1 AND name NOT LIKE "%(junk)%" '.$where);
+
+
+
+	//	$req = $wpdb->prepare('SELECT * FROM ' . $table_name . '
+	//							LEFT JOIN  '.$wpdb->prefix.'postmeta ON meta_key LIKE "%textmasterDocumentId%" AND meta_value=' . $table_name . '.idDocument
+	//							WHERE (creation_channel="api" OR id LIKE "wp_%%")  AND name NOT LIKE "%(junk)%" AND archived!=1 '.$where.' ORDER BY ' . $orderby . ' ' . $order . ' LIMIT %d, %d', ($paged * $per_page), $per_page);
+
+		$req = 'SELECT * FROM ' . $table_name . '
+								LEFT JOIN  '.$table_meta.' ON meta_key LIKE "%textmasterDocumentId%" AND meta_value=' . $table_name . '.idDocument
+								WHERE (creation_channel="api" OR id LIKE "wp_%%") AND archived!=1 AND name NOT LIKE "%(junk)%" '.$where.' ORDER BY ' . $orderby . ' ' . $order . ' LIMIT '.($paged * $per_page).', '. $per_page.'';
+
 	//	$req = $wpdb->prepare('SELECT * FROM ' . $table_name . ' WHERE creation_channel="api" '.$where.' ORDER BY ' . $orderby . ' ' . $order . ' LIMIT %d, %d', ($paged * $per_page), $per_page);
-		//echo $req;
+//		echo 'req '.$req;
 		//(id IN (SELECT meta_value FROM '.$wpdb->prefix.'postmeta WHERE meta_key LIKE "%%textmasterId%%" AND meta_value is not null) AND
 		//(id IN (SELECT meta_value FROM '.$wpdb->prefix.'postmeta WHERE meta_key LIKE "%textmasterId%" AND meta_value is not null) AND
 		$projetsTM = $wpdb->get_results( $req, ARRAY_A);
@@ -212,15 +275,24 @@ class textmaster_projets_Table extends WP_List_Table {
 
 		/*$req = 'SELECT * FROM '.$wpdb->prefix.'postmeta WHERE meta_key LIKE "%textmasterId%" AND meta_value is not null AND meta_value!=""';
 		$tmIds = $wpdb->get_results( $req);*/
+
+		$textmaster_email = get_option_tm('textmaster_email');
+		$textmaster_password = get_option_tm('textmaster_password');
+		$oOAuth = new TextMaster_OAuth2();
+		$token = $oOAuth->getToken($textmaster_email, $textmaster_password);
+		$infosUser = $oOAuth->getUserInfos($token);
+
 		foreach ($projetsTM  as $projets) {
+	//		print_r($projets);
 			$idPost = '';
-			$req = 'SELECT * FROM '.$wpdb->prefix.'postmeta WHERE  meta_key LIKE "%textmasterDocumentId%" AND meta_value="'.$projets['idDocument'].'"'; //meta_key LIKE "%textmasterId%" AND meta_value="'.$projets['id'].'" AND
+			//$req = 'SELECT * FROM '.$wpdb->prefix.'postmeta WHERE  meta_key LIKE "%textmasterDocumentId%" AND meta_value="'.$projets['idDocument'].'"'; //meta_key LIKE "%textmasterId%" AND meta_value="'.$projets['id'].'" AND
 		//	echo $req;
-			$wpId = $wpdb->get_results( $req);
+			//$wpId = $wpdb->get_results( $req);
 		//	echo $projets['idDocument'];
 		//	print_r($wpId);
-			if (count($wpId) == 0) {
-				$table_post = $wpdb->prefix . "posts";
+			$idPost =$projets['post_id'];
+			if ($projets['post_id'] == '') {
+			//	$table_post = $wpdb->prefix . "posts";
 				$titres = explode('(',$projets['name'] );
 				$titre = trim($titres[0]);
 				$Id = $wpdb->get_var('SELECT ID FROM  ' . $table_post . ' WHERE 	post_title="'.$titre.'" AND post_status!="inherit"');
@@ -229,21 +301,17 @@ class textmaster_projets_Table extends WP_List_Table {
 				if ($Id != '')
 					$idPost = $Id;
 			}
-			else
-				$idPost = $wpId[0]->post_id;
+
+
 
 			if ($idPost != '')
-				$item['name'] = '<a href="post.php?post='.$idPost.'&action=edit">'.$projets['name'].'</a>';
+				$item['name'] = '<a href="'.$adminUrl.'post.php?post='.$idPost.'&action=edit">'.$projets['name'].'</a>';
 			else if ( strpos($projets['id'], 'wp_') !== FALSE) {
-				$item['name'] = '<a href="post.php?post='.str_replace('wp_', '', $projets['id']).'&action=edit">'.$projets['name'].'</a>';
+				$item['name'] = '<a href="'.$adminUrl.'post.php?post='.str_replace('wp_', '', $projets['id']).'&action=edit">'.$projets['name'].'</a>';
 			}
 			else
 			{
-				$textmaster_email = get_option('textmaster_email');
-				$textmaster_password = get_option('textmaster_password');
-				$oOAuth = new TextMaster_OAuth2();
-				$token = $oOAuth->getToken($textmaster_email, $textmaster_password);
-				$infosUser = $oOAuth->getUserInfos($token);
+
 
 				$lang = explode('_', get_locale());
 				$urlProjet = 'http://'.$lang[0].'.'.URL_TM_PROJET.$projets['id'].'/overview/?auth_token='.$infosUser['authentication_token'];
@@ -273,7 +341,13 @@ class textmaster_projets_Table extends WP_List_Table {
 			$this->items[] = $item;
 		}
 
-
+/*		$time = microtime();
+		$time = explode(' ', $time);
+		$time = $time[1] + $time[0];
+		$finish = $time;
+		$total_time = round(($finish - $start), 4);
+		echo 'Page generated in '.$total_time.' seconds.';
+*/
 		$this->set_pagination_args(array(
 			'total_items' => $total_items,
 			'per_page' => $per_page,
@@ -284,92 +358,11 @@ class textmaster_projets_Table extends WP_List_Table {
 
 }
 
-add_action( 'cron_syncProjets','syncProjets' );
-if ($_SESSION['lastSyncTmProjets'] == '' ||  time() - $_SESSION['lastSyncTmProjets'] > TMPS_SYNC_PROJETS)
-	wp_schedule_single_event( time() + 1, 'cron_syncProjets' );
-//	syncProjets();
-
-function syncProjets($status = ''){
-	global $wpdb;
-/*
-	$time = microtime();
-	$time = explode(' ', $time);
-	$time = $time[1] + $time[0];
-	$start = $time;
-*/
-
-//	$wpdb->show_errors();
-	$tApi = new textmaster_api();
-	$tApi->secretapi = get_option('textmaster_api_secret');
-	$tApi->keyapi = get_option('textmaster_api_key');
-
-	$arryIdsProjets = array();
-
-	$projets = $tApi->getProjectList($status, FALSE, '', NB_SYNC_PROJETS);
-	$totalPage = ($projets['count'] / NB_SYNC_PROJETS) +1;
-	for ($page=1; $page <= $totalPage; $page++){
-		$projets = $tApi->getProjectList($status, FALSE, $page, NB_SYNC_PROJETS);
-//		print_r($projets);
-		if (count($projets['projects']) != 0) {
-			foreach ($projets['projects']  as $projets) {
-				$arryIdsProjets[] = $projets['id'];
-				$projetInfos = $tApi->getProjetInfos($projets['id']);
-				//		print_r($projetInfos);
-				$docs = $tApi->getDocumentList($projets['id']);
-				if (count($docs['documents']) == 1) {
-					$projets['status'] =  $docs['documents'][0]['status'];
-					$projets['IdDoc'] = $docs['documents'][0]['id'];
-					$projets['completed_at']['full'] = $docs['documents'][0]['completed_at']['full'];
-					$projets['archived'] = 0;
-					// 	print_r($docs['documents']);
-
-					wpSaveProjet($projets);
-				}
-				else {
-					$projet_name = $projets['name'];
-					foreach ($docs['documents'] as $document) {
-						$projets['status'] = $document['status'];
-						$projets['name'] = $document['title']. ' ('.$projet_name .')';
-						$projets['completed_at']['full'] = $document['completed_at']['full'];
-						$projets['IdDoc'] = $document['id'];
-						$projets['archived'] = 0;
-
-						wpSaveProjet($projets);
-					}
-				}
-
-			}
-		}
-	}
-
-//	print_r($arryIdsProjets);
-
-/*	if (count($arryIdsProjets) != 0 && $status == '') {
-		// on met les projetsquinesont pas dans la liste en archivé
-		$table_name = $wpdb->prefix . "tm_projets";
-		$req = 'UPDATE '.$table_name.' SET archived=1 WHERE id NOT IN ("'.implode('", "',$arryIdsProjets ).'") AND id NOT LIKE "%wp_%";';
-		//		echo $req;
-		$wpdb->query($req);
-		//	print_r($req);
-		$_SESSION['lastSyncTmProjets'] = time();
-	}*/
-
-
-/*
-	$time = microtime();
-	$time = explode(' ', $time);
-	$time = $time[1] + $time[0];
-	$finish = $time;
-	$total_time = round(($finish - $start), 4);
-	echo 'Page generated in '.$total_time.' seconds.';
-*/
-}
-
 
 function wpSaveProjet($projets){
 	global $wpdb;
 
-	$table_name = $wpdb->prefix . "tm_projets";
+	$table_name = $wpdb->base_prefix . "tm_projets";
 	$sqlUpdate = 'UPDATE '.$table_name.' SET
 					  name = %s,
 					  language_from = %s,
@@ -429,7 +422,7 @@ function wpDelTempProjet($id){
 	global $wpdb;
 
 	if ($id != '') {
-		$table_name = $wpdb->prefix . "tm_projets";
+		$table_name = $wpdb->base_prefix . "tm_projets";
 		$sqlDel = 'DELETE FROM '.$table_name.'  WHERE id = "%s"';
 		$reqDel = $wpdb->prepare($sqlDel, $id);
 		$wpdb->query($reqDel);

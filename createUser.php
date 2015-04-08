@@ -1,5 +1,8 @@
 <?php
-include "../../../wp-load.php";
+//include "../../../wp-load.php";
+//require_once( $_SERVER['DOCUMENT_ROOT'] . '/wp-load.php' );
+$parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
+require_once( $parse_uri[0] . 'wp-load.php' );
 
 $results = FALSE;
 
@@ -19,10 +22,10 @@ if (count($_POST) != 0) {
 ?>
 <!DOCTYPE html>
 <!--[if IE 8]>
-<html xmlns="http://www.w3.org/1999/xhtml" class="ie8 wp-toolbar"  dir="ltr" lang="fr-FR">
+<html xmlns="http://www.w3.org/1999/xhtml"   dir="ltr" lang="fr-FR">
 <![endif]-->
 <!--[if !(IE 8) ]><!-->
-<html xmlns="http://www.w3.org/1999/xhtml" class="wp-toolbar"  dir="ltr" lang="fr-FR">
+<html xmlns="http://www.w3.org/1999/xhtml"   dir="ltr" lang="fr-FR">
 <!--<![endif]-->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -53,21 +56,21 @@ td {
 <script type='text/javascript' src='/wp-admin/load-scripts.php?c=0&amp;load=jquery,utils&amp;ver=3.4.2'></script>
 <script type='text/javascript' src='/wp-content/plugins/wp-textmaster/textmaster.js?ver=<?php echo get_tm_plugin_version();?>'></script>
 </head>
-<body>
+<body style="margin:10px;">
 <?php echo "<h2>" . __('Créer un compte TextMaster' , 'textmaster') . "</h2>"; ?>
 <form name="textmaster_form" method="post" action="<?php echo str_replace('%7E', '~', $_SERVER['REQUEST_URI']); ?>">
 <?php
 if (is_array($results) && key_exists('errors', $results) && count($results['errors']) != 0) {
-	echo '<div class="error" style="padding:10px;">'.__('Impossible de créer votre compte, merci de corriger les erreurs.','textmaster').'</div>';
+	echo '<div class="error" style="padding:10px;">'.__('Impossible de créer votre compte, merci de corriger les erreurs.','textmaster').'</div><br/>';
 }
 else if (is_array($results) && key_exists('authentication_token', $results)) {
-	echo '<div class="updated" style="padding:10px;">'.__('Votre compte a bien été créé.','textmaster').'</div>';
+	echo '<div class="updated" style="padding:10px;">'.__('Votre compte a bien été créé.','textmaster').'</div><br/>';
 	textmaster_api::sendTracker();
 }
 ?>
-<table class="form-table">
+<table>
 <tr valign="top">
-<th scope="row"><?php _e("Prénom: ", 'textmaster'); ?></th>
+<th scope="row" style="text-align:left;"><?php _e("Prénom: ", 'textmaster'); ?></th>
 <td><input type="text" name="contact_information_attributes[first_name]" value="<?php
 if (isset($_POST['contact_information_attributes']['first_name']))
 	echo $_POST['contact_information_attributes']['first_name'];
@@ -77,7 +80,7 @@ if (is_array($results) && isset($results['errors']['first_name']) != 0)
 ?></td>
 </tr>
 <tr valign="top">
-<th scope="row"><?php _e("Nom: ", 'textmaster'); ?></th>
+<th scope="row" style="text-align:left;"><?php _e("Nom: ", 'textmaster'); ?></th>
 <td><input type="text" name="contact_information_attributes[last_name]" value="<?php
 if (isset($_POST['contact_information_attributes']['last_name']))
 	echo $_POST['contact_information_attributes']['last_name'];
@@ -87,7 +90,7 @@ if (is_array($results) && isset($results['errors']['last_name']) != 0)
 ?></td>
 </tr>
 <tr valign="top">
-<th scope="row"><?php _e("Société: ", 'textmaster'); ?></th>
+<th scope="row" style="text-align:left;"><?php _e("Société: ", 'textmaster'); ?></th>
 <td><input type="text" name="contact_information_attributes[company]" value="<?php
 if (isset($_POST['contact_information_attributes']['company']))
 	echo $_POST['contact_information_attributes']['company'];
@@ -96,8 +99,9 @@ if (is_array($results) && isset($results['errors']['company']) != 0)
 	echo '<div class="error" style="padding:10px;">'. $results['errors']['company'][0].'</div>';
 ?></td>
 </tr>
+<!--
 <tr valign="top">
-<th scope="row"><?php _e("Adresse: ", 'textmaster'); ?></th>
+<th scope="row" style="text-align:left;"><?php _e("Adresse: ", 'textmaster'); ?></th>
 <td><input type="text" name="contact_information_attributes[address]" value="<?php
 if (isset($_POST['contact_information_attributes']['address']))
 	echo $_POST['contact_information_attributes']['address'];
@@ -107,7 +111,7 @@ if (is_array($results) && isset($results['errors']['address']) != 0)
 ?></td>
 </tr>
 <tr valign="top">
-<th scope="row"><?php _e("Code Postal: ", 'textmaster'); ?></th>
+<th scope="row" style="text-align:left;"><?php _e("Code Postal: ", 'textmaster'); ?></th>
 <td><input type="text" name="contact_information_attributes[zip_code]" value="<?php
 if (isset($_POST['contact_information_attributes']['zip_code']))
 	echo $_POST['contact_information_attributes']['zip_code'];
@@ -117,7 +121,7 @@ if (is_array($results) && isset($results['errors']['zip_code']) != 0)
 ?></td>
 </tr>
 <tr valign="top">
-<th scope="row"><?php _e("Ville: ", 'textmaster'); ?></th>
+<th scope="row" style="text-align:left;"><?php _e("Ville: ", 'textmaster'); ?></th>
 <td><input type="text" name="contact_information_attributes[city]" value="<?php
 if (isset($_POST['contact_information_attributes']['zip_code']))
 	echo $_POST['contact_information_attributes']['city'];
@@ -127,7 +131,7 @@ if (is_array($results) && isset($results['errors']['city']) != 0)
 ?></td>
 </tr>
 <tr valign="top">
-<th scope="row"><?php _e("Pays: ", 'textmaster'); ?></th>
+<th scope="row" style="text-align:left;"><?php _e("Pays: ", 'textmaster'); ?></th>
 
 <td><select name="contact_information_attributes[country]" ><?php
 if (isset($_POST['contact_information_attributes']['country']))
@@ -151,8 +155,9 @@ if (is_array($results) && isset($results['errors']['country']) != 0)
 	 echo '<div class="error" style="padding:10px;">'. $results['errors']['country'][0].'</div>';
 ?></td>
 </tr>
+-->
 <tr valign="top">
-<th scope="row"><?php _e("Numéro de téléphone: ", 'textmaster'); ?></th>
+<th scope="row" style="text-align:left;"><?php _e("Numéro de téléphone: ", 'textmaster'); ?></th>
 <td><input type="text" name="contact_information_attributes[phone_number]" value="<?php
 if (isset($_POST['contact_information_attributes']['phone_number']))
 	echo $_POST['contact_information_attributes']['phone_number'];
@@ -162,7 +167,7 @@ if (is_array($results) && isset($results['errors']['phone_number']) != 0)
 ?></td>
 </tr>
 <tr valign="top">
-<th scope="row"><?php _e("Email: ", 'textmaster'); ?></th>
+<th scope="row" style="text-align:left;"><?php _e("Email: ", 'textmaster'); ?></th>
 <td><input type="text" name="email" value="<?php
 if (isset($_POST['email']))
 	echo $_POST['email'];
@@ -172,7 +177,7 @@ if (is_array($results) && isset($results['errors']['email']) != 0)
 ?></td>
 </tr>
 <tr valign="top">
-<th scope="row"><?php _e("Mot de passe: ", 'textmaster'); ?></th>
+<th scope="row" style="text-align:left;"><?php _e("Mot de passe: ", 'textmaster'); ?></th>
 <td><input type="password" name="password" value="<?php
 if (isset($_POST['password']))
 	echo $_POST['password'];
@@ -182,7 +187,7 @@ if (is_array($results) && isset($results['errors']['password']) != 0)
 ?></td>
 </tr>
 <tr valign="top">
-<th scope="row"><?php _e("Confirmer votre mot de passe: ", 'textmaster'); ?></th>
+<th scope="row" style="text-align:left;"><?php _e("Confirmer votre mot de passe: ", 'textmaster'); ?></th>
 <td><input type="password" name="confirmation_password" value="<?php
 if (isset($_POST['password']))
 	echo $_POST['confirmation_password'];
@@ -194,7 +199,7 @@ if (is_array($results) && isset($results['errors']['confirmation_password']) != 
 </table>
 <br/>
 		<br/>
-        <p class="submit">
+        <p class="submit" style="float:right;margin-right:45px;">
         <input type="submit" name="Submit" class="button-primary" value="<?php _e('Créer mon compte','textmaster' ) ?>" />
         </p>
 </form>
