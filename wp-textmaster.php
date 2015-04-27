@@ -4,7 +4,7 @@ Plugin Name: TextMaster plugin
 Plugin URI: http://www.textmaster.com/wordpress-translation-plugin/?pid=5310711603e44f00020006d3
 Description: Plugin for TextMaster copywriting, proofreading and translation services.
 Author: TextMaster SA
-Version: 2.1.1
+Version: 2.1.2
 Author URI: http://www.textmaster.com/?pid=5310711603e44f00020006d3
 Text Domain: textmaster
 */

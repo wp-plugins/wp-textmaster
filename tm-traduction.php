@@ -75,8 +75,6 @@ function traduction_metaboxes_pre(&$tApi){
 	}
 	else
 	{
-
-
 		$textmaster_email = get_option_tm('textmaster_email');
 		$textmaster_password = get_option_tm('textmaster_password');
 		if ($textmaster_password != '' && $textmaster_email != '') {
@@ -472,7 +470,7 @@ function callback_traduction(){
 
 			// comptaibilité acf
 			if( checkInstalledPlugin('Advanced Custom Fields') && isset($_POST['extras']) ) {
-				//	var_dump($_POST);
+			//	var_dump($_POST);
 				$params = array();
 				parse_str($_POST['extras'], $params);
 				if (isset($params["fields"]) && count($params["fields"]) != 0) {
@@ -486,6 +484,7 @@ function callback_traduction(){
 				}
 
 				$arrayDocs[0]['original_content']['content']["title"] = get_the_title($postID);
+				$arrayDocs[0]['original_content']["title"]['original_phrase'] = get_the_title($postID);
 				$arrayDocs[0]['original_content']['content']["original_phrase"] = $content;
 
 				if ($content_post->post_excerpt != ''){
@@ -522,6 +521,7 @@ function callback_traduction(){
 				}
 
 				$arrayDocs[0]['original_content']['content']["title"] = get_the_title($postID);
+				$arrayDocs[0]['original_content']["title"]['original_phrase'] = get_the_title($postID);
 				$arrayDocs[0]['original_content']['content']["original_phrase"] = $content;
 				if ($content_post->post_excerpt != ''){
 					$arrayDocs[0]['original_content']["post_excerpt"]["original_phrase"]  = $content_post->post_excerpt;
@@ -533,8 +533,11 @@ function callback_traduction(){
 				//		echo $nbMots;
 				//		die();
 			}
+
 			if( !checkInstalledPlugin('Advanced Custom Fields') && !checkInstalledPlugin('Meta Box')) {
 				if ($content_post->post_excerpt != ''){
+					$arrayDocs[0]['original_content']['content']["title"] = get_the_title($postID);
+					$arrayDocs[0]['original_content']["title"]['original_phrase'] = get_the_title($postID);
 					$arrayDocs[0]['original_content']['content']["original_phrase"] = $content;
 					$arrayDocs[0]['original_content']["post_excerpt"]["original_phrase"]  = $content_post->post_excerpt;
 					$contentText = cleanWpTxt( $content_post->post_excerpt ).' '.cleanWpTxt( $content );
@@ -552,7 +555,7 @@ function callback_traduction(){
 			$arrayDocs[0]['keyword_list'] = $textmasterKeywords_traduction;
 			$arrayDocs[0]['keywords_repeat_count'] = $textmasterKeywordsRepeatCount_traduction;
 
-
+		//	var_dump($arrayDocs);
 			$ret = $tApi->addDocument($idProjet, $arrayDocs );
 			//	print_r($ret);
 			if (is_array($ret))

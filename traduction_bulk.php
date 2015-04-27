@@ -424,6 +424,7 @@ function addDocsPosts($aInfosPost, $idProjet){
 						}
 
 						$arrayDocs[$nbDocAjouter]['original_content']['content']["title"] = $post['content']->post_title;
+						$arrayDocs[$nbDocAjouter]['original_content']["title"]['original_phrase'] = $post['content']->post_title;
 						$arrayDocs[$nbDocAjouter]['original_content']['content']["original_phrase"] = $post['content']->post_content;
 
 						if ($post['content']->post_excerpt != ''){
@@ -447,6 +448,7 @@ function addDocsPosts($aInfosPost, $idProjet){
 						}
 
 						$arrayDocs[$nbDocAjouter]['original_content']['content']["title"] = $post['content']->post_title;
+						$arrayDocs[$nbDocAjouter]['original_content']["title"]['original_phrase'] = $post['content']->post_title;
 						$arrayDocs[$nbDocAjouter]['original_content']['content']["original_phrase"] = $post['content']->post_content;
 						if ($post['content']->post_excerpt != ''){
 							$arrayDocs[$nbDocAjouter]['original_content']["post_excerpt"]["original_phrase"] = $post['content']->post_excerpt;
@@ -458,6 +460,7 @@ function addDocsPosts($aInfosPost, $idProjet){
 					if( !checkInstalledPlugin('Advanced Custom Fields') && !checkInstalledPlugin('Meta Box')) {
 						if ($post['content']->post_excerpt != ''){
 							$arrayDocs[$nbDocAjouter]['original_content']['content']["original_phrase"] = $post['content']->post_content;
+							$arrayDocs[$nbDocAjouter]['original_content']["title"]['original_phrase'] = $post['content']->post_title;
 							$arrayDocs[$nbDocAjouter]['original_content']["post_excerpt"]["original_phrase"] = $post['content']->post_excerpt;
 							$contentText = cleanWpTxt( $post['content']->post_excerpt ).' '.cleanWpTxt( $post['content']->post_content );
 						}

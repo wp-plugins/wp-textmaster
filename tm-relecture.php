@@ -405,6 +405,7 @@ function callback_readproof(){
 		}
 		if( !checkInstalledPlugin('Advanced Custom Fields') && !checkInstalledPlugin('Meta Box')) {
 			if ($content_post->post_excerpt != ''){
+				$arrayDocs[0]['original_content']['content']["title"] = get_the_title($postID);
 				$arrayDocs[0]['original_content']['content']["original_phrase"] = $content;
 				$arrayDocs[0]['original_content']["post_excerpt"]["original_phrase"]  = $content_post->post_excerpt;
 				$contentText = cleanWpTxt( $content_post->post_excerpt ).' '.cleanWpTxt( $content );

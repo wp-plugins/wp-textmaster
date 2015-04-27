@@ -34,6 +34,9 @@ if (isset($_GET['valide']) && $_GET['valide'] == 1) {
 		else
 			$new_post['post_title'] = __('Untitled');
 
+		if (isset($work['author_work']['post_excerpt']) && $work['author_work']['post_excerpt'] != '')
+			$new_post['post_excerpt'] = $work['author_work']['post_excerpt'];
+
 		foreach ( $work['author_work'] as $element => $paragraphes) {
 			if ($element != 'title')
 				$text .= '<p>'.nl2br($paragraphes).'</p>';
@@ -46,9 +49,7 @@ if (isset($_GET['valide']) && $_GET['valide'] == 1) {
 			$text = '';
 			//	var_dump($work['author_work']);
 			foreach ( $work['author_work'] as $element => $paragraphes) {
-				if ($element == 'post_excerpt'){
-					$new_post['post_excerpt'] = $work['post_excerpt'];
-				} else if ($element == 'content'){
+				 if ($element == 'content'){
 					$text .= '<p>'.nl2br($paragraphes).'</p>';
 					$contentFound = TRUE;
 				}
@@ -62,9 +63,7 @@ if (isset($_GET['valide']) && $_GET['valide'] == 1) {
 
 			if (!$contentFound) {
 				foreach ( $work['author_work'] as $element => $paragraphes) {
-					if ($element == 'post_excerpt'){
-						$new_post['post_excerpt'] = $work['post_excerpt'];
-					} else if ($element != 'title')
+					if ($element != 'title')
 						$text .= '<p>'.nl2br($paragraphes).'</p>';
 				}
 			}
@@ -74,9 +73,7 @@ if (isset($_GET['valide']) && $_GET['valide'] == 1) {
 			$text = '';
 	//		var_dump($work['author_work']);
 			foreach ( $work['author_work'] as $element => $paragraphes) {
-				if ($element == 'post_excerpt'){
-					$new_post['post_excerpt'] = $work['post_excerpt'];
-				} else if ($element == 'content'){
+				if ($element == 'content'){
 					$text .= '<p>'.nl2br($paragraphes).'</p>';
 					$contentFound = TRUE;
 				}
@@ -88,18 +85,14 @@ if (isset($_GET['valide']) && $_GET['valide'] == 1) {
 
 			if (!$contentFound) {
 				foreach ( $work['author_work'] as $element => $paragraphes) {
-					if ($element == 'post_excerpt'){
-						$new_post['post_excerpt'] = $work['post_excerpt'];
-					} else if ($element != 'title')
+				 if ($element != 'title')
 						$text .= '<p>'.nl2br($paragraphes).'</p>';
 				}
 
 			}
 		}else {
 			foreach ( $work['author_work'] as $element => $paragraphes) {
-				if ($element == 'post_excerpt'){
-					$new_post['post_excerpt'] = $work['post_excerpt'];
-				} else if ($element != 'title')
+				if ($element != 'title')
 					$text .= '<p>'.nl2br($paragraphes).'</p>';
 			}
 		}
@@ -114,14 +107,20 @@ if (isset($_GET['valide']) && $_GET['valide'] == 1) {
 		else
 			$new_post['post_type'] = 'post';
 
+	//	var_dump($new_post);
 		$post_id = wp_insert_post($new_post);
 //echo 'Error ';
 		if (checkInstalledPlugin('WPML Multilingual CMS')) {
 			$infosProjet = $tApi->getProjetInfos($_GET['projectId']);
 	//		var_dump($infosProjet);
 			if (isset($_GET['lang_icl']) && $_GET['lang_icl'] != '') {
-				$tableIclTrads = $wpdb->base_prefix.'icl_translations';
-				$req = 'INSERT INTO '.$tableIclTrads.' (element_type, element_id, trid, language_code, source_language_code)
+				include_once( WP_PLUGIN_DIR . '/sitepress-multilingual-cms/inc/wpml-api.php' );
+				if (is_multisite()) {
+					$blog_id = get_current_blog_id();
+					$tableIclTrads = $wpdb->base_prefix . $blog_id."_icl_translations";
+				}else
+					$tableIclTrads = $wpdb->base_prefix.'icl_translations';
+			/*	$req = 'INSERT INTO '.$tableIclTrads.' (element_type, element_id, trid, language_code, source_language_code)
 						VALUES ("post_'.$new_post['post_type'].'", "'.$post_id.'", "'.$_GET['post_id_origine'].'", "'.$_GET['lang_icl'].'", "'.$infosProjet['language_from'].'")';
 //				echo $req;
 				$wpdb->query($req);
@@ -135,9 +134,15 @@ if (isset($_GET['valide']) && $_GET['valide'] == 1) {
 						WHERE element_type="post_'.$new_post['post_type'].'" AND trid="'.$_GET['post_id_origine'].'" AND language_code="'.$_GET['lang_icl'].'"';
 				$wpdb->query($req);
 //				echo $req;
-
+*/
+				$post_language_information = wpml_get_language_information($_GET['post_id_origine']);
+				$trid = wpml_get_content_trid( 'post_' . $new_post['post_type'], $_GET['post_id_origine'] );
+			//	var_dump($post_language_information);
+			//	echo 'trid '.$trid.'<br>';
+				$wpdb->update( $tableIclTrads, array( 'trid' => $trid, 'language_code' => $_GET['lang_icl'], 'source_language_code' => $post_language_information['locale'] ), array( 'element_id' => $post_id ) );
 			}
 		}
+		//die();
 
 		if( checkInstalledPlugin('Advanced Custom Fields')&& count($extras) != 0) {
 			foreach ($extras as $key => $extra) {
@@ -247,7 +252,6 @@ if ($_GET['type'] == 'redaction'){
 	$textmasterDocumentId = get_post_meta($_GET['post_id'],'textmasterDocumentId', TRUE);
 
 	$infos = $tApi->getDocumentInfos($idProjet, $textmasterDocumentId);
-//	print_r($infos);
 	if (!is_array($infos) || count($infos) == 0) {
 		$table_name = $wpdb->base_prefix . "tm_projets";
 		$textmasterDocumentId = $wpdb->get_var('SELECT idDocument FROM  ' . $table_name . ' WHERE id='.$idProjet.' AND ctype="copywriting" AND name like="%'.get_the_title($_GET['post_id']).'%"');
@@ -267,7 +271,7 @@ else if ($_GET['type'] == 'trad'){
 	$textmasterDocumentId = get_IdDocTrad($_GET['post_id'], $_GET['lang']);//$_GET['idDocument'];// get_post_meta($_GET['post_id'],'textmasterDocumentIdTrad', TRUE);
 
 	$infos = $tApi->getDocumentInfos($idProjet, $textmasterDocumentId);
-
+//	print_r($infos);
 
 	if (!is_array($infos) || count($infos) == 0) {
 	//	$infosListe = $tApi->getDocumentList($idProjet);
@@ -315,9 +319,9 @@ $text = '';
 if (count($work) != 0) {
 	if (@key_exists('title', $work['author_work'])) {
 		foreach ( $work['author_work'] as $element => $paragraphes) {
-//			echo $element.' '.print_r($paragraphes, TRUE);
+			//echo $element.' '.print_r($paragraphes, TRUE).'<br>';
 			if ($element == 'title')
-				$text .= '<strong id="titreTm">'.$paragraphes.'</strong>';
+				$titre = '<strong id="titreTm">'.$paragraphes.'</strong>';
 			else
 				$text .= '<p>'.nl2br($paragraphes).'</p>';
 		}
@@ -351,7 +355,7 @@ if (count($work) != 0) {
 			$titre = substr($textBrute, strpos($textBrute, "<br><br>"));
 		echo strpos($textBrute, "<br><br>");
 		*/
-		$text .= '<strong style="font-weight:bold;">'.$titre.'</strong>';
+		$titre = '<strong style="font-weight:bold;">'.$titre.'</strong>';
 		$text .= '<p>'.nl2br(trim($textBrute)).'</p>';
 
 	}
@@ -359,6 +363,7 @@ if (count($work) != 0) {
 }
 //print_r($infos['documents'][0]['work']);
 echo '<br/><div style="overflow:auto;max-height:80%;display:block;min-height:500px;" id="textmasterWork">';
+echo $titre;
 echo $text;
 echo '</div><br/>';
 echo metaboxes_post($tApi, $_GET['type'] , $idProjet, $textmasterDocumentId, $_GET['post_id']);

@@ -522,6 +522,9 @@ function approveTrad(&$tApi, $post_id, $projectId, $docId, $valid = TRUE, $idSit
 	else  if (isset($work['title']) && $infos['title'] != '')
 		$new_post['post_title'] = $work['title'];
 
+	if (isset($work['author_work']['post_excerpt']) && $work['author_work']['post_excerpt'] != '')
+		$new_post['post_excerpt'] = $work['author_work']['post_excerpt'];
+
 	if (is_array($work['author_work']) && count($work['author_work']) != 0) {
 		// acf
 		$extras = array();
@@ -530,9 +533,7 @@ function approveTrad(&$tApi, $post_id, $projectId, $docId, $valid = TRUE, $idSit
 			$text = '';
 			//	var_dump($work['author_work']);
 			foreach ( $work['author_work'] as $element => $paragraphes) {
-				if ($element == 'post_excerpt'){
-					$new_post['post_excerpt'] = $work['post_excerpt'];
-				} else if ($element == 'content'){
+				if ($element == 'content'){
 					$text .= '<p>'.nl2br($paragraphes).'</p>';
 					$contentFound = TRUE;
 				}
@@ -546,9 +547,7 @@ function approveTrad(&$tApi, $post_id, $projectId, $docId, $valid = TRUE, $idSit
 
 			if (!$contentFound) {
 				foreach ( $work['author_work'] as $element => $paragraphes) {
-					if ($element == 'post_excerpt'){
-						$new_post['post_excerpt'] = $work['post_excerpt'];
-					} else 	if ($element != 'title')
+					if ($element != 'title')
 						$text .= '<p>'.nl2br($paragraphes).'</p>';
 				}
 			}
@@ -558,9 +557,7 @@ function approveTrad(&$tApi, $post_id, $projectId, $docId, $valid = TRUE, $idSit
 			$text = '';
 			//	var_dump($work['author_work']);
 			foreach ( $work['author_work'] as $element => $paragraphes) {
-				if ($element == 'post_excerpt'){
-					$new_post['post_excerpt'] = $work['post_excerpt'];
-				} else 	if ($element == 'content'){
+				if ($element == 'content'){
 					$text .= '<p>'.nl2br($paragraphes).'</p>';
 					$contentFound = TRUE;
 				}
@@ -572,9 +569,7 @@ function approveTrad(&$tApi, $post_id, $projectId, $docId, $valid = TRUE, $idSit
 
 			if (!$contentFound) {
 				foreach ( $work['author_work'] as $element => $paragraphes) {
-					if ($element == 'post_excerpt'){
-						$new_post['post_excerpt'] = $work['post_excerpt'];
-					} else 	if ($element != 'title')
+					if ($element != 'title')
 						$text .= '<p>'.nl2br($paragraphes).'</p>';
 				}
 			}
@@ -582,9 +577,7 @@ function approveTrad(&$tApi, $post_id, $projectId, $docId, $valid = TRUE, $idSit
 		if( !checkInstalledPlugin('Advanced Custom Fields') && !checkInstalledPlugin('Meta Box')) {
 
 			foreach ( $work['author_work'] as $element => $paragraphes) {
-				if ($element == 'post_excerpt'){
-					$new_post['post_excerpt'] = $work['post_excerpt'];
-				} else 	if ($element != 'title')
+				if ($element != 'title')
 					$text .= '<p>'.nl2br($paragraphes).'</p>';
 			}
 		}
@@ -702,8 +695,7 @@ function getExtrasFields($postId, $type="acf", $site = ''){
 						if (is_array($chk_tm_mb_feilds) && !in_array($meta_box_fields['id'], $chk_tm_mb_feilds)){
 							$meta_value = get_post_meta( $postId, $meta_box_fields['id'], TRUE );
 						//	var_dump($meta_value);
-							if (is_string($meta_value) && trim($meta_value) != ''){
-
+							if (!is_email( $meta_value) && !is_numeric($meta_value) && is_string($meta_value) && trim($meta_value) != ''){
 									$datas[$meta_box_fields['id']] = $meta_value;
 
 							}else {

@@ -163,7 +163,10 @@
 			extras = '';
 			if (jQuery(".acf_postbox").length > 0) {
 			 	extras = jQuery(".acf_postbox input[type!='hidden'][type!='password'][type!='date'][type!='email'][type!='checkbox'], .acf_postbox textarea").serialize();
-			 }
+			}
+			if (jQuery(".acf-postbox").length > 0) {
+				 	extras = jQuery(".acf-postbox input[type!='hidden'][type!='password'][type!='date'][type!='email'][type!='checkbox'], .acf-postbox textarea").serialize();
+		 	}
 
 			 // pour le plugin meta box
 			if (jQuery(".rwmb-meta-box").length > 0) {
@@ -440,7 +443,12 @@
 		  		getPrice('traduction');
 	  		});
 		 }
-
+		if (jQuery(".acf-postbox").length > 0) {
+		 	jQuery(".acf-postbox input[type!='hidden'][type!='password'][type!='date'][type!='email'][type!='checkbox'], .acf-postbox textarea").change(function(){
+	  	  		getPrice('readproof');
+		  		getPrice('traduction');
+	  		});
+		 }
 		 // pour le plugin meta box
 		if (jQuery(".rwmb-meta-box").length > 0) {
 		 	jQuery(".rwmb-meta-box input[type!='hidden'][type!='password'][type!='date'][type!='email'][type!='checkbox'], .rwmb-meta-box textarea").change(function(){
@@ -574,12 +582,18 @@ function launchTrad(){
 	// pour les acf
 	extras = '';
 	if (jQuery(".acf_postbox").length > 0) {
-	 	extras = jQuery(".acf_postbox input[type!='hidden'][type!='password'][type!='date'][type!='email'][type!='checkbox'], .acf_postbox textarea").serialize();
+	 //	extras = jQuery(".acf_postbox input[type!='hidden'][type!='password'][type!='date'][type!='email'][type!='url'][type!='checkbox'][type!='radio'][type!='range'], .acf_postbox textarea").serialize();
+	 	extras = jQuery(".acf_postbox input[type='text'], .acf_postbox textarea").serialize();
+	 }
+	if (jQuery(".acf-postbox").length > 0) {
+//	 	extras = jQuery(".acf-postbox input[type!='hidden'][type!='password'][type!='date'][type!='email'][type!='url'][type!='checkbox'][type!='radio'][type!='range'], .acf-postbox textarea").serialize();
+	 	extras = jQuery(".acf-postbox input[type='text'], .acf_postbox textarea").serialize();
 	 }
 
 	 // pour le plugin meta box
 	if (jQuery(".rwmb-meta-box").length > 0) {
-	 	extras = jQuery(".rwmb-meta-box input[type!='hidden'][type!='password'][type!='date'][type!='email'][type!='checkbox'], .rwmb-meta-box textarea").serialize();
+	 //	extras = jQuery(".rwmb-meta-box input[type!='hidden'][type!='password'][type!='date'][type!='email'][type!='url'][type!='checkbox'][type!='radio'][type!='range'], .rwmb-meta-box textarea").serialize();
+	 	extras = jQuery(".rwmb-meta-box input[type='text'], .rwmb-meta-box textarea").serialize();
 	 }
 
 	postID = jQuery("#post_ID").val();
@@ -782,12 +796,17 @@ function getPrice(type, wordsCount){
 			sendPriceRequest(type, wordsCount, languageLevel, quality, expertise, priority, objAffichageQuality, objAffichageExpertise, objAffichagePriority, objAffichage, objAffichageBase);
 		}else{
 			extras = '';
+			// acf
 			if (jQuery(".acf_postbox").length > 0) {
 		 		jQuery(".acf_postbox input[type!='hidden'][type!='password'][type!='date'][type!='email'][type!='checkbox'], .acf_postbox textarea").each(function( index ) {
 				  extras = extras +' '+ jQuery( this ).val();
 				});
 		 	}
-
+			if (jQuery(".acf-postbox").length > 0) {
+		 		jQuery(".acf-postbox input[type!='hidden'][type!='password'][type!='date'][type!='email'][type!='checkbox'], .acf-postbox textarea").each(function( index ) {
+				  extras = extras +' '+ jQuery( this ).val();
+				});
+		 	}
 			 // pour le plugin meta box
 			if (jQuery(".rwmb-meta-box").length > 0) {
 			 	jQuery(".rwmb-meta-box input[type!='hidden'][type!='password'][type!='date'][type!='email'][type!='checkbox'], .rwmb-meta-box textarea").each(function( index ) {
@@ -888,7 +907,11 @@ function getAuthors(type, wordsCount){
 					  extras = extras +' '+ jQuery( this ).val();
 					});
 			 	}
-
+				if (jQuery(".acf-postbox").length > 0) {
+			 		jQuery(".acf-postbox input[type!='hidden'][type!='password'][type!='date'][type!='email'][type!='checkbox'], .acf-postbox textarea").each(function( index ) {
+					  extras = extras +' '+ jQuery( this ).val();
+					});
+			 	}
 				 // pour le plugin meta box
 				if (jQuery(".rwmb-meta-box").length > 0) {
 				 	jQuery(".rwmb-meta-box input[type!='hidden'][type!='password'][type!='date'][type!='email'][type!='checkbox'], .rwmb-meta-box textarea").each(function( index ) {
