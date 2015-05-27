@@ -1,4 +1,4 @@
-=== TextMaster WordPress Translation Plugin ===
+﻿=== TextMaster WordPress Translation Plugin ===
 
 Contributors: lupuz, TextMaster SA
 
@@ -22,7 +22,7 @@ A WordPress translation plugin that also allows you to order SEO web content and
 
 == Description ==
 
-With the [TextMaster](http://www.textmaster.com/?pid=4f1db74529e1673829000009) WordPress translation plugin, you can easily have your site translated and proofread by native-speaking professionals in over 100 language pairs, right from your admin panel. You can also add engaging SEO web content written by one of our expert authors. No matter how big or small your project, TextMaster’s on-demand translation services and web content writers are available 24/7 around the world.
+With the [TextMaster](https://www.textmaster.com/?pid=4f1db74529e1673829000009) WordPress translation plugin, you can easily have your site translated and proofread by native-speaking professionals in over 100 language pairs, right from your admin panel. You can also add engaging SEO web content written by one of our expert authors. No matter how big or small your project, TextMaster’s on-demand translation services and web content writers are available 24/7 around the world.
 
 = Features =
 
@@ -50,7 +50,7 @@ Contact us at contact@textmaster.com or call us at:
 
 = Stay up to date =
 
-Visit our [official website](http://www.textmaster.com/?pid=4f1db74529e1673829000009) for more details or follow us on our official blog [ContentisKing.com](http://contentisking.textmaster.com/), [Facebook](http://www.facebook.com/textmaster), [Twitter](http://www.twitter.com/textmaster), [Google+](https://plus.google.com/+Textmaster-EN/), and [LinkedIn](http://www.linkedin.com/company/1986954).
+Visit our [official website](https://www.textmaster.com/?pid=4f1db74529e1673829000009) for more details or follow us on our official blog [ContentisKing.com](http://contentisking.textmaster.com/), [Facebook](http://www.facebook.com/textmaster), [Twitter](http://www.twitter.com/textmaster), [Google+](https://plus.google.com/+Textmaster-EN/), and [LinkedIn](http://www.linkedin.com/company/1986954).
 
 
 == Installation ==
@@ -61,7 +61,7 @@ Visit our [official website](http://www.textmaster.com/?pid=4f1db74529e167382900
 
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
-3. Create an account and buy prepaid credits on [TextMaster.com](http://www.textmaster.com/?pid=4f1db74529e1673829000009)
+3. Create an account and buy prepaid credits on [TextMaster.com](https://www.textmaster.com/?pid=4f1db74529e1673829000009)
 
 4. Launch your translation, copywriting, or proofreading projects directly through your WordPress admin panel
 
@@ -80,7 +80,7 @@ Making a purchase is simple. Just log into your account on TextMaster.com and bu
 = How long will it take to process my order? =
 This depends on the size of your text and the options that you have chosen. The average turnaround time is 12 hours, although longer or more complex texts can take more time.
 
-Visit our FAQ page for more answers: <http://textmaster.com/client-faq>
+Visit our FAQ page for more answers: <https://textmaster.com/client-faq>
 
 
 
