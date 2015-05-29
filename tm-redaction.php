@@ -146,10 +146,13 @@ function redaction_defaut_metaboxes_pre(&$tApi){
 //	$tApi = new textmaster_api(get_option_tm('textmaster_api_key'), get_option_tm('textmaster_api_secret'));
 	//	$tApi->secretapi = get_option_tm('textmaster_api_secret');
 	//	$tApi->keyapi =  get_option_tm('textmaster_api_key');
-
+	$userTM = $tApi->getUserInfos();
 
 	if ($tApi->secretapi == '' && $tApi->keyapi == '') {
 		_e('Merci de v&eacute;rifier vos informations de connexion à TextMaster','textmaster');
+	}
+	else if (isset($userTM['errors'])) {
+		_e('Merci de v&eacute;rifier le paramétrage de votre serveur (date et heure du serveur : '.date('d/m/Y H:i:s').')','textmaster');
 	}
 	else
 	{

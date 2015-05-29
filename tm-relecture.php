@@ -34,9 +34,13 @@ function readproof_metaboxes_pre(&$tApi){
 		$style = 'style="display:none"';
 	echo '<div id="meta_readproof" '.$style.'>';
 
+	$userTM = $tApi->getUserInfos();
 
 	if ($tApi->secretapi == '' && $tApi->keyapi == ''){
 		_e('Merci de v&eacute;rifier vos informations de connexion à TextMaster','textmaster');
+	}
+	else if (isset($userTM['errors'])) {
+		_e('Merci de v&eacute;rifier le paramétrage de votre serveur (date et heure du serveur : '.date('d/m/Y H:i:s').')','textmaster');
 	}
 	else
 	{
@@ -221,6 +225,8 @@ function readproof_metaboxes_pre(&$tApi){
 
 //		wp_texmaster_readproof_options_metaboxes($tApi);
 		wp_texmaster_readproof_authors_metaboxes($tApi);
+		if ( checkInstalledPlugin('Meta Box'))
+			wp_texmaster_readproof_pmb_metaboxes($tApi);
 
 /*		$contentText = cleanWpTxt( $post->post_content );
    textmaster_api::countWords( $post->post_title .' '.$contentText);
@@ -372,7 +378,12 @@ function callback_readproof(){
 		}
 		if(  checkInstalledPlugin('Meta Box')&& isset($_POST['extras'])) {
 			//	var_dump($_POST);
-			$chk_tm_mb_feilds = unserialize(get_option_tm('chk_tm_mb_feilds'));
+		//	$chk_tm_mb_feilds = unserialize(get_option_tm('chk_tm_mb_feilds'));
+			$chk_tm_mb_feilds = array();
+			$chk_tm_mb = array();
+			parse_str($_POST['filtre_pmb'], $chk_tm_mb);
+			if (isset($chk_tm_mb['chk_tm_mb_feilds']))
+				$chk_tm_mb_feilds = $chk_tm_mb['chk_tm_mb_feilds'];
 
 			$params = array();
 			parse_str($_POST['extras'], $params);
@@ -611,6 +622,51 @@ function wp_texmaster_readproof_authors_metaboxes(&$tApi){
 			echo $auteur['author_ref'].$auteurDesc;
 			echo '</li>';
 		}
+
+		echo '</ul>';
+		echo '</div>';
+	}
+}
+
+function wp_texmaster_readproof_pmb_metaboxes(&$tApi){
+	global $post;
+	$auteurs = $tApi->getAuteurs();
+
+	if (count($auteurs) == 0) {
+		_e('Merci de v&eacute;rifier vos informations de connexion à TextMaster','textmaster');
+	}
+	else
+	{
+		echo '<a id="showPMBReadproof"><img src="'.plugins_url('', __FILE__).'/images/plus.png" />' .__('Filter les meta-boxes' ,'textmaster').'</a><br/>';
+		echo '<div id="pmbReadproof">';
+		echo '<ul style="display:inline-block;">';
+
+		$chk_tm_mb_feilds = unserialize(get_option_tm('chk_tm_mb_feilds'));
+
+		$meta_boxes = apply_filters( 'rwmb_meta_boxes', array() );
+		if (isset($meta_boxes)  && count($meta_boxes) != 0) {
+			foreach ($meta_boxes as $meta_box) {
+				if (count($meta_box['fields']) != 0 && (((!isset($meta_box['post_types']) || $meta_box['post_types'] == NULL) && get_post_type($post->ID) == 'post') || (isset($meta_box['post_types']) && in_array(get_post_type($post->ID), $meta_box['post_types'])) )) {
+					foreach ($meta_box['fields'] as $meta_box_fields) {
+
+						$chked = '';
+						if (is_array($chk_tm_mb_feilds) && in_array($meta_box_fields['id'], $chk_tm_mb_feilds))
+							$chked = 'checked="checked"';
+
+						//	var_dump($meta_box_fields);
+						if ($meta_box_fields['type'] == 'text' || $meta_box_fields['type'] == 'textarea' || $meta_box_fields['type'] == 'wysiwyg'){
+							echo '<li><label><input type="checkbox" name="chk_tm_mb_feilds[]" value="'.$meta_box_fields['id'].'" '.$chked.' class="chk_tm_mb_feilds_read"/> ';
+							echo (isset($meta_box_fields['name']) != FALSE  ? ' '.$meta_box_fields['name'] .'' : '').' ('.$meta_box_fields['id'].')</label></li>';
+						}
+					}
+				}
+/*else
+					_e('Aucune Meta-box','textmaster');*/
+			}
+		}
+		else
+			_e('Aucune Meta-box','textmaster');
+
 
 		echo '</ul>';
 		echo '</div>';

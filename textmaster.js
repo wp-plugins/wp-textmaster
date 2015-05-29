@@ -30,6 +30,10 @@
 			jQuery('#authorsTraduction').toggle();
 		});
 		jQuery('#authorsTraduction').hide();
+		jQuery('#showPMBTraduction').click(function(){
+			jQuery('#pmbTraduction').toggle();
+		});
+		jQuery('#pmbTraduction').hide();
 
 		// pour la metabox redaction
 		jQuery('#showOptionsRedaction').click(function(){
@@ -40,7 +44,10 @@
 			jQuery('#authorsRedaction').toggle();
 		});
 		jQuery('#authorsRedaction').hide();
-
+		jQuery('#showPMBReadproof').click(function(){
+			jQuery('#pmbReadproof').toggle();
+		});
+		jQuery('#pmbReadproof').hide();
 
 		$('#textmaster_settings div').hide();
 		$('div.t1').show();
@@ -171,7 +178,8 @@
 			 // pour le plugin meta box
 			if (jQuery(".rwmb-meta-box").length > 0) {
 			 	extras = jQuery(".rwmb-meta-box input[type!='hidden'][type!='password'][type!='date'][type!='email'][type!='checkbox'], .rwmb-meta-box textarea").serialize();
-			 }
+			 	filtre_pmb = jQuery(".chk_tm_mb_feilds_read").serialize();
+			}
 
 			postID = jQuery("#post_ID").val();
 
@@ -197,7 +205,9 @@
 					targetReaderGroup: targetReaderGroup,
 
 					briefing: briefing,
+
 					extras: extras,
+					filtre_pmb : filtre_pmb,
 
 					postID: postID
 		  		},
@@ -593,7 +603,9 @@ function launchTrad(){
 	 // pour le plugin meta box
 	if (jQuery(".rwmb-meta-box").length > 0) {
 	 //	extras = jQuery(".rwmb-meta-box input[type!='hidden'][type!='password'][type!='date'][type!='email'][type!='url'][type!='checkbox'][type!='radio'][type!='range'], .rwmb-meta-box textarea").serialize();
-	 	extras = jQuery(".rwmb-meta-box input[type='text'], .rwmb-meta-box textarea").serialize();
+	 	extras = jQuery(".rwmb-meta-box input[type='text'], .rwmb-meta-box textarea").not('.rwmb-color').serialize();
+
+	 	filtre_pmb = jQuery(".chk_tm_mb_feilds_trad").serialize();
 	 }
 
 	postID = jQuery("#post_ID").val();
@@ -622,6 +634,7 @@ function launchTrad(){
 			briefing: briefing,
 
 			extras: extras,
+			filtre_pmb: filtre_pmb,
 
 			postID: postID
 		},

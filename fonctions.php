@@ -519,8 +519,10 @@ function approveTrad(&$tApi, $post_id, $projectId, $docId, $valid = TRUE, $idSit
 
 	if (isset( $work['author_work']['title']) && $work['author_work']['title'] != '')
 		$new_post['post_title'] = $work['author_work']['title'];
-	else  if (isset($work['title']) && $infos['title'] != '')
-		$new_post['post_title'] = $work['title'];
+//	else if (isset($work['title']) && $infos['title'] != '')
+//		$new_post['post_title'] = $work['title'];
+	else
+		$new_post['post_title'] = __('Untitled');
 
 	if (isset($work['author_work']['post_excerpt']) && $work['author_work']['post_excerpt'] != '')
 		$new_post['post_excerpt'] = $work['author_work']['post_excerpt'];

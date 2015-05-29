@@ -20,7 +20,9 @@ if (isset($_GET['valide']) && $_GET['valide'] == 1) {
 		$text = '';
 
 		$infos = $tApi->getDocumentInfos($_GET['projectId'], $_GET['docId']);
-	//	print_r($infos);
+
+	//	var_dump($infos);
+	//	die();
 		// on créer un article avec le contenu
 		if (key_exists('documents', $infos))
 			$work = $infos['documents'][0];
@@ -29,8 +31,8 @@ if (isset($_GET['valide']) && $_GET['valide'] == 1) {
 
 		if (isset($work['author_work']['title']) && $work['author_work']['title'] != '')
 			$new_post['post_title'] = $work['author_work']['title'];
-		else  if ($infos['title'] != '')
-			$new_post['post_title'] = $work['title'];
+//		else if ($work['title'] != '')
+//			$new_post['post_title'] = $work['title'];
 		else
 			$new_post['post_title'] = __('Untitled');
 
@@ -315,7 +317,7 @@ else
 }
 
 $text = '';
-//print_r($work);
+//var_dump($work);
 if (count($work) != 0) {
 	if (@key_exists('title', $work['author_work'])) {
 		foreach ( $work['author_work'] as $element => $paragraphes) {
@@ -379,7 +381,11 @@ if (checkInstalledPlugin('WPML Multilingual CMS') && $_GET['type'] == 'trad') {
 	if (count($aLangsIcl) != 0) {
 		echo '<select name="lang_icl" id="lang_icl">';
 		foreach ($aLangsIcl as $langsIcl) {
-			echo '<option value="'.$langsIcl['language_code']. '">'. $langsIcl['native_name'].'</option>';
+			$selected = '';
+			if ($langsIcl['language_code'] == $_GET['lang'])
+				$selected = ' selected="selected"';
+
+			echo '<option value="'.$langsIcl['language_code']. '" '.$selected.'>'. $langsIcl['native_name'].'</option>';
 		}
 		echo '</select>';
 		echo '<input name="ValiderPlus" type="button" class="button button-highlighted" id="useDocTextmasterIcl" tabindex="6" accesskey="c" value="'.__('Utiliser comme traduction','textmaster').'">';

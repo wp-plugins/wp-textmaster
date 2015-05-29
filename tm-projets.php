@@ -252,7 +252,7 @@ class textmaster_projets_Table extends WP_List_Table {
 
 
 		$total_items = $wpdb->get_var('SELECT COUNT(id) FROM  ' . $table_name . '
-						LEFT JOIN  '.$table_meta.' ON meta_key LIKE "%textmasterDocumentId%" AND meta_value=' . $table_name . '.idDocument
+						JOIN  '.$table_meta.' ON meta_key LIKE "%textmasterDocumentId%" AND meta_value LIKE CONCAT("%", ' . $table_name . '.idDocument, "%")
 						 WHERE ( creation_channel="api" OR id LIKE "wp_%%") AND archived!=1 AND name NOT LIKE "%(junk)%" '.$where);
 
 
@@ -262,11 +262,11 @@ class textmaster_projets_Table extends WP_List_Table {
 	//							WHERE (creation_channel="api" OR id LIKE "wp_%%")  AND name NOT LIKE "%(junk)%" AND archived!=1 '.$where.' ORDER BY ' . $orderby . ' ' . $order . ' LIMIT %d, %d', ($paged * $per_page), $per_page);
 
 		$req = 'SELECT * FROM ' . $table_name . '
-								LEFT JOIN  '.$table_meta.' ON meta_key LIKE "%textmasterDocumentId%" AND meta_value=' . $table_name . '.idDocument
+								JOIN  '.$table_meta.' ON meta_key LIKE "%textmasterDocumentId%" AND meta_value LIKE CONCAT("%", ' . $table_name . '.idDocument, "%")
 								WHERE (creation_channel="api" OR id LIKE "wp_%%") AND archived!=1 AND name NOT LIKE "%(junk)%" '.$where.' ORDER BY ' . $orderby . ' ' . $order . ' LIMIT '.($paged * $per_page).', '. $per_page.'';
 
 	//	$req = $wpdb->prepare('SELECT * FROM ' . $table_name . ' WHERE creation_channel="api" '.$where.' ORDER BY ' . $orderby . ' ' . $order . ' LIMIT %d, %d', ($paged * $per_page), $per_page);
-//		echo 'req '.$req;
+	//	echo 'req '.$req;
 		//(id IN (SELECT meta_value FROM '.$wpdb->prefix.'postmeta WHERE meta_key LIKE "%%textmasterId%%" AND meta_value is not null) AND
 		//(id IN (SELECT meta_value FROM '.$wpdb->prefix.'postmeta WHERE meta_key LIKE "%textmasterId%" AND meta_value is not null) AND
 		$projetsTM = $wpdb->get_results( $req, ARRAY_A);
@@ -290,6 +290,7 @@ class textmaster_projets_Table extends WP_List_Table {
 			//$wpId = $wpdb->get_results( $req);
 		//	echo $projets['idDocument'];
 		//	print_r($wpId);
+		//	var_dump($projets);
 			$idPost =$projets['post_id'];
 			if ($projets['post_id'] == '') {
 			//	$table_post = $wpdb->prefix . "posts";

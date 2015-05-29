@@ -69,9 +69,12 @@ function traduction_metaboxes_pre(&$tApi){
 
 	echo '<div id="meta_trad" >';
 
-
+	$userTM = $tApi->getUserInfos();
 	if ($tApi->secretapi == '' && $tApi->keyapi == ''){
 		_e('Merci de v&eacute;rifier vos informations de connexion à TextMaster','textmaster');
+	}
+	else if (isset($userTM['errors'])) {
+		_e('Merci de v&eacute;rifier le paramétrage de votre serveur (date et heure du serveur : '.date('d/m/Y H:i:s').')','textmaster');
 	}
 	else
 	{
@@ -314,6 +317,9 @@ function traduction_metaboxes_pre(&$tApi){
 //		wp_texmaster_traduction_options_metaboxes($tApi);
 		wp_texmaster_traduction_authors_metaboxes($tApi);
 
+		if ( checkInstalledPlugin('Meta Box'))
+			wp_texmaster_traduction_pmb_metaboxes($tApi);
+
 		echo '<img src="/wp-admin/images/wpspin_light.gif" style="display:none;float:left;margin-top:5px;margin-right:5px;" class="ajax-loading-tmTrad" alt=""><div style="display:none;float:left;margin-top:5px;margin-right:5px;" class="ajax-loading-tmTrad"> '.__('Merci de patienter', 'textmaster').'</div> ';
 		echo '<div id="resultTextmasterTrad" class="misc-pub-section">'.$txtRet;
 		if ($hide && get_option_tm('textmaster_useMultiLangues') == 'Y')
@@ -500,7 +506,13 @@ function callback_traduction(){
 			if(  checkInstalledPlugin('Meta Box') && isset($_POST['extras'])) {
 				//	var_dump($_POST);
 			//	$meta_boxes = apply_filters( 'rwmb_meta_boxes', array() );
-				$chk_tm_mb_feilds = unserialize(get_option_tm('chk_tm_mb_feilds'));
+				//$chk_tm_mb_feilds = unserialize(get_option_tm('chk_tm_mb_feilds'));
+			//	var_dump($_POST['filtre_pmb']);
+				$chk_tm_mb_feilds = array();
+				$chk_tm_mb = array();
+				parse_str($_POST['filtre_pmb'], $chk_tm_mb);
+				if (isset($chk_tm_mb['chk_tm_mb_feilds']))
+					$chk_tm_mb_feilds = $chk_tm_mb['chk_tm_mb_feilds'];
 
 				$params = array();
 				parse_str($_POST['extras'], $params);
@@ -762,6 +774,50 @@ function wp_texmaster_traduction_authors_metaboxes(&$tApi){
 	}
 }
 
+function wp_texmaster_traduction_pmb_metaboxes(&$tApi){
+	global $post;
+	$auteurs = $tApi->getAuteurs();
 
+	if (count($auteurs) == 0) {
+		_e('Merci de v&eacute;rifier vos informations de connexion à TextMaster','textmaster');
+	}
+	else
+	{
+		echo '<a id="showPMBTraduction"><img src="'.plugins_url('', __FILE__).'/images/plus.png" />' .__('Filter les meta-boxes' ,'textmaster').'</a><br/>';
+		echo '<div id="pmbTraduction">';
+		echo '<ul style="display:inline-block;">';
+
+		$chk_tm_mb_feilds = unserialize(get_option_tm('chk_tm_mb_feilds'));
+
+		$meta_boxes = apply_filters( 'rwmb_meta_boxes', array() );
+	//	var_dump($meta_boxes);
+		if (isset($meta_boxes)  && count($meta_boxes) != 0) {
+			foreach ($meta_boxes as $meta_box) {
+				if (count($meta_box['fields']) != 0 && (((!isset($meta_box['post_types']) || $meta_box['post_types'] == NULL) && get_post_type($post->ID) == 'post') || (isset($meta_box['post_types']) && in_array(get_post_type($post->ID), $meta_box['post_types'])) )) {
+					foreach ($meta_box['fields'] as $meta_box_fields) {
+
+						$chked = '';
+						if (is_array($chk_tm_mb_feilds) && in_array($meta_box_fields['id'], $chk_tm_mb_feilds))
+							$chked = 'checked="checked"';
+
+						//	var_dump($meta_box_fields);
+						if ($meta_box_fields['type'] == 'text' || $meta_box_fields['type'] == 'textarea' || $meta_box_fields['type'] == 'wysiwyg'){
+							echo '<li><label><input type="checkbox" name="chk_tm_mb_feilds[]" value="'.$meta_box_fields['id'].'" '.$chked.' class="chk_tm_mb_feilds_trad"/> ';
+							echo (isset($meta_box_fields['name']) != FALSE  ? ' '.$meta_box_fields['name'] .'' : '').' ('.$meta_box_fields['id'].')</label></li>';
+						}
+					}
+				}
+/*else
+					_e('Aucune Meta-box','textmaster');*/
+			}
+		}
+		else
+			_e('Aucune Meta-box','textmaster');
+
+
+		echo '</ul>';
+		echo '</div>';
+	}
+}
 
 ?>

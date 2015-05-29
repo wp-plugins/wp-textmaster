@@ -1536,6 +1536,9 @@ function afficheAvances(){
 		foreach ($sites as $site) {
 		//	var_dump($site);
 			switch_to_blog($site['blog_id']);
+			$infoSite = get_blog_details( array( 'blog_id' => $site['blog_id'] ) );
+	//		var_dump($infoSite);
+			$metaB[$site['blog_id']]['name'] = $infoSite->blogname;
 	//		$tpl = apply_filters( 'template_directory',  array() );
 	//		var_dump($tpl);
 			$theme_name = get_template_directory();
@@ -1543,8 +1546,9 @@ function afficheAvances(){
 				require($theme_name.'/functions.php');
 				$rep_fonctions[]= $theme_name.'/functions.php';
 			//	echo '<br>'.$theme_name.'/functions.php<br>-------------------------------<br>';
-				$metaB = array_merge( apply_filters( 'set_tm_metaboxes', array() ), $metaB);
-		//		var_dump($meta_boxes_room);
+				$metaB[$site['blog_id']]['metaBoxes'] = apply_filters( 'set_tm_metaboxes', array() );
+				$metaB[$site['blog_id']]['metaBoxes'] = array_map("unserialize", array_unique(array_map("serialize", $metaB[$site['blog_id']]['metaBoxes'])));
+				//		var_dump($meta_boxes_room);
 			}
 
 		//	var_dump($metaB);
@@ -1581,6 +1585,39 @@ function afficheAvances(){
     <tr valign="top">
     <td colspan="2">
     <?php
+	if ( is_multisite()) {
+		//var_dump($meta_boxes_def);
+		if (count($meta_boxes_def) != 0) {
+			foreach ($meta_boxes_def as $key => $meta_box) {
+				echo '<h4><a href="javascript:void(jQuery(\'#metaboxes_'.$key.'\').toggle(\'slow\'));"> > Blog: '.$meta_box['name'].'</a></h4>';
+				echo '<div id="metaboxes_'.$key.'" style="display:none">';
+				if (isset($meta_box['metaBoxes'])  && count($meta_box['metaBoxes']) != 0) {
+					foreach ($meta_box['metaBoxes'] as $meta_box_site) {
+						if (count($meta_box_site['fields']) != 0) {
+							foreach ($meta_box_site['fields'] as $meta_box_fields) {
+								$chked = '';
+								if (is_array($chk_tm_mb_feilds) && in_array($meta_box_fields['id'], $chk_tm_mb_feilds))
+									$chked = 'checked="checked"';
+
+								//	var_dump($meta_box_fields);
+								if ($meta_box_fields['type'] == 'text' || $meta_box_fields['type'] == 'textarea' || $meta_box_fields['type'] == 'wysiwyg'){
+									echo '<li>'.'<input type="checkbox" name="chk_tm_mb_feilds[]" value="'.$meta_box_fields['id'].'" '.$chked.'/> ';
+									echo $meta_box_fields['id'].''.(isset($meta_box_fields['name']) != FALSE  ? ' ('.$meta_box_fields['name'] .')' : '').'</li>';
+								}
+
+							}
+						}
+					//	var_dump($meta_box_site);
+					}
+				}else
+					echo __('Aucune meta-box à filtrer', 'textmaster').'<br/>';
+				echo '</div>';
+			}
+		}else {
+			echo __('Lister les meta-box à filtrer (<strong>field id</strong> séparés par des virgules): ', 'textmaster').'<br/>';
+			echo '<textarea name="area_tm_mb" style="width:90%">'.implode(', ', $chk_tm_mb_feilds).'</textarea><br/>';
+		}
+	}else {
 		if (count($meta_boxes_def) != 0) {
 			echo '<ul>';
 			foreach ($meta_boxes_def as $meta_box) {
@@ -1605,6 +1642,8 @@ function afficheAvances(){
 			echo __('Lister les meta-box à filtrer (<strong>field id</strong> séparés par des virgules): ', 'textmaster').'<br/>';
 			echo '<textarea name="area_tm_mb" style="width:90%">'.implode(', ', $chk_tm_mb_feilds).'</textarea><br/>';
 		}
+	}
+
 //	echo '<em>'. __('Pour passer vos meta-box au plugin TextMaster utilisez le filtre : add_filter( "set_tm_metaboxes", "votre_fontion" )', 'textmaster').'</em><br/>';
 //	echo '<br/>'.__('Fichiers functions.php inclus:', 'textmaster').'<ul><li>'.implode('</li><li>', $rep_fonctions).'</li></ul>';
 	?>
