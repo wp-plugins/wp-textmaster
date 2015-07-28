@@ -148,7 +148,10 @@ function traduction_metaboxes_pre(&$tApi){
 		$languageSourceSelected = '';
 		if (isset($_REQUEST['lang']) && $_REQUEST['lang'] != '')
 			$languageSourceSelected = $_REQUEST['lang'];
-		else if (get_post_meta($post->ID, 'textmasterLangOrigine', true) != '')
+		else if (checkInstalledPlugin('WPML Multilingual CMS')) {
+			$post_language_info = wpml_get_language_information($post->ID);
+			$languageSourceSelected = strtolower(str_replace("_", "-", $post_language_info['locale']));
+		}else if (get_post_meta($post->ID, 'textmasterLangOrigine', true) != '')
 			$languageSourceSelected = get_post_meta($post->ID, 'textmasterLangOrigine', true);
 		else
 			$languageSourceSelected = get_option_tm('textmaster_traductionLanguageSource');
@@ -506,13 +509,22 @@ function callback_traduction(){
 			if(  checkInstalledPlugin('Meta Box') && isset($_POST['extras'])) {
 				//	var_dump($_POST);
 			//	$meta_boxes = apply_filters( 'rwmb_meta_boxes', array() );
-				//$chk_tm_mb_feilds = unserialize(get_option_tm('chk_tm_mb_feilds'));
 			//	var_dump($_POST['filtre_pmb']);
 				$chk_tm_mb_feilds = array();
 				$chk_tm_mb = array();
-				parse_str($_POST['filtre_pmb'], $chk_tm_mb);
-				if (isset($chk_tm_mb['chk_tm_mb_feilds']))
-					$chk_tm_mb_feilds = $chk_tm_mb['chk_tm_mb_feilds'];
+				// si le POST filtre_pmb les meta-boxes n'ont pas été détectés
+				// on rrecup ceux des paramétrages du plugin
+				if ($_POST['filtre_pmb'] == '-1') {
+					$chk_option_tm_mb_feilds = unserialize(get_option_tm('chk_tm_mb_feilds'));
+					if ( is_multisite())
+						$chk_tm_mb_feilds = $chk_option_tm_mb_feilds[get_current_blog_id()];
+					else
+						$chk_tm_mb_feilds = $chk_option_tm_mb_feilds;
+				}else {
+					parse_str($_POST['filtre_pmb'], $chk_tm_mb);
+					if (isset($chk_tm_mb['chk_tm_mb_feilds']))
+						$chk_tm_mb_feilds = $chk_tm_mb['chk_tm_mb_feilds'];
+				}
 
 				$params = array();
 				parse_str($_POST['extras'], $params);
@@ -524,8 +536,10 @@ function callback_traduction(){
 								$fullContent .= cleanWpTxt( $param );
 							} else if (is_array($param)) {
 								foreach ($param as $key => $text) {
-									$arrayDocs[0]['original_content'][$name.'_tmtext_'.$key]["original_phrase"] = $text;
-									$fullContent .= cleanWpTxt( $text );
+									if (trim($text) != '') {
+										$arrayDocs[0]['original_content'][$name.'_tmtext_'.$key]["original_phrase"] = $text;
+										$fullContent .= cleanWpTxt( $text );
+									}
 								}
 							}
 						}
@@ -567,9 +581,38 @@ function callback_traduction(){
 			$arrayDocs[0]['keyword_list'] = $textmasterKeywords_traduction;
 			$arrayDocs[0]['keywords_repeat_count'] = $textmasterKeywordsRepeatCount_traduction;
 
+			// DEBUG FASTBOOKING -> Envoi mail
+/*
+			$to = 'lupuz.yonderboy@gmail.com';
+			$subject = 'création trad fastbooking';
+			$message = "Contenu doc\n";
+			$message .= "----------------\n";
+			$message .= serialize($arrayDocs). "\n";
+			$message .= "----------------\n\n";
+			$message .= "Metaboxes filtre defaut\n";
+			$message .= "----------------\n";
+			$message .= serialize($chk_tm_mb_feilds). "\n";
+			$message .= "----------------\n\n";
+			$message .= "Metaboxes filtre post\n";
+			$message .= "----------------\n";
+			$message .= $_POST['extras']. "\n";
+			$message .= "----------------\n\n";
+			$message .= "POST\n";
+			$message .= "----------------\n";
+			$message .= print_r($_POST, TRUE). "\n";
+
+			$headers = 'From: ' . MAIL_ALERTE_SUPPORT . "\r\n" .
+				'Reply-To: ' . MAIL_ALERTE_SUPPORT . "\r\n" .
+				'X-Mailer: PHP/' . phpversion();
+
+			mail($to, $subject, $message, $headers);
+*/
+
+
+
 		//	var_dump($arrayDocs);
 			$ret = $tApi->addDocument($idProjet, $arrayDocs );
-			//	print_r($ret);
+		//	print_r($ret);
 			if (is_array($ret))
 			{
 				if (array_key_exists('id',$ret)){
@@ -787,8 +830,13 @@ function wp_texmaster_traduction_pmb_metaboxes(&$tApi){
 		echo '<div id="pmbTraduction">';
 		echo '<ul style="display:inline-block;">';
 
-		$chk_tm_mb_feilds = unserialize(get_option_tm('chk_tm_mb_feilds'));
-
+		$chk_option_tm_mb_feilds = unserialize(get_option_tm('chk_tm_mb_feilds'));
+		if (is_array($chk_option_tm_mb_feilds)) {
+			if ( is_multisite())
+				$chk_tm_mb_feilds = $chk_option_tm_mb_feilds[get_current_blog_id()];
+			else
+				$chk_tm_mb_feilds = $chk_option_tm_mb_feilds;
+		}
 		$meta_boxes = apply_filters( 'rwmb_meta_boxes', array() );
 	//	var_dump($meta_boxes);
 		if (isset($meta_boxes)  && count($meta_boxes) != 0) {
@@ -810,9 +858,19 @@ function wp_texmaster_traduction_pmb_metaboxes(&$tApi){
 /*else
 					_e('Aucune Meta-box','textmaster');*/
 			}
+			echo '<input type="hidden" name="nopmb" id="nopmb" value="0">';
 		}
-		else
-			_e('Aucune Meta-box','textmaster');
+		else{
+			if (is_array($chk_tm_mb_feilds)) {
+				echo '<li><strong>'. __('Meta-box filtrées par défaut: ','textmaster').'</strong></li>';
+				foreach ($chk_tm_mb_feilds as $tm_mb_feild) {
+				 	echo '<li>'.$tm_mb_feild .'</li>';
+				 }
+			}
+			else
+				_e('Aucune Meta-box','textmaster');
+			echo '<input type="hidden" name="nopmb" id="nopmb" value="1">';
+		}
 
 
 		echo '</ul>';

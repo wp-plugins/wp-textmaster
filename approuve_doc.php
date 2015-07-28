@@ -5,8 +5,14 @@ header("Pragma: no-cache");
 
 //include "../../../wp-load.php";
 //require_once( $_SERVER['DOCUMENT_ROOT'] . '/wp-load.php' );
-$parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
-require_once( $parse_uri[0] . 'wp-load.php' );
+require_once('confs_path.php');
+if (defined('PATH_WP_LOAD') && PATH_WP_LOAD != '')
+	$uri_load = PATH_WP_LOAD;
+else{
+	$parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
+	$uri_load = $parse_uri[0];
+}
+require_once( $uri_load . 'wp-load.php' );
 
 if (isset($_GET['valide']) && $_GET['valide'] == 1) {
 
@@ -15,6 +21,7 @@ if (isset($_GET['valide']) && $_GET['valide'] == 1) {
 //	$tApi->keyapi =  get_option_tm('textmaster_api_key');
 
 //	print_r($_GET);
+	$post_origine = get_post($_GET['post_id_origine']);
 
 	if ($_GET['type'] == 'redaction' || $_GET['new_article'] == 1 || $_GET['new_article'] == 2) {
 		$text = '';
@@ -100,16 +107,19 @@ if (isset($_GET['valide']) && $_GET['valide'] == 1) {
 		}
 
 		$new_post['post_content'] = $text;
+	//	var_dump($_GET);
+	//	die();
 
 		if (checkInstalledPlugin('WPML Multilingual CMS') && isset($_GET['lang_icl']) && $_GET['lang_icl'] != '') {
-			$new_post['post_type'] = get_post_type( $_GET['post_id_origine'] );
+			$new_post['post_type'] = $post_origine->post_type; //get_post_type( $_GET['post_id_origine'] );
 		}
 		else if ($_GET['new_article'] == 2)
 			$new_post['post_type'] = 'page';
 		else
 			$new_post['post_type'] = 'post';
 
-	//	var_dump($new_post);
+//		var_dump($new_post);
+//		die();
 		$post_id = wp_insert_post($new_post);
 //echo 'Error ';
 		if (checkInstalledPlugin('WPML Multilingual CMS')) {
@@ -140,8 +150,14 @@ if (isset($_GET['valide']) && $_GET['valide'] == 1) {
 				$post_language_information = wpml_get_language_information($_GET['post_id_origine']);
 				$trid = wpml_get_content_trid( 'post_' . $new_post['post_type'], $_GET['post_id_origine'] );
 			//	var_dump($post_language_information);
-			//	echo 'trid '.$trid.'<br>';
-				$wpdb->update( $tableIclTrads, array( 'trid' => $trid, 'language_code' => $_GET['lang_icl'], 'source_language_code' => $post_language_information['locale'] ), array( 'element_id' => $post_id ) );
+//				echo 'trid '.$trid.'<br>';
+			//	echo  'post_' . $new_post['post_type'].' / '. $post_id.' / '. $_GET['lang_icl'].' / '. $trid;
+				$ret_wpml_add = wpml_add_translatable_content( 'post_' . $new_post['post_type'], $post_id, $_GET['lang_icl'], $trid );
+			//	echo 'ret add ' .$ret_wpml_add;
+			//	if ($ret_wpml_add == WPML_API_ERROR) {
+			//		echo 'error';
+					$wpdb->update( $tableIclTrads, array( 'trid' => $trid, 'language_code' => $_GET['lang_icl'], 'source_language_code' => $post_language_information['locale'] ), array( 'element_id' => $post_id ) );
+			//	}
 			}
 		}
 		//die();
@@ -160,12 +176,13 @@ if (isset($_GET['valide']) && $_GET['valide'] == 1) {
 			$aTextF = array();
 			foreach ($extras as $key => $extra) {
 				if (strpos($extra['field'], '_tmtext_') !== FALSE) {
-					$num = str_replace('_tmtext_', '', $extra['field']);
-				$aTextF[$num] = $extra['val'];
-				update_post_meta( $post_id, $extra['field'], $aTextF);
-			}else
+					$field = substr($extra['field'], 0, strpos($extra['field'], '_tmtext_'));
+					//$num = str_replace('_tmtext_', '', $extra['field']);
+					$aTextF = array($extra['val']);
+					update_post_meta( $post_id, $field, $aTextF);
+				}else
 					update_post_meta( $post_id, $extra['field'], $extra['val'] );
-			}
+				}
 //			if (count($aTextF) != 0) {
 //				update_post_meta( $post_id, , $aTextF);
 //			}
@@ -283,7 +300,7 @@ else if ($_GET['type'] == 'trad'){
 		$infos = $tApi->getDocumentInfos($idProjet, $textmasterDocumentId);
 	}
 
-	if (key_exists('documents', $infos)){
+	if (@key_exists('documents', $infos)){
 		$work = $infos['documents'][0];
 		$infos['id'] = $infos['documents'][0]['id'];
 	}
@@ -333,9 +350,12 @@ if (count($work) != 0) {
 		$textStruct = '';
 		$titre = '';
 
-		foreach ( $work['author_work'] as $element => $paragraphes) {
-			$textBrute .= '<p>'.$paragraphes.'</p>';
+		if (is_array($work['author_work'])) {
+			foreach ( $work['author_work'] as $element => $paragraphes) {
+				$textBrute .= '<p>'.$paragraphes.'</p>';
+			}
 		}
+
 
 	//	$lignes = explode("\n", $textBrute );
 	//	print_r($lignes);
@@ -381,14 +401,15 @@ if (checkInstalledPlugin('WPML Multilingual CMS') && $_GET['type'] == 'trad') {
 	if (count($aLangsIcl) != 0) {
 		echo '<select name="lang_icl" id="lang_icl">';
 		foreach ($aLangsIcl as $langsIcl) {
+			$lang = explode('-', $_GET['lang']);
 			$selected = '';
-			if ($langsIcl['language_code'] == $_GET['lang'])
+			if ($langsIcl['language_code'] == $lang[0])
 				$selected = ' selected="selected"';
 
 			echo '<option value="'.$langsIcl['language_code']. '" '.$selected.'>'. $langsIcl['native_name'].'</option>';
 		}
 		echo '</select>';
-		echo '<input name="ValiderPlus" type="button" class="button button-highlighted" id="useDocTextmasterIcl" tabindex="6" accesskey="c" value="'.__('Utiliser comme traduction','textmaster').'">';
+		echo '<input name="useDocTextmasterIcl" type="button" class="button button-highlighted" id="useDocTextmasterIcl" tabindex="6" accesskey="c" value="'.__('Utiliser comme traduction','textmaster').'">';
 	}
 }
 echo '<div id="publishing-action" style="margin-right:5px;"><input name="ValiderPlus" type="button" class="button button-highlighted" id="useDocTextmasterPlus" tabindex="6" accesskey="c" value="'.__('Valider et créer un article','textmaster').'"></div> ';

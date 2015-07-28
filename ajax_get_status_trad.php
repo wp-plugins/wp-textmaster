@@ -5,8 +5,14 @@ header("Pragma: no-cache");
 
 //require( '../../../wp-load.php' );
 //require_once( $_SERVER['DOCUMENT_ROOT'] . '/wp-load.php' );
-$parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
-require_once( $parse_uri[0] . 'wp-load.php' );
+require_once('confs_path.php');
+if (defined('PATH_WP_LOAD') && PATH_WP_LOAD != '')
+	$uri_load = PATH_WP_LOAD;
+else{
+	$parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
+	$uri_load = $parse_uri[0];
+}
+require_once( $uri_load . 'wp-load.php' );
 
 $tApi = new textmaster_api(get_option_tm('textmaster_api_key'), get_option_tm('textmaster_api_secret'));
 if ( isset($_GET['idSite']) && $_GET['idSite'] != '') {

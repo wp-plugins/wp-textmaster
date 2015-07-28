@@ -277,11 +277,14 @@ class textmaster_api {
     public function getLanguageLevels()
     {
         global $wpdb;
-
         $table_languageLevels = $wpdb->base_prefix . 'tm_languageLevels';
 
-        $reqCats = $wpdb->prepare('SELECT * FROM ' . $table_languageLevels, '');
-        $arrayRet = $wpdb->get_results($reqCats, ARRAY_A);
+		if($wpdb->get_var("SHOW TABLES LIKE '$table_languageLevels'" ) == $table_languageLevels){
+			$reqCats = $wpdb->prepare('SELECT * FROM ' . $table_languageLevels, '');
+			$arrayRet = $wpdb->get_results($reqCats, ARRAY_A);
+		}else
+			$_SESSION['lastSyncTmLevel'] = '';
+
 
         if ($_SESSION['lastSyncTmLevel'] == '' || time() - $_SESSION['lastSyncTmLevel'] > $this->dureeResyncro || count($arrayRet) == 0) {
             $this->chCurl = $this->init();
@@ -310,7 +313,8 @@ class textmaster_api {
             // var_dump($arrayRet);
             // $arrayRet['regular'] = __('Regular','textmaster');
             // $arrayRet['premium'] = __('Premium','textmaster');
-            $this->syncLanguageLevels($arrayRet["language_levels"]);
+        	if($wpdb->get_var("SHOW TABLES LIKE '$table_languageLevels'" ) == $table_languageLevels)
+        		$this->syncLanguageLevels($arrayRet["language_levels"]);
         }else {
             $reqCats = $wpdb->prepare('SELECT * FROM ' . $table_languageLevels, '');
             $arrayRet["language_levels"] = $wpdb->get_results($reqCats, ARRAY_A);
@@ -318,7 +322,7 @@ class textmaster_api {
         // print_r( $arrayRet["language_levels"]);
         // on ajout le niv 'enterprise' qui n'est pas retournée par l'api sandbox
         $entrepriseFound = false;
-        if (count($arrayRet["language_levels"]) != 0) {
+        if (is_array($arrayRet["language_levels"]) && count($arrayRet["language_levels"]) != 0) {
             foreach ($arrayRet["language_levels"] as $key => $val) {
                 if ($val['name'] == 'enterprise') {
                     $entrepriseFound = true;
@@ -326,11 +330,11 @@ class textmaster_api {
                 }
             }
         }
-        if (!$entrepriseFound)
+        if (!$entrepriseFound && is_array($arrayRet))
             $arrayRet["language_levels"][]['name'] = 'enterprise';
         // $arrayRet["language_levels"] = array_unique($arrayRet["language_levels"]);
         // on trie les language_levels par type de service
-        if (count($arrayRet["language_levels"]) != 0) {
+        if (is_array($arrayRet) && count($arrayRet["language_levels"]) != 0) {
             foreach ($arrayRet["language_levels"] as $key => $val) {
                 if ($val['name'] != 'enterprise') {
                     $arrayRet["language_levels"]['traduction'][$key] = $val;
@@ -342,6 +346,8 @@ class textmaster_api {
                 }
             }
         }
+		else 
+			$arrayRet["language_levels"] = array();
         // return $arrayCats['categories'];
         // var_dump($arrayRet["language_levels"]);
         return $arrayRet["language_levels"];
@@ -452,8 +458,7 @@ class textmaster_api {
             $arrayLangs = json_decode($result, true);
 
             $this->trierArray($arrayLangs['languages']);
-
-            $this->syncLanguages($arrayLangs['languages']);
+            $arrayLangs['languages'] = $this->syncLanguages($arrayLangs['languages']);
         }else {
             $reqLangs = $wpdb->prepare('SELECT * FROM ' . $table_langues, '');
 
@@ -487,8 +492,14 @@ class textmaster_api {
 
                 $wpdb->query($req);
             }
+        	// suppresion des langues non iso (bug api)
+        	$wpdb->query('DELETE FROM ' . $table_langues. ' WHERE code NOT LIKE "%-%"');
             $_SESSION['lastSyncTmLangues'] = time();
         }
+    	$reqLangs = $wpdb->prepare('SELECT * FROM ' . $table_langues, '');
+    	$arrayLangs['languages'] = $wpdb->get_results($reqLangs, ARRAY_A);
+
+    	return $arrayLangs['languages'];
     }
 
     /*
@@ -777,7 +788,7 @@ class textmaster_api {
         global $wpdb;
 
         $table_reference_pricings = $wpdb->base_prefix . 'tm_reference_pricings';
-        if (count($array) != 0) {
+        if (is_array($array) && count($array) != 0 ) {
             // $wpdb->query('DELETE FROM '.$table_reference_pricings);
             foreach ($array as $type => $typePrice) {
                 if (count($typePrice) != 0) {

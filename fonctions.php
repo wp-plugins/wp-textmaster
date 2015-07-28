@@ -688,12 +688,17 @@ function getExtrasFields($postId, $type="acf", $site = ''){
 
 	if ($type == 'metabox') {
 		$meta_boxes = apply_filters( 'rwmb_meta_boxes', array() );
-		$chk_tm_mb_feilds = unserialize(get_option_tm('chk_tm_mb_feilds'));
-//		var_dump($meta_boxes);
+		$chk_option_tm_mb_feilds = unserialize(get_option_tm('chk_tm_mb_feilds'));
+		if ( is_multisite())
+			$chk_tm_mb_feilds = $chk_option_tm_mb_feilds[get_current_blog_id()];
+		else
+			$chk_tm_mb_feilds = $chk_option_tm_mb_feilds;
+		//var_dump($chk_tm_mb_feilds);
 		if (count($meta_boxes) != 0) {
 			foreach ($meta_boxes as $meta_box) {
 				if (count($meta_box['fields']) != 0) {
 					foreach ($meta_box['fields'] as $meta_box_fields) {
+					//	echo $meta_box_fields['id'] .' / '. print_r($chk_tm_mb_feilds, TRUE).'<br/>';
 						if (is_array($chk_tm_mb_feilds) && !in_array($meta_box_fields['id'], $chk_tm_mb_feilds)){
 							$meta_value = get_post_meta( $postId, $meta_box_fields['id'], TRUE );
 						//	var_dump($meta_value);

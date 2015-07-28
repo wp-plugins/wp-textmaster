@@ -175,11 +175,17 @@
 				 	extras = jQuery(".acf-postbox input[type!='hidden'][type!='password'][type!='date'][type!='email'][type!='checkbox'], .acf-postbox textarea").serialize();
 		 	}
 
-			 // pour le plugin meta box
+			// pour le plugin meta box
+			filtre_pmb = '';
 			if (jQuery(".rwmb-meta-box").length > 0) {
 			 	extras = jQuery(".rwmb-meta-box input[type!='hidden'][type!='password'][type!='date'][type!='email'][type!='checkbox'], .rwmb-meta-box textarea").serialize();
-			 	filtre_pmb = jQuery(".chk_tm_mb_feilds_read").serialize();
-			}
+
+			 	if (jQuery(".chk_tm_mb_feilds_trad").length > 0)
+		 			filtre_pmb = jQuery(".chk_tm_mb_feilds_trad").serialize();
+	 			if (jQuery("#nopmb").length > 0)
+	 				if (jQuery('#nopmb').val() == 1)
+	 				filtre_pmb = '-1';
+	 		}
 
 			postID = jQuery("#post_ID").val();
 
@@ -371,13 +377,14 @@
 			jQuery.ajax({
 			 		type: 'GET',
 		 			url: window.urlPlugin +'/approuve_doc.php?valide=1&docId='+docId+'&post_id_origine='+post_id_origine+'&lang_icl='+lang_icl+'&projectId='+projectId+'&type='+textmaster_type+'&new_article=2&select_textmasterSatisfaction='+select_textmasterSatisfaction+'&text_textmaster_message='+text_textmaster_message+'&textmaster_add_author='+textmaster_add_author+'&auteur_description='+auteur_description+'&select_textmasterStatutAuteur='+select_textmasterStatutAuteur+'&auteurTmId='+auteurTmId,
-
 		  			success: function(data, textStatus, XMLHttpRequest){
-		  				if (data.indexOf('Error') != -1) {
+		   				if (data.indexOf('Error') != -1) {
 		  					jQuery("#resultTM").html('<div class="error">'+data+'</div>');
 		  				}
-		  				else
+		  				else{
+
 		  					window.top.location.href= window.urlAdmin +"/post.php?post="+data+"&action=edit&lang="+lang_icl;
+		  				}
 		  			},
 		  			error: function(MLHttpRequest, textStatus, errorThrown){
 		  				alert(errorThrown);
@@ -472,7 +479,7 @@
 	  	jQuery( "#select_textmasterReadProofLanguageLevel" ).change(function() {
 		  	getPrice('readproof');
 		  	getAuthors('readproof');
-		  	setOptions('select_textmasterReadProofLanguageLevel');
+	  		setOptions('select_textmasterReadProofLanguageLevel');
 	  	});
 
 	  	jQuery( "#select_textmasterTradLanguageLevel" ).change(function() {
@@ -558,7 +565,9 @@
 		  	else
 		  		jQuery( "#tm_add_auteur" ).hide();
 	  	});
-	  	 setOptions();
+
+	  //	if (jQuery('#textmaster_settings').lenght == 0)
+	//	  	 setOptions();
 
 	  	 barPercent();
 	});
@@ -600,12 +609,20 @@ function launchTrad(){
 	 	extras = jQuery(".acf-postbox input[type='text'], .acf_postbox textarea").serialize();
 	 }
 
-	 // pour le plugin meta box
-	if (jQuery(".rwmb-meta-box").length > 0) {
+	// pour le plugin meta box
+	filtre_pmb = '';
+	if (jQuery(".rwmb-meta-box").length > 0 || jQuery(".rwmb-field").length > 0) {
 	 //	extras = jQuery(".rwmb-meta-box input[type!='hidden'][type!='password'][type!='date'][type!='email'][type!='url'][type!='checkbox'][type!='radio'][type!='range'], .rwmb-meta-box textarea").serialize();
-	 	extras = jQuery(".rwmb-meta-box input[type='text'], .rwmb-meta-box textarea").not('.rwmb-color').serialize();
+	 	if (jQuery(".rwmb-meta-box").length > 0 )
+	 		extras = jQuery(".rwmb-meta-box input[type='text'], .rwmb-meta-box textarea").not('.rwmb-color').serialize();
+ 		else if (jQuery(".rwmb-field").length > 0 )
+	 		extras = jQuery(".rwmb-field input[type='text'], .rwmb-field textarea").not('.rwmb-color').serialize();
 
-	 	filtre_pmb = jQuery(".chk_tm_mb_feilds_trad").serialize();
+		if (jQuery(".chk_tm_mb_feilds_trad").length > 0)
+		 	filtre_pmb = jQuery(".chk_tm_mb_feilds_trad").serialize();
+	 	if (jQuery("#nopmb").length > 0)
+	 		if (jQuery('#nopmb').val() == 1)
+	 			filtre_pmb = '-1';
 	 }
 
 	postID = jQuery("#post_ID").val();

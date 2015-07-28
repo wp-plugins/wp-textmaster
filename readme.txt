@@ -8,7 +8,7 @@ Requires at least: 3.3
 
 Tested up to: 4.1
 
-Stable tag: 2.1.3
+Stable tag: 2.1.6
 
 License: GPLv2 or later
 

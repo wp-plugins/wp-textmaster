@@ -4,7 +4,7 @@ Plugin Name: TextMaster plugin
 Plugin URI: http://www.textmaster.com/wordpress-translation-plugin/?pid=5310711603e44f00020006d3
 Description: Plugin for TextMaster copywriting, proofreading and translation services.
 Author: TextMaster SA
-Version: 2.1.3
+Version: 2.1.6
 Author URI: http://www.textmaster.com/?pid=5310711603e44f00020006d3
 Text Domain: textmaster
 */
@@ -66,6 +66,9 @@ function textmaster_install() {
 
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
+	// on active les erreurs MySQL
+//	$wpdb->show_errors();
+
 	$table_name = $wpdb->base_prefix . "tm_projets";
 	$table_categories =  $wpdb->base_prefix .'tm_categories';
 	$table_langues =  $wpdb->base_prefix .'tm_langues';
@@ -113,7 +116,7 @@ $sqlProjets = "CREATE TABLE $table_name (
 	$sqlCategories = "CREATE TABLE $table_categories (
  			`code` varchar(250) NOT NULL,
  			`value` VARCHAR(250) NULL,
-			UNIQUE KEY `code_categorie` (`code`)
+			UNIQUE KEY `tm_code_categorie` (`code`)
     		);";
 	dbDelta( $sqlCategories );
 	$err = $wpdb->last_error;
@@ -124,7 +127,7 @@ $sqlProjets = "CREATE TABLE $table_name (
 	$sqlLangues = "CREATE TABLE $table_langues (
  			`code` varchar(250) NOT NULL,
  			`value` VARCHAR(250) NULL,
-			UNIQUE KEY `code_lang` (`code`)
+			UNIQUE KEY `tm_code_lang` (`code`)
     		);";
 	dbDelta( $sqlLangues );
 	$err = $wpdb->last_error;
@@ -136,7 +139,7 @@ $sqlProjets = "CREATE TABLE $table_name (
  			`description` VARCHAR(250) NULL,
  			`image_preview_path` VARCHAR(250) NULL,
  			`ctype` VARCHAR(250) NULL,
-			UNIQUE KEY `name_template` (`name`)
+			UNIQUE KEY `tm_name_template` (`name`)
     		);";
 	dbDelta( $sqlTemplates );
 	$err = $wpdb->last_error;
@@ -144,19 +147,21 @@ $sqlProjets = "CREATE TABLE $table_name (
 		trigger_error(__('Erreur : impossible de créer la table : '.$table_templates.' ('.$err.')'), E_USER_ERROR);
 
 	$sqlLanguageLevels = "CREATE TABLE $table_languageLevels  (
- 			`name` varchar(250) NOT NULL
+ 			`name` varchar(100) NOT NULL,
+    		UNIQUE KEY `tm_name_language_level` (`name`)
     		);";
- 			//UNIQUE KEY `name_language_level` (`name`)
+ 			//
 	dbDelta( $sqlLanguageLevels );
 	$err = $wpdb->last_error;
-	if($wpdb->get_var("SHOW TABLES LIKE '$table_languageLevels'" ) != $table_languageLevels)
-		trigger_error(__('Erreur : impossible de créer la table : '.$table_languageLevels.' ('.$err.')'), E_USER_ERROR);
+	// sur certain serveur la table ne peut être créée (innoDB) -> on passe quand même
+//	if($wpdb->get_var("SHOW TABLES LIKE '$table_languageLevels'" ) != $table_languageLevels)
+//		trigger_error(__('Erreur : impossible de créer la table : '.$table_languageLevels.' ('.$err.')'), E_USER_ERROR);
 
 	$sqlReference_pricings = "CREATE TABLE $table_reference_pricings  (
 				`type` varchar(100) NOT NULL,
-				`name` varchar(250) NOT NULL,
+				`name` varchar(100) NOT NULL,
 				`value` varchar(250) NOT NULL,
-				UNIQUE KEY `reference_pricings` (`type`, `name`)
+				UNIQUE KEY `tm_reference_pricings` (`type`, `name`)
 				);";
 	dbDelta( $sqlReference_pricings );
 	$err = $wpdb->last_error;
@@ -168,7 +173,7 @@ $sqlProjets = "CREATE TABLE $table_name (
 				`tags` varchar(250) NOT NULL,
 				`status` varchar(250) NOT NULL,
 				`id` varchar(100) NOT NULL,
-				`author_id` varchar(250) NOT NULL,
+				`author_id` varchar(100) NOT NULL,
 				`author_ref` varchar(250) NOT NULL,
 				`latest_activity` varchar(250) NOT NULL,
 				`created_at` varchar(250) NOT NULL,
@@ -203,6 +208,9 @@ $sqlProjets = "CREATE TABLE $table_name (
 
 	// supprime l'index unique existant avant les actions groupées
 	$wpdb->query('DROP INDEX id ON '.$table_name.'');
+
+	// on desactive les erreurs MySQL
+//	$wpdb->hide_errors();
 
 	wp_schedule_single_event( time() + 1, 'cron_syncProjets' );
 

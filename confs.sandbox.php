@@ -31,6 +31,11 @@ define("WORDCOUNT_API_ENABLE", FALSE);
 
 define("CATEGORIE_DEFAUT", 'C014');
 
+// pour que les suivis de projets pointent sur le site textmaster
+// tm -> site textmaster
+// wp -> posts wordpress
+define('SUIVI_PROJET_TM', 'tm');
+
 // les plugins compatibles
 define("PLUGIN_METABOX_VERSION", '4.3.8');
 define("PLUGIN_ACF_VERSION", '4.4.0');

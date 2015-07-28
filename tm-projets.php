@@ -13,6 +13,11 @@ function admin_textmaster_projets(){
 	$html = '';
 	// le filtre par site pour le network
 	if ( is_network_admin() ) {
+		// le filtre pour forcer la liste des sites
+		if ( !wp_is_large_network())
+			add_filter( 'wp_is_large_network', 'filter_tm_wp_is_large_network', 10, 3 );
+
+
 		if (function_exists('wp_get_sites')) {
 			$sites = wp_get_sites();
 			if (count($sites) != 0) {
@@ -53,6 +58,12 @@ function admin_textmaster_projets(){
 				</form>
 				</div>
 			<?php
+}
+
+// le filtre pour forcer la liste des sites
+function filter_tm_wp_is_large_network( $count, $users, $count )
+{
+	return 9999;
 }
 
 class textmaster_projets_Table extends WP_List_Table {
@@ -302,22 +313,23 @@ class textmaster_projets_Table extends WP_List_Table {
 				if ($Id != '')
 					$idPost = $Id;
 			}
-
-
-
-			if ($idPost != '')
-				$item['name'] = '<a href="'.$adminUrl.'post.php?post='.$idPost.'&action=edit">'.$projets['name'].'</a>';
-			else if ( strpos($projets['id'], 'wp_') !== FALSE) {
-				$item['name'] = '<a href="'.$adminUrl.'post.php?post='.str_replace('wp_', '', $projets['id']).'&action=edit">'.$projets['name'].'</a>';
-			}
-			else
-			{
-
-
+			if ( defined('SUIVI_PROJET_TM') &&  SUIVI_PROJET_TM == 'tm' ) {
 				$lang = explode('_', get_locale());
 				$urlProjet = 'http://'.$lang[0].'.'.URL_TM_PROJET.$projets['id'].'/overview/?auth_token='.$infosUser['authentication_token'];
 				$item['name'] = '<a href="'.$urlProjet.'" target="_blank">'.$projets['name'].'</a>';
+			} else {
+				if ($idPost != '')
+					$item['name'] = '<a href="'.$adminUrl.'post.php?post='.$idPost.'&action=edit">'.$projets['name'].'</a>';
+				else if ( strpos($projets['id'], 'wp_') !== FALSE) {
+					$item['name'] = '<a href="'.$adminUrl.'post.php?post='.str_replace('wp_', '', $projets['id']).'&action=edit">'.$projets['name'].'</a>';
+				}
+				else {
+					$lang = explode('_', get_locale());
+					$urlProjet = 'http://'.$lang[0].'.'.URL_TM_PROJET.$projets['id'].'/overview/?auth_token='.$infosUser['authentication_token'];
+					$item['name'] = '<a href="'.$urlProjet.'" target="_blank">'.$projets['name'].'</a>';
+				}
 			}
+
 
 		//	$item['ctype'] = $projets['ctype'];
 			// traduction des types

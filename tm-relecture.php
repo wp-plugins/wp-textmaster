@@ -381,9 +381,15 @@ function callback_readproof(){
 		//	$chk_tm_mb_feilds = unserialize(get_option_tm('chk_tm_mb_feilds'));
 			$chk_tm_mb_feilds = array();
 			$chk_tm_mb = array();
-			parse_str($_POST['filtre_pmb'], $chk_tm_mb);
-			if (isset($chk_tm_mb['chk_tm_mb_feilds']))
-				$chk_tm_mb_feilds = $chk_tm_mb['chk_tm_mb_feilds'];
+			// si le POST filtre_pmb les meta-boxes n'ont pas été détectés
+			// on rrecup ceux des paramétrages du plugin
+			if ($_POST['filtre_pmb'] == '-1') {
+				$chk_tm_mb_feilds = unserialize(get_option_tm('chk_tm_mb_feilds'));
+			}else {
+				parse_str($_POST['filtre_pmb'], $chk_tm_mb);
+				if (isset($chk_tm_mb['chk_tm_mb_feilds']))
+					$chk_tm_mb_feilds = $chk_tm_mb['chk_tm_mb_feilds'];
+			}
 
 			$params = array();
 			parse_str($_POST['extras'], $params);
@@ -663,10 +669,12 @@ function wp_texmaster_readproof_pmb_metaboxes(&$tApi){
 /*else
 					_e('Aucune Meta-box','textmaster');*/
 			}
+			echo '<input type="hidden" name="nopmb" id="nopmb" value="0">';
 		}
-		else
+		else{
 			_e('Aucune Meta-box','textmaster');
-
+			echo '<input type="hidden" name="nopmb" id="nopmb" value="1">';
+		}
 
 		echo '</ul>';
 		echo '</div>';

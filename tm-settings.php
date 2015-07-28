@@ -1183,12 +1183,13 @@ function afficheTraduction(&$tApi, &$languageLevels, &$languages, &$categories, 
         <?php
 	$chkNo = '';
 	$chkYes = '';
-	if($textmaster_qualityTraduction =="true")
+	if($textmaster_qualityTraduction == 'true')
 		$chkYes = 'checked="checked"';
 	else
 		$chkNo = 'checked="checked"';
 
-	echo '<input type="radio" name="radio_textmasterQualityTraduction" class="radio_textmasterQualityTraduction" value="true" '.$chkYes.'/> '.__('Oui','textmaster').' <input type="radio" name="radio_textmasterQualityTraduction" class="radio_textmasterQualityTraduction" value="false" '.$chkNo.'/> '.__('Non','textmaster');
+	echo '<label><input type="radio" name="radio_textmasterQualityTraduction" class="radio_textmasterQualityTraduction" value="true" '.$chkYes.' /> '.__('Oui','textmaster').'</label>';
+ 	echo ' <label><input type="radio" name="radio_textmasterQualityTraduction" class="radio_textmasterQualityTraduction" value="false" '.$chkNo.' /> '.__('Non','textmaster').'</label>';
 	?><span class="coutOptionTm">+ </span><span><?php echo $aPrices[2]['value'] ?></span> <?php echo $infosClient['wallet']['currency_code'] ?> /  <?php _e('mot','textmaster') ?>
         </td>
      </tr>
@@ -1205,7 +1206,8 @@ function afficheTraduction(&$tApi, &$languageLevels, &$languages, &$categories, 
 	else
 		$chkNo = 'checked="checked"';
 
-	echo '<input type="radio" name="radio_textmasterExpertiseTraduction" class="radio_textmasterExpertiseTraduction" value="true" '.$chkYes.'/> '.__('Oui','textmaster').' <input type="radio" name="radio_textmasterExpertiseTraduction" class="radio_textmasterExpertiseTraduction" value="false" '.$chkNo.'/> '.__('Non','textmaster');
+	echo '<label><input type="radio" name="radio_textmasterExpertiseTraduction" class="radio_textmasterExpertiseTraduction" value="true" '.$chkYes.'/> '.__('Oui','textmaster').'</label>';
+	echo ' <label><input type="radio" name="radio_textmasterExpertiseTraduction" class="radio_textmasterExpertiseTraduction" value="false" '.$chkNo.'/> '.__('Non','textmaster').'</label>';
 	?><span class="coutOptionTm">+ </span><span><?php echo $aPrices[3]['value'] ?></span> <?php echo $infosClient['wallet']['currency_code'] ?> /  <?php _e('mot','textmaster') ?>
         </td>
      </tr>-->
@@ -1222,7 +1224,8 @@ function afficheTraduction(&$tApi, &$languageLevels, &$languages, &$categories, 
 	else
 		$chkNo = 'checked="checked"';
 
-	echo '<input type="radio" name="radio_textmasterPriorityTraduction" class="radio_textmasterPriorityTraduction" value="true" '.$chkYes.'/> '.__('Oui','textmaster').' <input type="radio" name="radio_textmasterPriorityTraduction" class="radio_textmasterPriorityTraduction" value="false" '.$chkNo.'/> '.__('Non','textmaster');
+	echo '<label><input type="radio" name="radio_textmasterPriorityTraduction" class="radio_textmasterPriorityTraduction" value="true" '.$chkYes.'/> '.__('Oui','textmaster').'</label>';
+	echo ' <label><input type="radio" name="radio_textmasterPriorityTraduction" class="radio_textmasterPriorityTraduction" value="false" '.$chkNo.'/> '.__('Non','textmaster').'</label>';
 	?> <span class="coutOptionTm">+ </span><span><?php echo $aPrices[6]['value'] ?></span> <?php echo $infosClient['wallet']['currency_code'] ?> /  <?php _e('mot','textmaster') ?>
         </td>
      </tr>
@@ -1475,7 +1478,7 @@ function afficheReadProof(&$tApi, &$languageLevels, &$languages, &$categories, &
 	else
 	$chkNo = 'checked="checked"';
 
-	echo '<input type="radio" name="radio_textmasterQualityReadproof" class="radio_textmasterQualityReadproof" value="true" '.$chkYes.'/> '.__('Oui','textmaster').' <input type="radio" name="radio_textmasterQualityReadproof" class="radio_textmasterQualityReadproof" value="false" '.$chkNo.'/> '.__('Non','textmaster');
+	echo '<label><input type="radio" name="radio_textmasterQualityReadproof" class="radio_textmasterQualityReadproof" value="true" '.$chkYes.'/> '.__('Oui','textmaster').'</label> <label><input type="radio" name="radio_textmasterQualityReadproof" class="radio_textmasterQualityReadproof" value="false" '.$chkNo.'/> '.__('Non','textmaster').'</label>';
 	?><span class="coutOptionTm">+ </span><span><?php echo $aPrices[2]['value'] ?></span> <?php echo $infosClient['wallet']['currency_code'] ?> /  <?php _e('mot','textmaster') ?>
 	</td>
 	</tr>-->
@@ -1492,7 +1495,7 @@ function afficheReadProof(&$tApi, &$languageLevels, &$languages, &$categories, &
 	else
 	$chkNo = 'checked="checked"';
 
-	echo '<input type="radio" name="radio_textmasterExpertiseReadproof" class="radio_textmasterExpertiseReadproof" value="true" '.$chkYes.'/> '.__('Oui','textmaster').' <input type="radio" name="radio_textmasterExpertiseReadproof" class="radio_textmasterExpertiseReadproof" value="false" '.$chkNo.'/> '.__('Non','textmaster');
+	echo '<label><input type="radio" name="radio_textmasterExpertiseReadproof" class="radio_textmasterExpertiseReadproof" value="true" '.$chkYes.'/> '.__('Oui','textmaster').'</label> <label><input type="radio" name="radio_textmasterExpertiseReadproof" class="radio_textmasterExpertiseReadproof" value="false" '.$chkNo.'/> '.__('Non','textmaster').'</label>';
 	?><span class="coutOptionTm">+ </span><span><?php echo $aPrices[3]['value'] ?></span> <?php echo $infosClient['wallet']['currency_code'] ?> /  <?php _e('mot','textmaster') ?>
 	</td>
 	</tr>-->
@@ -1509,7 +1512,7 @@ function afficheReadProof(&$tApi, &$languageLevels, &$languages, &$categories, &
 	else
 	$chkNo = 'checked="checked"';
 
-	echo '<input type="radio" name="radio_textmasterPriorityReadproof" class="radio_textmasterPriorityReadproof" value="true" '.$chkYes.'/> '.__('Oui','textmaster').' <input type="radio" name="radio_textmasterPriorityReadproof" class="radio_textmasterPriorityReadproof" value="false" '.$chkNo.'/> '.__('Non','textmaster');
+	echo '<label><input type="radio" name="radio_textmasterPriorityReadproof" class="radio_textmasterPriorityReadproof" value="true" '.$chkYes.'/> '.__('Oui','textmaster').'</label> <label><input type="radio" name="radio_textmasterPriorityReadproof" class="radio_textmasterPriorityReadproof" value="false" '.$chkNo.'/> '.__('Non','textmaster').'</label>';
 		?><span class="coutOptionTm">+ </span><span><?php echo $aPrices[6]['value'] ?></span> <?php echo $infosClient['wallet']['currency_code'] ?> /  <?php _e('mot','textmaster') ?>
 	        </td>
 	     </tr>
@@ -1534,6 +1537,7 @@ function afficheAvances(){
 
 		$sites = wp_get_sites();
 		foreach ($sites as $site) {
+			$metaBoxes = array();
 		//	var_dump($site);
 			switch_to_blog($site['blog_id']);
 			$infoSite = get_blog_details( array( 'blog_id' => $site['blog_id'] ) );
@@ -1546,18 +1550,19 @@ function afficheAvances(){
 				require($theme_name.'/functions.php');
 				$rep_fonctions[]= $theme_name.'/functions.php';
 			//	echo '<br>'.$theme_name.'/functions.php<br>-------------------------------<br>';
-				$metaB[$site['blog_id']]['metaBoxes'] = apply_filters( 'set_tm_metaboxes', array() );
+				$metaBoxes =  apply_filters( 'rwmb_meta_boxes', array());
+				$metaB[$site['blog_id']]['metaBoxes'] = array_merge(apply_filters( 'set_tm_metaboxes', array() ), array(), $metaBoxes);
 				$metaB[$site['blog_id']]['metaBoxes'] = array_map("unserialize", array_unique(array_map("serialize", $metaB[$site['blog_id']]['metaBoxes'])));
 				//		var_dump($meta_boxes_room);
 			}
 
 		//	var_dump($metaB);
 			//	echo $theme_name;		//	var_dump(apply_filters( 'rwmb_meta_boxes', array() ));
-	//		$metaB = array_merge( apply_filters( 'rwmb_meta_boxes', array() ), $metaB);
 		}
 		restore_current_blog();
 //		var_dump($metaB);
-		$meta_boxes_def = array_map("unserialize", array_unique(array_map("serialize", $metaB)));
+	//	$meta_boxes_def = array_map("unserialize", array_unique(array_map("serialize", $metaB)));
+		$meta_boxes_def = $metaB;
 	//	var_dump($meta_boxes);
 	}else{
 	//	$meta_boxes = apply_filters( 'rwmb_meta_boxes', array() );
@@ -1566,7 +1571,7 @@ function afficheAvances(){
 	}
 
 	$chk_tm_mb_feilds = unserialize(get_option_tm('chk_tm_mb_feilds'));
-
+//	var_dump($chk_tm_mb_feilds);
 /*	if ($tm_metabox_pg_prefix == '')
 		$tm_metabox_pg_prefix = 'your_prefix';
 */
@@ -1596,12 +1601,12 @@ function afficheAvances(){
 						if (count($meta_box_site['fields']) != 0) {
 							foreach ($meta_box_site['fields'] as $meta_box_fields) {
 								$chked = '';
-								if (is_array($chk_tm_mb_feilds) && in_array($meta_box_fields['id'], $chk_tm_mb_feilds))
+								if (is_array($chk_tm_mb_feilds[$key]) && in_array($meta_box_fields['id'], $chk_tm_mb_feilds[$key]))
 									$chked = 'checked="checked"';
 
 								//	var_dump($meta_box_fields);
 								if ($meta_box_fields['type'] == 'text' || $meta_box_fields['type'] == 'textarea' || $meta_box_fields['type'] == 'wysiwyg'){
-									echo '<li>'.'<input type="checkbox" name="chk_tm_mb_feilds[]" value="'.$meta_box_fields['id'].'" '.$chked.'/> ';
+									echo '<li>'.'<input type="checkbox" name="chk_tm_mb_feilds['.$key.'][]" value="'.$meta_box_fields['id'].'" '.$chked.'/> ';
 									echo $meta_box_fields['id'].''.(isset($meta_box_fields['name']) != FALSE  ? ' ('.$meta_box_fields['name'] .')' : '').'</li>';
 								}
 
@@ -1618,7 +1623,7 @@ function afficheAvances(){
 			echo '<textarea name="area_tm_mb" style="width:90%">'.implode(', ', $chk_tm_mb_feilds).'</textarea><br/>';
 		}
 	}else {
-		if (count($meta_boxes_def) != 0) {
+		if (count($meta_boxes_def) != 0 && is_array($meta_boxes_def)) {
 			echo '<ul>';
 			foreach ($meta_boxes_def as $meta_box) {
 				if (count($meta_box['fields']) != 0) {
